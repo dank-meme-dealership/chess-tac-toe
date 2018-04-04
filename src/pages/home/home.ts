@@ -23,6 +23,7 @@ export class HomePage {
   name: string;
 
   constructor(public navCtrl: NavController, public modalCtrl: ModalController, private afs: AngularFirestore) {
+    this.name = localStorage.getItem('name');
   }
 
   ionViewDidLoad() {
@@ -31,7 +32,17 @@ export class HomePage {
       this.userDoc = this.afs.doc<User>('users/' + uid);
       this.user = this.userDoc.valueChanges();
       this.user.take(1).subscribe(user => {
-        this.name = user.name;
+        let uid = localStorage.getItem('uid');
+        if (uid) {
+          if (user) {
+            this.name = user.name;
+            localStorage.setItem('name', user.name);
+          }
+          else {
+            this.name = null;
+            localStorage.setItem('uid', null);
+          }
+        }
       });
     }
   }
