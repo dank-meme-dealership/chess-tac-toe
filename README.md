@@ -50,7 +50,7 @@
 
         -> Make this experience similar to generals.io
 
-# OPTIONAL FEATURES
+## OPTIONAL FEATURES
 
 ### Leaderboard
 
@@ -70,7 +70,7 @@
     
     -> Sounds like Justin Weaver may look into building something
 
-# DATABASE DESIGN
+## DATABASE DESIGN
 
 {
 
