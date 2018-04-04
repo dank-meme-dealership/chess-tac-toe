@@ -3,7 +3,7 @@
 # FEATURES 
 
 
-LANDING PAGE 
+LANDING PAGE   
 	-> Basically copy generals.io  
 	-> Set username  
 		-> If not, we'll just save locally your anonymous ID from FB  
