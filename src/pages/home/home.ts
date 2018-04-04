@@ -55,7 +55,7 @@ export class HomePage {
   }
 
   showModal() {
-    this.modal = this.modalCtrl.create(PlayGameModal, {name: this.name || 'Anonymous'}, {cssClass: 'play-game-modal'});
+    this.modal = this.modalCtrl.create(PlayGameModal, {name: this.name || ''}, {cssClass: 'play-game-modal'});
     this.modal.present();
   }
 }
