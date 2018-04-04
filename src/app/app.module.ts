@@ -13,7 +13,6 @@ import {ComponentsModule} from "../components/components.module";
 import {AngularFireModule} from 'angularfire2';
 import {AngularFireDatabaseModule, AngularFireDatabase} from 'angularfire2/database';
 import {AngularFireAuthModule} from 'angularfire2/auth';
-import {AngularFirestore} from "angularfire2/firestore";
 
 export const firebaseConfig = {
   apiKey: "AIzaSyD2OLU1f78pWLsMO-NwIfBJfRRJp4Hlg1k",
@@ -50,7 +49,6 @@ export const firebaseConfig = {
     StatusBar,
     SplashScreen,
     AngularFireDatabase,
-    AngularFirestore,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     BotProvider
   ]
