@@ -16,5 +16,9 @@
 // automatically applied to the <body> element in the app.
 
 button[ion-button].chess-button {
-  background: tan;
+  background: #d0b085;
+
+  &:hover {
+    background: #937c5e;
+  }
 }
