@@ -22,5 +22,29 @@ page-home {
       font-size: 16px;
       color: #000;
     }
+    .chess-button {
+      margin-top: 10px;
+    }
+  }
+}
+
+play-game-modal {
+  .button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100%;
+    padding: 10px;
+  }
+}
+
+play-game-modal {
+  .button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100%;
   }
 }

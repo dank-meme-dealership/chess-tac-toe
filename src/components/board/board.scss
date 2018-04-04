@@ -1,0 +1,58 @@
+board {
+    .chessboard {
+        width: 430px;
+        height: 630px;
+        margin: 20px;
+        border: 15px solid #333;
+    }
+    .board-space{
+        float: left;
+        width: 100px;
+        height: 100px;
+        background-color: #999;
+          font-size:75px;
+        text-align:center;
+        display: table-cell;
+        vertical-align:middle;
+    }
+    .black {
+        background-color:lightseagreen;
+    }
+    .white {
+        background-color: lightblue;
+    }
+    .player{
+        background-color: tan;
+        border-top: 5px solid #333;
+        border-bottom: 5px solid #333;
+    }
+
+    .wr::after{
+        content: '\2656';
+    }
+    .wb::after{
+        content: '\2657 ';
+    }
+    .wk::after{
+        content: '\2658';
+    }
+    .wp::after{
+        content: '\2659';
+    }
+    .br::after{
+        content: '\265C';
+        color: black;
+    }
+    .bb::after{
+        content: '\265D';
+        color: black;
+    }
+    .bk::after{
+        content: '\265E';
+        color: black;
+    }
+    .bp::after{
+        content: '\265F';
+        color: black;
+    }
+}
