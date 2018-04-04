@@ -1,8 +1,7 @@
 # chesstactoe
 
-########################
-####### FEATURES #######
-########################
+# FEATURES 
+
 
 LANDING PAGE
 	-> Basically copy generals.io
@@ -31,9 +30,7 @@ REPLAYS
 	-> Store every move ever and play back at maybe 500ms
 		-> Make this experience similar to generals.io
 
-########################
-## OPTIONAL FEATURES ###
-########################
+# OPTIONAL FEATURES
 
 LEADERBOARD
 	-> Based on Elo
@@ -46,9 +43,7 @@ DUMMY AI
 	-> Makes random moves
 	-> Could make it smarter if we get bored
 
-########################
-### DATABASE DESIGN ####
-########################
+# DATABASE DESIGN 
 
 {
 	playerQueue: {
