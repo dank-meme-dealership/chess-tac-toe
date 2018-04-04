@@ -21,11 +21,16 @@ export class HomePage {
 }
 
 @Component({
-  selector: 'page-home',
+  selector: 'play-game-modal',
   template: `
     <ion-content>
-      <button class="chess-button" ion-button (click)="goToGameplay('matchmaking')">Matchmaking</button>
-      <button class="chess-button" ion-button (click)="goToGameplay('private')">Private</button>
+      <div class="button-container">
+        <button class="chess-button" ion-button (click)="goToGameplay('matchmaking')">Matchmaking</button>
+        <div text-center>You will be assigned a random opponent</div>
+        
+        <button margin-top class="chess-button" ion-button (click)="goToGameplay('private')">Private</button>
+        <div text-center>You can create a private game and invite a friend</div>
+      </div>
     </ion-content>
   `
 })
