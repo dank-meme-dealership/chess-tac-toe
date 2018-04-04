@@ -1,17 +1,10 @@
-<ion-header>
-  <ion-navbar>
-    <ion-title text-center>
-      Chess Tac Toe
-    </ion-title>
-  </ion-navbar>
-</ion-header>
-
 <ion-content>
   <div class="home-container">
-    <h1>Chess Tac Toe</h1>
-    <input placeholder="Anonymous">
+    <h1 class="title">Chess Tac Toe</h1>
+    <h6 class="slogan">Say something about chess here</h6>
+    <input type="text" class="username" placeholder="Anonymous">
     <div>
-      <button ion-button (click)="goToGameplay()">Play</button>
+      <button class="chess-button" ion-button (click)="goToGameplay()">Play</button>
     </div>
   </div>
 </ion-content>
