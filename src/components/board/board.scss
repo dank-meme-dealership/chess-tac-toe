@@ -1,13 +1,19 @@
 board {
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+
     @media screen and (max-width: 500px){
         .chessboard{
-            width: 310px;
-            height: 450px;
+            width: 286px;
+            height: 414px;
         }
         .board-space{
-            width: 70px;
-            height: 70px;
-            font-size:45px;
+            width: 64px;
+            height: 64px;
+            font-size:40px;
         }
     }
     @media screen and (min-width:500px){
