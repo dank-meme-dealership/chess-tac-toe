@@ -13,14 +13,19 @@ page-home {
     .slogan {
       margin: 0;
     }
-    input.username {
+    ion-input.username {
       margin-top: 10px;
       width: 200px;
       height: 40px;
-      padding: 5px;
-      text-align: center;
-      font-size: 16px;
-      color: #000;
+      max-height: 40px;
+      padding: 0 5px;
+      background: #fff;
+
+      input {
+        text-align: center;
+        font-size: 16px;
+        color: #000;
+      }
     }
     .chess-button {
       margin-top: 10px;
