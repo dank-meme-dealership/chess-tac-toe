@@ -15,4 +15,7 @@ export class GameplayPage {
     console.log('ionViewDidLoad GameplayPage');
   }
 
+  exit() {
+    this.navCtrl.pop();
+  }
 }
