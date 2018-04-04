@@ -9,16 +9,19 @@ import { Injectable } from '@angular/core';
 */
 @Injectable()
 export class BotProvider {
+  private color: string;
+  private board: any;
+  private availablePieces: Array<string>;
 
   constructor(public http: HttpClient) {
     console.log('Hello BotProvider Provider');
   }
 
   getMove(state) {
-    color = state.color;
-    board = state.board;
-    available_pieces = [];
-    return board;
+    this.color = state.color;
+    this.board = state.board;
+    this.availablePieces = [];
+    return this.board;
 
   }
 
