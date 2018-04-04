@@ -25,31 +25,6 @@ export class HomePage {
     <ion-content>
       <div class="button-container">
         <button class="chess-button" ion-button (click)="goToGameplay('matchmaking')">Matchmaking</button>
-        <div text-center>You will be assigned a random opponent</div>
-        
-        <button margin-top class="chess-button" ion-button (click)="goToGameplay('private')">Private</button>
-        <div text-center>You can create a private game and invite a friend</div>
-      </div>
-    </ion-content>
-  `
-})
-export class PlayGameModal {
-
-  constructor(public navCtrl: NavController, public modalCtrl: ModalController) {
-    this.modal = this.modalCtrl.create(PlayGameModal);
-  }
-
-  showModal() {
-    this.modal.present();
-  }
-}
-
-@Component({
-  selector: 'play-game-modal',
-  template: `
-    <ion-content>
-      <div class="button-container">
-        <button class="chess-button" ion-button (click)="goToGameplay('matchmaking')">Matchmaking</button>
         <div text-center>Play against a random opponent</div>
 
         <button margin-top class="chess-button" ion-button (click)="goToGameplay('private')">Private</button>
@@ -61,6 +36,7 @@ export class PlayGameModal {
 export class PlayGameModal {
 
   constructor(public navCtrl: NavController) {
+
   }
 
   goToGameplay(type: string) {
