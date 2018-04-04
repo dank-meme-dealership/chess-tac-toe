@@ -1,8 +1,10 @@
+
+
 # chesstactoe
 
-# FEATURES
+## FEATURES
 
-LANDING PAGE
+### Landing Page
 
     -> Basically copy generals.io
 
@@ -18,15 +20,15 @@ LANDING PAGE
 
         -> Private
 
-STACK
+### Stack
 
     -> Angular5/Ionic3
 
     -> Firebase/Firestore
 
-    -> Auto deploy from Github to Heroku
+    -> Auto deploy from Github to Heroku. See it live here: https://chesstactoe.herokuapp.com/
 
-GAMEPLAY
+### Gameplay
 
     -> 4x4 board with 1x4 rows on either side to hold your pieces
 
@@ -42,7 +44,7 @@ GAMEPLAY
 
         -> Go Home
 
-REPLAYS
+### Replays
 
     -> Store every move ever and play back at maybe 500ms
 
@@ -50,21 +52,23 @@ REPLAYS
 
 # OPTIONAL FEATURES
 
-LEADERBOARD
+### Leaderboard
 
     -> Based on Elo
 
     -> Links to usernames to watch replays
 
-CHATROOM
+### Chatroom
 
     ->
 
-DUMMY AI
+### AI
 
     -> Makes random moves
 
     -> Could make it smarter if we get bored
+    
+    -> Sounds like Justin Weaver may look into building something
 
 # DATABASE DESIGN
 
