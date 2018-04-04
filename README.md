@@ -2,6 +2,8 @@
 
 # chesstactoe
 
+Real-time matchmaking online version of Tic Tac Chec board game, [see it live on Heroku](https://chesstactoe.herokuapp.com/)
+
 ## FEATURES
 
 ### Landing Page
@@ -26,7 +28,7 @@
 
     -> Firebase/Firestore
 
-    -> Auto deploy from Github to Heroku. See it live here: https://chesstactoe.herokuapp.com/
+    -> Auto deploy from Github to Heroku.
 
 ### Gameplay
 
@@ -72,7 +74,7 @@
 
 ## DATABASE DESIGN
 
-{
+
 
     playerQueue: {
 
@@ -186,4 +188,4 @@
 
     }
 
-}
+
