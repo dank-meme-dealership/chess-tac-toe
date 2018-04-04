@@ -5,7 +5,8 @@ import {SplashScreen} from '@ionic-native/splash-screen';
 import {StatusBar} from '@ionic-native/status-bar';
 
 import {MyApp} from './app.component';
-import {HomePage, PlayGameModal} from '../pages/home/home';
+import {HomePage} from '../pages/home/home';
+import {PlayGameModal} from "../pages/home/play-game-modal";
 import {GameplayPage} from "../pages/gameplay/gameplay";
 import {BotProvider} from '../providers/bot/bot';
 import {ComponentsModule} from "../components/components.module";
