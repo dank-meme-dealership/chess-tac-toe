@@ -7,8 +7,8 @@ import { Component } from '@angular/core';
 export class BoardComponent {
 
   boardState: string[][];
-  selected: Object;
-  moveTo: Object;
+  selected: any;
+  moveTo: any;
 
   constructor() {
     console.log('Hello BoardComponent Component');
