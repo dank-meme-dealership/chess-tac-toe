@@ -8,6 +8,7 @@ import {MyApp} from './app.component';
 import {HomePage, PlayGameModal} from '../pages/home/home';
 import {GameplayPage} from "../pages/gameplay/gameplay";
 import {BotProvider} from '../providers/bot/bot';
+import {ComponentsModule} from "../components/components.module";
 
 import {AngularFireModule} from 'angularfire2';
 import {AngularFireDatabaseModule, AngularFireDatabase} from 'angularfire2/database';
@@ -34,7 +35,8 @@ export const firebaseConfig = {
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireDatabaseModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    ComponentsModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
