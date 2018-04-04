@@ -11,7 +11,7 @@ export class HomePage {
   modal: Modal;
 
   constructor(public navCtrl: NavController, public modalCtrl: ModalController) {
-    this.modal = this.modalCtrl.create(PlayGameModal);
+    this.modal = this.modalCtrl.create(PlayGameModal, {}, {cssClass:'play-game-modal'});
   }
 
   showModal() {

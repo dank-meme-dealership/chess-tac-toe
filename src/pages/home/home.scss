@@ -38,3 +38,17 @@ play-game-modal {
     padding: 10px;
   }
 }
+
+.play-game-modal {
+  ion-backdrop {
+    visibility: visible !important;
+  }
+
+  .modal-wrapper {
+    left: calc(50% - (200px/2));
+    top: calc(50% - (200px/2));
+    position: absolute;
+    width: 200px;
+    height: 200px;
+  }
+}
