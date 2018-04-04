@@ -39,7 +39,7 @@ export class BoardComponent {
       }
       if (this.moveTo.piece !==''){
         //check to see if you are moving out of a tray. if so do nothing. you cannot capture a piece while placing
-        if(this.selected.xS === 0 || this.selected.xS === 5){
+        if(this.selected.x === 0 || this.selected.x === 5){
           return;
         }
 
