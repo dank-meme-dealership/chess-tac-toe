@@ -7,6 +7,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { GameplayPage } from "../pages/gameplay/gameplay";
+import { BotProvider } from '../providers/bot/bot';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { GameplayPage } from "../pages/gameplay/gameplay";
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    BotProvider
   ]
 })
 export class AppModule {}
