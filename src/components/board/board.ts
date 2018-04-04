@@ -14,12 +14,12 @@ export class BoardComponent {
     console.log('Hello BoardComponent Component');
     this.selected = null;
     this.boardState = [
-      ['wr', 'wp', 'wk', 'wb'],
+      ['wr', 'wpd', 'wk', 'wb'],
       ['', '', '', ''],
       ['', '', '', ''],
       ['', '', '', ''],
       ['', '', '', ''],
-      ['br', 'bp', 'bk', 'bb'],
+      ['br', 'bpu', 'bk', 'bb'],
     ]
   }
 

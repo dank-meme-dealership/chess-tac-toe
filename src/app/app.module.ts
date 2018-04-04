@@ -14,6 +14,7 @@ import {AngularFireModule} from 'angularfire2';
 import {AngularFireDatabaseModule, AngularFireDatabase} from 'angularfire2/database';
 import {AngularFireAuthModule} from 'angularfire2/auth';
 import {AngularFirestore} from "angularfire2/firestore";
+import { ChessProvider } from '../providers/chess/chess';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyD2OLU1f78pWLsMO-NwIfBJfRRJp4Hlg1k",
@@ -52,7 +53,8 @@ export const firebaseConfig = {
     AngularFireDatabase,
     AngularFirestore,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    BotProvider
+    BotProvider,
+    ChessProvider
   ]
 })
 export class AppModule {
