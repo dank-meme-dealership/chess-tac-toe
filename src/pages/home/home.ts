@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {Modal, ModalController, NavController} from 'ionic-angular';
+import {Modal, ModalController, NavController, ViewController} from 'ionic-angular';
 
 import {GameplayPage} from '../gameplay/gameplay'
 
@@ -11,7 +11,7 @@ export class HomePage {
   modal: Modal;
 
   constructor(public navCtrl: NavController, public modalCtrl: ModalController) {
-    this.modal = this.modalCtrl.create(PlayGameModal, {}, {cssClass:'play-game-modal'});
+    this.modal = this.modalCtrl.create(PlayGameModal, {}, {cssClass: 'play-game-modal'});
   }
 
   showModal() {
@@ -34,13 +34,13 @@ export class HomePage {
   `
 })
 export class PlayGameModal {
-
-  constructor(public navCtrl: NavController) {
+  constructor(public navCtrl: NavController, public viewCtrl: ViewController) {
   }
 
   goToGameplay(type: string) {
     console.log(type);
     this.navCtrl.push(GameplayPage);
+    this.viewCtrl.dismiss();
   }
 
 }
