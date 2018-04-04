@@ -3,8 +3,7 @@ board {
     display: flex;
     align-items: center;
     justify-content: center;
-    vertical-align: middle;
-
+    
     @media screen and (max-width: 500px){
         .chessboard{
             width: 286px;
