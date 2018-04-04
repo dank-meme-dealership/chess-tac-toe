@@ -52,7 +52,7 @@ board {
   .wk::after {
     content: '\2658';
   }
-  .wp::after {
+  .wpu::after, .wpd::after {
     content: '\2659';
   }
   .br::after {
@@ -67,7 +67,7 @@ board {
     content: '\265E';
     color: black;
   }
-  .bp::after {
+  .bpu::after, .bpd::after {
     content: '\265F';
     color: black;
   }
