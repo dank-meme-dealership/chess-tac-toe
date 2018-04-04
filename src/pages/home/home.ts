@@ -47,6 +47,13 @@ export class HomePage {
     }
   }
 
+  updateName() {
+    if (this.userDoc) {
+      this.userDoc.update({name: this.name});
+      localStorage.setItem('name', this.name);
+    }
+  }
+
   showModal() {
     this.modal = this.modalCtrl.create(PlayGameModal, {name: this.name || 'Anonymous'}, {cssClass: 'play-game-modal'});
     this.modal.present();
