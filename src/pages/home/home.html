@@ -2,7 +2,7 @@
   <div class="home-container">
     <h1 class="title">Chess Tac Toe</h1>
     <h6 class="slogan">Say something about chess here</h6>
-    <input type="text" class="username" placeholder="Anonymous">
+    <input type="text" class="username" placeholder="Anonymous" [(ngModel)]="name">
     <div>
       <button class="chess-button" ion-button (click)="showModal()">Play</button>
     </div>
