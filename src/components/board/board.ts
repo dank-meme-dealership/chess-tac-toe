@@ -38,7 +38,26 @@ export class BoardComponent {
         piece: this.boardState[x][y]
       }
       if (this.moveTo.piece !==''){
+        //check to see if you are moving out of a tray. if so do nothing. you cannot capture a piece while placing
+        if(this.selected.x === 0 || this.selected.x === 5){
+          return;
+        }
 
+        if(this.selected.piece[0]!== this.moveTo.piece[0]){
+          var playerArray;
+          if (this.moveTo.piece[0] =='b'){
+            playerArray = 5;
+          } else {
+            playerArray = 0;
+          }
+          var c = 0;
+          while(this.boardState[playerArray][c]!==''){
+            c++;
+          }
+          this.boardState[x][y] = this.selected.piece;
+          this.boardState[this.selected.xS][this.selected.yS] = '';
+          this.boardState[playerArray][c] = this.moveTo.piece;
+        }
       } else {
         this.boardState[x][y] = this.selected.piece;
         this.boardState[this.selected.xS][this.selected.yS] = '';
