@@ -1,16 +1,32 @@
 board {
+    @media screen and (max-width: 500px){
+        .chessboard{
+            width: 310px;
+            height: 450px;
+        }
+        .board-space{
+            width: 70px;
+            height: 70px;
+            font-size:45px;
+        }
+    }
+    @media screen and (min-width:500px){
+        .chessboard {
+            width: 430px;
+            height: 630px;
+        }
+        .board-space{
+            width: 100px;
+            height: 100px;
+            font-size:65px;
+        }
+    }
     .chessboard {
-        width: 430px;
-        height: 630px;
-        margin: 20px;
         border: 15px solid #333;
     }
     .board-space{
         float: left;
-        width: 100px;
-        height: 100px;
         background-color: #999;
-          font-size:65px;
         text-align:center;
         display: table-cell;
         vertical-align:middle;
