@@ -8,6 +8,7 @@ export class BotProvider {
   private pieces: ['r', 'b', 'k', 'p'];
   private color: string;
   private board: any[][]; //not sure if this declaration or VVVV below
+  // private weights: number[][]; //not sure if this declaration or VVVV below
   private availablePieces: Array<string>;
 
   constructor(public http: HttpClient) {
@@ -54,7 +55,7 @@ export class BotProvider {
         }
       }
     }
-    //let tempWeights = this.getWeightedBoard(board);
+    let tempWeights = this.getWeightedBoard(board, color);
     this.movePiece(board, color, playerPieceRow, playerPieceCol, null, null)
   }
 
@@ -69,8 +70,42 @@ export class BotProvider {
     //do more stuff with the piece we just found;
   }
 
-  // protected getWeightedBoard(board: string[][]){
-  //   return null;
-  // }
+  protected getWeightedBoard(board: string[][], color: string){
+    var weights = this.getEmptyMultiArray();
+    for(let row=0; row < this.board.length; row++) {
+      for(let col=0; col < this.board[row].length; col++) {
+        //if it's one of our pieces...
+        if(board[row][col][0] === color[0]) {
+          weights[row][col]-=100; //a piece occupies this spot
+          this.updateWeights(row,col, weights); //add one to each cell NSEW from this location.
+        }
+
+        //what about if it's one of thier pieces?
+      }
+    }
+    return weights;
+  }
+
+  protected updateWeights(row: number, col: number, weights: number[][]): any {
+    //update the row
+    for(let i = 0 ; i< this.board[row].length; i++) {
+      weights[row][i] += 1;
+    }
+    //update the column
+    for(let j = 0; j< this.board.length; j++) {
+      weights[j][col] += 1;
+    }
+  }
+
+  protected getEmptyMultiArray(): number[][] {
+    var array= new Array<Array<number>>();
+    for(var i=0;i<4;i++) {
+      array[i]= new Array<number>();
+      for(var j=0;j<4;j++) {
+        array[i][j] = 0;
+      }
+    }
+    return array;
+  }
 
 }
