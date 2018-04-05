@@ -126,7 +126,7 @@ export class ChessProvider {
         if (possible.o) break;
       }
     }
-    
+
     return legalMoves;
   }
 
@@ -203,10 +203,14 @@ export class ChessProvider {
   }
 
   moveIsOnBoard(x, y) {
-    if (x < 5 && x > 0 && y < 4 && y >= 0) {
+    if (this.isNotInTray(x,y) && y < this.board[x].length && y >= 0) {
       return true;
     } else {
       return false;
     }
+  }
+
+  isNotInTray(x,y) {
+    return x < 5 && x > 0
   }
 }
