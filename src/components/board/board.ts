@@ -69,6 +69,7 @@ export class BoardComponent {
       yS: y,
       piece: this.boardState[x][y]
     };
+    this.updatePawnIfNeeded();
     if (occupied) { // do logic to move a piece
       let playerArray;
 
@@ -135,9 +136,15 @@ export class BoardComponent {
     this.selected = {
       xS: x,
       yS: y,
-      piece: this.boardState[x][y]
+      piece: this.boardState[x][y],
+      
     };
     this.moves = this.chessProvider.getValidMoves(this.boardState, this.selected);
     this.highlightMoves();
+  }
+
+  updatePawnIfNeeded(){
+    if (this.selected.piece.substring(1,3)==='pd' && this.moveTo.xS === 4) this.selected.piece = this.selected.piece[0] + 'pu';
+    if (this.selected.piece.substring(1,3)==='pu' && this.moveTo.xS === 1) this.selected.piece = this.selected.piece[0] + 'pd' ;
   }
 }

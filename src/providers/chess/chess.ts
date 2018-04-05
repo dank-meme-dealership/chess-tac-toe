@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { ObjectToUniqueKey } from '@firebase/database/dist/esm/src/core/util/util';
 
 export interface Move {
   playerId: number;
@@ -64,37 +65,41 @@ export class ChessProvider {
 
     //RIGHT
     for (let x = this.selected.xS + 1; x < 5; x++) {
-      let possible = this.checkSpace(x, this.selected.yS, color)
-      if (possible) {
-        legalMoves.push(possible);
-        if (possible.o) break;
+      let onBoardSpace = this.checkSpace(x, this.selected.yS, color)
+      if (onBoardSpace) {
+        if(onBoardSpace.f) break; // we hit a friendly and can't go farther. Break and do not add to legal moves
+        legalMoves.push(onBoardSpace);
+        if (onBoardSpace.o) break; // we hit aan enemy and can't go farther, but we added him already as a valid move.
       }
     }
 
     //LEFT
     for (let x = this.selected.xS - 1; x > 0; x--) {
-      let possible = this.checkSpace(x, this.selected.yS, color)
-      if (possible) {
-        legalMoves.push(possible);
-        if (possible.o) break;
+      let onBoardSpace = this.checkSpace(x, this.selected.yS, color)
+      if (onBoardSpace) {
+        if(onBoardSpace.f) break; 
+        legalMoves.push(onBoardSpace);
+        if (onBoardSpace.o) break;  
       }
     }
 
     //UP
     for (let y = this.selected.yS - 1; y >= 0; y--) {
-      let possible = this.checkSpace(this.selected.xS, y, color)
-      if (possible) {
-        legalMoves.push(possible);
-        if (possible.o) break;
+      let onBoardSpace = this.checkSpace(this.selected.xS, y, color)
+      if (onBoardSpace) {
+        if(onBoardSpace.f) break; 
+        legalMoves.push(onBoardSpace);
+        if (onBoardSpace.o) break;
       }
     }
 
     //DOWN
     for (let y = this.selected.yS + 1; y < 4; y++) {
-      let possible = this.checkSpace(this.selected.xS, y, color)
-      if (possible) {
-        legalMoves.push(possible);
-        if (possible.o) break;
+      let onBoardSpace = this.checkSpace(this.selected.xS, y, color)
+      if (onBoardSpace) {
+        if(onBoardSpace.f) break;
+        legalMoves.push(onBoardSpace);
+        if (onBoardSpace.o) break;
       }
     }
     return legalMoves;
@@ -107,37 +112,41 @@ export class ChessProvider {
 
     // //UP RIGHT
     for (let i = 1; i < 4; i++) {
-      let possible = this.checkSpace(this.selected.xS + i, this.selected.yS + i, color)
-      if (possible) {
-        legalMoves.push(possible);
-        if (possible.o) break;
+      let onBoardSpace = this.checkSpace(this.selected.xS + i, this.selected.yS + i, color)
+      if (onBoardSpace) {
+        if(onBoardSpace.f) break;
+        legalMoves.push(onBoardSpace);
+        if (onBoardSpace.o) break;
       }
     }
 
     // //UP LEFT
     for (let i = 1; i < 4; i++) {
-      let possible = this.checkSpace(this.selected.xS - i, this.selected.yS + i, color)
-      if (possible) {
-        legalMoves.push(possible);
-        if (possible.o) break;
+      let onBoardSpace = this.checkSpace(this.selected.xS - i, this.selected.yS + i, color)
+      if (onBoardSpace) {
+        if(onBoardSpace.f) break;
+        legalMoves.push(onBoardSpace);
+        if (onBoardSpace.o) break;
       }
     }
 
     // //DOWN RIGHT
     for (let i = 1; i < 4; i++) {
-      let possible = this.checkSpace(this.selected.xS + i, this.selected.yS - i, color)
-      if (possible) {
-        legalMoves.push(possible);
-        if (possible.o) break;
+      let onBoardSpace = this.checkSpace(this.selected.xS + i, this.selected.yS - i, color)
+      if (onBoardSpace) {
+        if(onBoardSpace.f) break;
+        legalMoves.push(onBoardSpace);
+        if (onBoardSpace.o) break;
       }
     }
 
     // //DOWN LEFT
     for (let i = 1; i < 4; i++) {
-      let possible = this.checkSpace(this.selected.xS - i, this.selected.yS - i, color)
-      if (possible) {
-        legalMoves.push(possible);
-        if (possible.o) break;
+      let onBoardSpace = this.checkSpace(this.selected.xS - i, this.selected.yS - i, color)
+      if (onBoardSpace) {
+        if(onBoardSpace.f) break;
+        legalMoves.push(onBoardSpace);
+        if (onBoardSpace.o) break;
       }
     }
 
@@ -149,29 +158,29 @@ export class ChessProvider {
     let legalMoves = [];
     let color = this.selected.piece[0];
 
-    let possible = this.checkSpace(this.selected.xS + 2, this.selected.yS + 1, color);
-    if (possible) legalMoves.push(possible);
+    let onBoardSpace = this.checkSpace(this.selected.xS + 2, this.selected.yS + 1, color);
+    if (onBoardSpace) legalMoves.push(onBoardSpace);
 
-    possible = this.checkSpace(this.selected.xS - 2, this.selected.yS + 1, color);
-    if (possible) legalMoves.push(possible);
+    onBoardSpace = this.checkSpace(this.selected.xS - 2, this.selected.yS + 1, color);
+    if (onBoardSpace) legalMoves.push(onBoardSpace);
 
-    possible = this.checkSpace(this.selected.xS + 2, this.selected.yS - 1, color);
-    if (possible) legalMoves.push(possible);
+    onBoardSpace = this.checkSpace(this.selected.xS + 2, this.selected.yS - 1, color);
+    if (onBoardSpace) legalMoves.push(onBoardSpace);
 
-    possible = this.checkSpace(this.selected.xS - 2, this.selected.yS - 1, color);
-    if (possible) legalMoves.push(possible);
+    onBoardSpace = this.checkSpace(this.selected.xS - 2, this.selected.yS - 1, color);
+    if (onBoardSpace) legalMoves.push(onBoardSpace);
 
-    possible = this.checkSpace(this.selected.xS + 1, this.selected.yS + 2, color);
-    if (possible) legalMoves.push(possible);
+    onBoardSpace = this.checkSpace(this.selected.xS + 1, this.selected.yS + 2, color);
+    if (onBoardSpace) legalMoves.push(onBoardSpace);
 
-    possible = this.checkSpace(this.selected.xS - 1, this.selected.yS + 2, color);
-    if (possible) legalMoves.push(possible);
+    onBoardSpace = this.checkSpace(this.selected.xS - 1, this.selected.yS + 2, color);
+    if (onBoardSpace) legalMoves.push(onBoardSpace);
 
-    possible = this.checkSpace(this.selected.xS + 1, this.selected.yS - 2, color);
-    if (possible) legalMoves.push(possible);
+    onBoardSpace = this.checkSpace(this.selected.xS + 1, this.selected.yS - 2, color);
+    if (onBoardSpace) legalMoves.push(onBoardSpace);
 
-    possible = this.checkSpace(this.selected.xS - 1, this.selected.yS - 2, color);
-    if (possible) legalMoves.push(possible);
+    onBoardSpace = this.checkSpace(this.selected.xS - 1, this.selected.yS - 2, color);
+    if (onBoardSpace) legalMoves.push(onBoardSpace);
 
     return legalMoves;
   }
@@ -190,18 +199,18 @@ export class ChessProvider {
 
     //forward
     y = this.selected.yS;
-    let possible = this.checkSpace(x, y, color);
-    if (possible) legalMoves.push(possible);
+    let onBoardSpace = this.checkSpace(x, y, color);
+    if (onBoardSpace) legalMoves.push(onBoardSpace);
 
     //forward left/right
     y = this.selected.yS + 1;
-    possible = this.checkSpace(x, y, color);
-    if (possible && possible.o) legalMoves.push(possible);
+    onBoardSpace = this.checkSpace(x, y, color);
+    if (onBoardSpace && onBoardSpace.o) legalMoves.push(onBoardSpace);
 
     //forward left/right
     y = this.selected.yS - 1;
-    possible = this.checkSpace(x, y, color);
-    if (possible && possible.o) legalMoves.push(possible);
+    onBoardSpace = this.checkSpace(x, y, color);
+    if (onBoardSpace && onBoardSpace.o) legalMoves.push(onBoardSpace);
 
     return legalMoves;
   }
@@ -212,8 +221,9 @@ export class ChessProvider {
       return { x: x, y: y, o: false }; //pass back space as empty
     } else if (this.board[x][y][0] !== color) {
       return { x: x, y: y, o: true }; //pass back space as occupied if it has opponent
-    } 
-    return null; // otherwise pass back not a valid move;
+    } else {
+      return { o: false, f:true};
+    }
   }
 
   moveIsOnBoard(x, y) {
