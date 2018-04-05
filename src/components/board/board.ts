@@ -34,7 +34,7 @@ export class BoardComponent {
         piece: this.boardState[x][y]
       };
       this.moves = this.chessProvider.getValidMoves(this.boardState,this.selected);
-      highlightMoves();
+      this.highlightMoves();
     } 
     // else if (this.selected !== null) { // if we already have a piece selected then
     //   this.moveTo = {
@@ -74,6 +74,6 @@ export class BoardComponent {
   }
 
   highlightMoves(){
-    
+
   }
 }
