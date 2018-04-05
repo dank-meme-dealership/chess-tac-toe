@@ -30,9 +30,7 @@ export class BoardComponent {
       this.game = this.gameDoc.valueChanges()
         .takeUntil(this.ngUnsubscribe)
         .subscribe(game => {
-          // this.boardState = game.boardState
-          console.log(JSON.parse(game.boardState))
-
+          // set the board on the client when it's updated
           this.boardState = JSON.parse(game.boardState);
         });
     }
@@ -48,8 +46,6 @@ export class BoardComponent {
     ]
     this.highlighted = [];
     this.moves = [];
-
-
   }
 
   onClick(x, y): void {
@@ -94,6 +90,8 @@ export class BoardComponent {
       this.boardState[this.selected.xS][this.selected.yS] = '';
     }
     this.deselectPiece();
+    
+    // update the board in firebase
     this.gameDoc.update({boardState: JSON.stringify(this.boardState)});
   }
 

@@ -43,8 +43,6 @@ export class GameplayPage {
       this.game = this.gameDoc.valueChanges()
         .takeUntil(this.ngUnsubscribe)
         .subscribe(game => {
-          console.log(JSON.parse(game.boardState))
-
           if (!this.thisPlayer) {
             this.thisPlayer = this.getPlayer(game);
           }
@@ -53,6 +51,7 @@ export class GameplayPage {
   }
 
   getPlayer(game: any) {
+    console.log(game);
     return null;
   }
 
