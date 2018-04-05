@@ -30,16 +30,12 @@ export class HomePage {
       this.userDoc = this.afs.doc<User>('users/' + uid);
       this.user = this.userDoc.valueChanges();
       this.user.take(1).subscribe(user => {
-        let uid = localStorage.getItem('uid');
-        if (uid) {
-          if (user) {
-            this.name = user.name;
-            localStorage.setItem('name', user.name);
-          }
-          else {
-            this.name = null;
-            localStorage.setItem('uid', null);
-          }
+        if (user) {
+          this.name = user.name;
+          localStorage.setItem('name', user.name);
+        }
+        else {
+          this.removeLocalUser();
         }
       });
     }
@@ -52,9 +48,15 @@ export class HomePage {
         this.userDoc = this.afs.doc<User>('users/' + uid);
         this.user = this.userDoc.valueChanges();
       }
-      this.userDoc.update({name: this.name});
+      this.userDoc.update({name: this.name}).catch(this.removeLocalUser.bind(this));
       localStorage.setItem('name', this.name);
     }
+  }
+
+  removeLocalUser() {
+    this.user = null;
+    this.userDoc = null;
+    localStorage.setItem('uid', '');
   }
 
   showModal() {

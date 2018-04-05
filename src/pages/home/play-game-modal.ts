@@ -30,15 +30,14 @@ export class PlayGameModal {
 
   goToGameplay(type: string) {
     let uid = localStorage.getItem('uid');
-    if (uid === null || uid === 'null') {
-      let that = this; // hack, anyone know the es6 way?
-      this.addUser(this.params.get('name')).then(function (uid) {
-        localStorage.setItem('uid', uid);
-        that.joinQueue(uid, type);
-      });
+    if (uid) {
+      this.joinQueue(uid, type);
     }
     else {
-      this.joinQueue(uid, type);
+      this.addUser(this.params.get('name')).then(function (uid) {
+        localStorage.setItem('uid', uid);
+        this.joinQueue(uid, type);
+      }.bind(this));
     }
   }
 
