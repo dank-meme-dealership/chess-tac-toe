@@ -159,28 +159,28 @@ export class ChessProvider {
     let color = this.selected.piece[0];
 
     let onBoardSpace = this.checkSpace(this.selected.xS + 2, this.selected.yS + 1, color);
-    if (onBoardSpace) legalMoves.push(onBoardSpace);
+    if (onBoardSpace && !onBoardSpace.f) legalMoves.push(onBoardSpace);
 
     onBoardSpace = this.checkSpace(this.selected.xS - 2, this.selected.yS + 1, color);
-    if (onBoardSpace) legalMoves.push(onBoardSpace);
+    if (onBoardSpace && !onBoardSpace.f) legalMoves.push(onBoardSpace);
 
     onBoardSpace = this.checkSpace(this.selected.xS + 2, this.selected.yS - 1, color);
-    if (onBoardSpace) legalMoves.push(onBoardSpace);
+    if (onBoardSpace && !onBoardSpace.f) legalMoves.push(onBoardSpace);
 
     onBoardSpace = this.checkSpace(this.selected.xS - 2, this.selected.yS - 1, color);
-    if (onBoardSpace) legalMoves.push(onBoardSpace);
+    if (onBoardSpace && !onBoardSpace.f) legalMoves.push(onBoardSpace);
 
     onBoardSpace = this.checkSpace(this.selected.xS + 1, this.selected.yS + 2, color);
-    if (onBoardSpace) legalMoves.push(onBoardSpace);
+    if (onBoardSpace && !onBoardSpace.f) legalMoves.push(onBoardSpace);
 
     onBoardSpace = this.checkSpace(this.selected.xS - 1, this.selected.yS + 2, color);
-    if (onBoardSpace) legalMoves.push(onBoardSpace);
+    if (onBoardSpace && !onBoardSpace.f) legalMoves.push(onBoardSpace);
 
     onBoardSpace = this.checkSpace(this.selected.xS + 1, this.selected.yS - 2, color);
-    if (onBoardSpace) legalMoves.push(onBoardSpace);
+    if (onBoardSpace && !onBoardSpace.f) legalMoves.push(onBoardSpace);
 
     onBoardSpace = this.checkSpace(this.selected.xS - 1, this.selected.yS - 2, color);
-    if (onBoardSpace) legalMoves.push(onBoardSpace);
+    if (onBoardSpace && !onBoardSpace.f) legalMoves.push(onBoardSpace);
 
     return legalMoves;
   }
@@ -200,7 +200,7 @@ export class ChessProvider {
     //forward
     y = this.selected.yS;
     let onBoardSpace = this.checkSpace(x, y, color);
-    if (onBoardSpace) legalMoves.push(onBoardSpace);
+    if (onBoardSpace && !onBoardSpace.f) legalMoves.push(onBoardSpace);
 
     //forward left/right
     y = this.selected.yS + 1;
