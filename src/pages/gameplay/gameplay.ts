@@ -7,6 +7,8 @@ import {AngularFireDatabase} from 'angularfire2/database';
 import {Subject} from "rxjs/Subject";
 import { BotProvider } from '../../providers/bot/bot';
 
+import _ from "lodash";
+
 @IonicPage()
 @Component({
   selector: 'page-gameplay',
@@ -52,6 +54,9 @@ export class GameplayPage {
 
   getPlayer(game: any) {
     console.log(game);
+    _.each(game.players, function(player) {
+      console.log(player);
+    })
     return null;
   }
 
