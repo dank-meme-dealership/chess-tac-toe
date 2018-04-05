@@ -9,79 +9,116 @@ export interface Move {
 @Injectable()
 export class ChessProvider {
 
+  board: any[][];
+  selected: any;
   constructor(public http: HttpClient) {
     console.log('Hello ChessProvider Provider');
   }
 
   getValidMoves(board, selected) {
-    var pieceType = selected.piece[1];
+    let pieceType = this.selected.piece[1];
+    this.board = board;
+    this.selected = selected;
+    let moves = null;
     switch (pieceType) {
       case 'r': {
-        return this.getRookLegalMove(board, selected);
+        moves =  this.getRookLegalMove();
+        break;
       }
       case 'b': {
-        this.getBishopLegalMove(board, selected);
+        moves = this.getBishopLegalMove();
         break;
       }
       case 'k': {
-        this.getKnightLegalMove(board, selected);
+        moves = this.getKnightLegalMove();
         break;
       }
       case 'p': {
-        this.getPawnLegalMove(board, selected);
+        moves = this.getPawnLegalMove();
         break;
       }
     }
+    this.board = null;
+    this.selected = null;
+    return moves;
   }
 
 
-  getRookLegalMove(board, selected) {
+  getRookLegalMove() {
+    // for(let row = this.selected.yS; row = (row+1));
+  }
+
+  getBishopLegalMove() {
 
   }
 
-  getBishopLegalMove(board, selected) {
+  getKnightLegalMove() {
+    //
+    let legalMoves = [];
+    let color = this.selected.piece[0];
 
+    let possible = this.checkSpace(this.selected.xS+2,this.selected.yS+1,color);
+    if(possible) legalMoves.push(possible);
+
+    possible = this.checkSpace(this.selected.xS-2,this.selected.yS+1,color);
+    if(possible) legalMoves.push(possible);
+
+    possible = this.checkSpace(this.selected.xS+2,this.selected.yS-1,color);
+    if(possible) legalMoves.push(possible);
+
+    possible = this.checkSpace(this.selected.xS-2,this.selected.yS-1,color);
+    if(possible) legalMoves.push(possible);
+
+    possible = this.checkSpace(this.selected.xS+1,this.selected.yS+2,color);
+    if(possible) legalMoves.push(possible);
+
+    possible = this.checkSpace(this.selected.xS-1,this.selected.yS+2,color);
+    if(possible) legalMoves.push(possible);
+
+    possible = this.checkSpace(this.selected.xS+1,this.selected.yS-2,color);
+    if(possible) legalMoves.push(possible);
+
+    possible = this.checkSpace(this.selected.xS-1,this.selected.yS-2,color);
+    if(possible) legalMoves.push(possible);
+
+    return legalMoves;
   }
 
-  getKnightLegalMove(board, selected) {
-
-  }
-
-  getPawnLegalMove(board, selected) {
-    var legalMoves = [];
-    var color = selected.piece[0];
-    var direction = selected.piece[2];
-    var x, y;
+  getPawnLegalMove() {
+    let legalMoves = [];
+    let color = this.selected.piece[0];
+    let direction = this.selected.piece[2];
+    let x, y;
 
     if (direction === 'u') {
-      x = selected.xS - 1;
+      x = this.selected.xS - 1;
     } else {
-      x = selected.xS + 1;
+      x = this.selected.xS + 1;
     }
 
     //forward
-    y = selected.yS;
-    let possible = this.checkSpace(x, y,color,board);
+    y = this.selected.yS;
+    let possible = this.checkSpace(x, y,color);
     if(possible) legalMoves.push(possible);
 
     //forward left/right
-    y=selected.yS+1;
-    possible = this.checkSpace(x,y,color,board)
+    y=this.selected.yS+1;
+    possible = this.checkSpace(x,y,color);
     if(possible && possible.o) legalMoves.push(possible);
 
     //forward left/right
-    y=selected.yS-1;
-    possible = this.checkSpace(x,y,color,board)
+    y=this.selected.yS-1;
+    possible = this.checkSpace(x,y,color);
     if(possible && possible.o) legalMoves.push(possible);
 
     return legalMoves;
   }
 
-  checkSpace(x, y, color, board) {
+  checkSpace(x, y, color) {
     if(!this.moveIsOnBoard(x,y)) return null;
-    if (board[x][y] === '') {
+    if (this.board[x][y] === '') {
       return { x: x, y: y, o:true}; //pass back space as empty
-    } else if (board[x][y][0] !== color) {
+    } else if (this.board[x][y][0] !== color) {
       return { x: x, y: y, o:false}; //pass back space as occupied if it has opponent
     }
     return null; // otherwise pass back not a valid move;
