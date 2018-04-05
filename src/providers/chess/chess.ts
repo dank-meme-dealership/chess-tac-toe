@@ -212,7 +212,7 @@ export class ChessProvider {
       return { x: x, y: y, o: false }; //pass back space as empty
     } else if (this.board[x][y][0] !== color) {
       return { x: x, y: y, o: true }; //pass back space as occupied if it has opponent
-    }
+    } 
     return null; // otherwise pass back not a valid move;
   }
 
