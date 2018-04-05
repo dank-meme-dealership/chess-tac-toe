@@ -203,14 +203,14 @@ export class ChessProvider {
   }
 
   moveIsOnBoard(x, y) {
-    if (this.isNotInTray(x,y) && y < this.board[x].length && y >= 0) {
+    if (this.isNotInTray(x) && y < this.board[x].length && y >= 0) {
       return true;
     } else {
       return false;
     }
   }
 
-  isNotInTray(x,y) {
-    return x < 5 && x > 0
+  isNotInTray(x) {
+    return x < 5 && x > 0;
   }
 }
