@@ -31,7 +31,7 @@ export class QueuePage {
     if (this.navParams.data.type === 'private') {
       this.createGame([player], true).then(game => {
         // nav to this game, nothing to delete
-        this.joinGame(game.id, null);
+        this.joinGame(game.id, player.id, null);
       });;
     }
     // matchmaking games join a queue
@@ -66,7 +66,7 @@ export class QueuePage {
     // if this queued user needs to join a game, do it!
     if (queueGame) {
       this.busy = true;
-      this.joinGame(queueGame.gameId, queueGame.queueId);
+      this.joinGame(queueGame.gameId, player.id, queueGame.queueId);
     }
     
     // if gameId returned as null, it means you haven't been invited to a game yet
@@ -131,7 +131,7 @@ export class QueuePage {
       });
   }
 
-  joinGame(gameId: string, queueToDelete: string) {
+  joinGame(gameId: string, playerId: string, queueToDelete: string) {
     // if this game is being joined by a player from the queue,
     // that user's queueId needs to be removed
     if (queueToDelete) {
@@ -139,6 +139,6 @@ export class QueuePage {
     }
 
     this.navCtrl.pop(); // remove queue from history stack
-    this.navCtrl.push(GameplayPage, {gameId: gameId});
+    this.navCtrl.push(GameplayPage, {gameId: gameId, playerId: playerId});
   }
 }

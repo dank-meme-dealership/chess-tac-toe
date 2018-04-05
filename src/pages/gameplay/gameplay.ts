@@ -19,13 +19,19 @@ export class GameplayPage {
   private gameDoc: AngularFirestoreDocument<Game>;
   game: any; //Observable<Game>
   private ngUnsubscribe: Subject<void> = new Subject();
-  private thisPlayer: any;
+  private player: any;
+
+  whiteName: string;
+  whitesTurn: boolean;
+  blackName: string;
+  blacksTurn: boolean;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public botProvider: BotProvider, private afs: AngularFirestore) {
   }
 
   ionViewDidLoad() {
     let gameId = this.navParams.get('gameId');
+    let playerId = this.navParams.get('playerId');
     // if you got here without a gameId, you're a magician, leave
     if (!gameId) {
       this.exit();
@@ -45,19 +51,19 @@ export class GameplayPage {
       this.game = this.gameDoc.valueChanges()
         .takeUntil(this.ngUnsubscribe)
         .subscribe(game => {
-          if (!this.thisPlayer) {
-            this.thisPlayer = this.getPlayer(game);
+          if (!this.player) {
+            this.player = this.getPlayer(game, playerId);
+            this.whiteName = game.players[0].name;
+            this.blackName = game.players[1].name;
           }
+          this.whitesTurn = game.turns.length % 2 === 0;
+          this.blacksTurn = !this.whitesTurn;
         });
     }
   }
 
-  getPlayer(game: any) {
-    console.log(game);
-    _.each(game.players, function(player) {
-      console.log(player);
-    })
-    return null;
+  getPlayer(game: any, playerId: string) {
+    return _.find(game.players, {'id': playerId});
   }
 
   exit() {

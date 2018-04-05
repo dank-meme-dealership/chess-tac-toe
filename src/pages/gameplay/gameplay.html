@@ -2,6 +2,12 @@
   <button class="exit-button" (click)="exit()">Exit</button>
 
   <div class="board-container">
+    <div class="name-container" [ngClass]="{'highlighted': whitesTurn}">
+      <div>{{ whiteName }}</div>
+    </div>
     <board></board>
+    <div class="name-container" [ngClass]="{'highlighted': blacksTurn}">
+      <div>{{ blackName }}</div>
+    </div>
   </div>
 </ion-content>
