@@ -58,8 +58,6 @@ export class BotProvider {
       }
     }
 
-
-
     let tempWeights = this.getWeightedBoard(board, color);
     let availableMoves = null;
 
@@ -83,6 +81,7 @@ export class BotProvider {
     }
 
     this.movePiece(board, color, playerPieceRow, playerPieceCol, bestMove.x, bestMove.y);
+    return this.board;
   }
 
 
