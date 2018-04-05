@@ -68,16 +68,14 @@ board {
   }
 
   .valid {
-    background: bisque;
+    opacity: .4;
   }
 
   .validEnemy {
-    background: firebrick;
+    background: #984c4c;
   }
 
   .selected {
-    border:black;
-    border-style: dotted;
-    border-width: 2px;
+    background: darkolivegreen;
   }
 }
