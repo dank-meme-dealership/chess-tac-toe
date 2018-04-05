@@ -13,7 +13,7 @@ import { BotProvider } from '../../providers/bot/bot';
   templateUrl: 'gameplay.html',
 })
 export class GameplayPage {
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public botProvider: BotProvider) {
   }
 
   ionViewDidLoad() {
