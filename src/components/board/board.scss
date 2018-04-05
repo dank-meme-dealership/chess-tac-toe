@@ -1,0 +1,69 @@
+board {
+  @media screen and (max-width: 500px) {
+    .chessboard {
+      width: 286px !important;
+      height: 414px !important;
+    }
+    .board-space {
+      width: 64px !important;
+      height: 64px !important;
+      font-size: 40px !important;
+    }
+  }
+
+  .chessboard {
+    border: 15px solid #333;
+    width: 430px;
+    height: 630px;
+  }
+  .board-space {
+    width: 100px;
+    height: 100px;
+    font-size: 65px;
+    float: left;
+    background-color: #999;
+    text-align: center;
+    display: table-cell;
+    vertical-align: middle;
+  }
+  .black {
+    background-color: lightseagreen;
+  }
+  .white {
+    background-color: lightblue;
+  }
+  .player {
+    background-color: tan;
+    border-top: 5px solid #333;
+    border-bottom: 5px solid #333;
+  }
+
+  .wr::after {
+    content: '\2656';
+  }
+  .wb::after {
+    content: '\2657 ';
+  }
+  .wk::after {
+    content: '\2658';
+  }
+  .wpu::after, .wpd::after {
+    content: '\2659';
+  }
+  .br::after {
+    content: '\265C';
+    color: black;
+  }
+  .bb::after {
+    content: '\265D';
+    color: black;
+  }
+  .bk::after {
+    content: '\265E';
+    color: black;
+  }
+  .bpu::after, .bpd::after {
+    content: '\265F';
+    color: black;
+  }
+}

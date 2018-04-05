@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {Component} from '@angular/core';
+import {IonicPage, NavController, NavParams} from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -15,4 +15,7 @@ export class GameplayPage {
     console.log('ionViewDidLoad GameplayPage');
   }
 
+  exit() {
+    this.navCtrl.pop();
+  }
 }
