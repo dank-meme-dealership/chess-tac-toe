@@ -46,7 +46,12 @@ export class HomePage {
   }
 
   updateName() {
-    if (this.userDoc) {
+    let uid = localStorage.getItem('uid');
+    if (uid) {
+      if (!this.userDoc) {
+        this.userDoc = this.afs.doc<User>('users/' + uid);
+        this.user = this.userDoc.valueChanges();
+      }
       this.userDoc.update({name: this.name});
       localStorage.setItem('name', this.name);
     }
