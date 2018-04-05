@@ -52,12 +52,12 @@ export class PlayGameModal {
       this.viewCtrl.dismiss();
     }
     else if (uid) {
-      this.joinQueue({name: name, uid: uid}, type);
+      this.joinQueue({name: name, id: uid}, type);
     }
     else {
       this.addUser(name).then(function (uid) {
         localStorage.setItem('uid', uid);
-        this.joinQueue({name: name, uid: uid}, type);
+        this.joinQueue({name: name, id: uid}, type);
       }.bind(this));
     }
   }
@@ -75,18 +75,10 @@ export class PlayGameModal {
       this.navCtrl.push(QueuePage, {player: player, type: type});
       this.viewCtrl.dismiss();
     }
-    // otherwise we need to add them to the queue and send them on their way with that id
+    // otherwise we need send them to the queue page to have a match made
     else {
-      this.afs.collection<any>('queue')
-        .add({
-          player: player,
-          queueTimestamp: moment().unix(),
-        })
-        .then(queue => {
-          // nav to this game
-          this.navCtrl.push(QueuePage, {player: player, queueId: queue.id});
-          this.viewCtrl.dismiss();
-        });
+      this.navCtrl.push(QueuePage, {player: player, type: type});
+      this.viewCtrl.dismiss();
     }
   }
 }
