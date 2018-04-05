@@ -8,6 +8,7 @@ import {PlayGameModal} from "./play-game-modal";
 
 export interface User {
   name: string;
+  timestamp: number;
 }
 
 @Component({

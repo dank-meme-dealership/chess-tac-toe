@@ -4,6 +4,18 @@ import {User} from "./home";
 import {Observable} from "rxjs/Observable";
 import {NavController, NavParams, ViewController} from "ionic-angular";
 import {GameplayPage} from "../gameplay/gameplay";
+import {Move} from "../../providers/chess/chess";
+
+const moment = require('moment');
+
+export interface Game {
+  players: any[];
+  turns: Move[];
+  outcomes?: any;
+  queueTimestamp: number;
+  startedTimestamp?: number;
+  privateGame: boolean;
+}
 
 @Component({
   selector: 'play-game-modal',
@@ -29,27 +41,40 @@ export class PlayGameModal {
   }
 
   goToGameplay(type: string) {
+    let name = this.params.get('name');
     let uid = localStorage.getItem('uid');
     if (uid) {
-      this.joinQueue(uid, type);
+      this.joinQueue(name, uid, type);
     }
     else {
-      this.addUser(this.params.get('name')).then(function (uid) {
+      this.addUser(name).then(function (uid) {
         localStorage.setItem('uid', uid);
-        this.joinQueue(uid, type);
+        this.joinQueue(name, uid, type);
       }.bind(this));
     }
   }
 
   addUser(name: string) {
-    return this.usersCollection.add({name: name}).then(function (response) {
+    return this.usersCollection.add({name: name, timestamp: moment().unix()}).then(function (response) {
       return response.id;
     });
   }
 
-  joinQueue(uid: string, type: string) {
-    // TODO: Add uid to the queue of the right type
-    this.navCtrl.push(GameplayPage);
-    this.viewCtrl.dismiss();
+  joinQueue(name: string, uid: string, type: string) {
+    let games = this.afs.collection<Game>('games');
+    let game = {
+      players: [{name: name, uid: uid}],
+      turns: [],
+      queueTimestamp: moment().unix(),
+      privateGame: type === 'private',
+    };
+    console.log(game);
+    games.add(game).then(response => {
+      console.log(response);
+
+      // nav to this game
+      this.navCtrl.push(GameplayPage);
+      this.viewCtrl.dismiss();
+    });
   }
 }

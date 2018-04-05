@@ -1,6 +1,11 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 
+export interface Move {
+  playerId: number;
+  move: string;
+}
+
 @Injectable()
 export class ChessProvider {
 
