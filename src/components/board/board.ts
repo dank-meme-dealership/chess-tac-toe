@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import { ChessProvider} from '../../providers/chess/chess';
+import { Component } from '@angular/core';
+import { ChessProvider } from '../../providers/chess/chess';
 
 @Component({
   selector: 'board',
@@ -10,7 +10,8 @@ export class BoardComponent {
   boardState: string[][];
   selected: any;
   moveTo: any;
-  moves: any;
+  moves: any[];
+  highlighted: any[];
 
   constructor(public chessProvider: ChessProvider) {
     console.log('Hello BoardComponent');
@@ -23,6 +24,8 @@ export class BoardComponent {
       ['', '', '', ''],
       ['br', 'bpu', 'bk', 'bb'],
     ]
+    this.highlighted = [];
+    this.moves = [];
   }
 
   onClick(x, y): void {
@@ -33,47 +36,69 @@ export class BoardComponent {
         yS: y,
         piece: this.boardState[x][y]
       };
-      this.moves = this.chessProvider.getValidMoves(this.boardState,this.selected);
-      this.highlightMoves();
-    } 
-    // else if (this.selected !== null) { // if we already have a piece selected then
-    //   this.moveTo = {
-    //     xS: x,
-    //     yS: y,
-    //     piece: this.boardState[x][y]
-    //   };
-    //   if (this.moveTo.piece !== '') {
-    //     // check to see if you are moving out of a tray. if so do nothing.
-    //     // you cannot capture a piece while placing
-    //     if (this.selected.xS === 0 || this.selected.xS === 5) {
-    //       return;
-    //     }
-
-    //     if (this.selected.piece[0] !== this.moveTo.piece[0]) {
-    //       let playerArray;
-    //       if (this.moveTo.piece[0] == 'b') {
-    //         playerArray = 5;
-    //       } else {
-    //         playerArray = 0;
-    //       }
-    //       let c = 0;
-    //       while (this.boardState[playerArray][c] !== '') {
-    //         c++;
-    //       }
-    //       this.boardState[x][y] = this.selected.piece;
-    //       this.boardState[this.selected.xS][this.selected.yS] = '';
-    //       this.boardState[playerArray][c] = this.moveTo.piece;
-    //     }
-    //   } else {
-    //     this.boardState[x][y] = this.selected.piece;
-    //     this.boardState[this.selected.xS][this.selected.yS] = '';
-    //   }
-    //   this.selected = null;
-    //   this.moveTo = null;
-    // }
+      this.moves = this.chessProvider.getValidMoves(this.boardState, this.selected);
+      if (this.chessProvider.isNotInTray(x)) {
+        this.highlightMoves();
+      }
+    } else if (this.selected !== null) { // if we already have a piece selected then see if we clicked a valid square. If so move piece, else do nothing.
+      for (let space of this.moves) {
+        if (space.x === x && space.y === y) {
+          this.movePiece(x, y, space.o);
+        }
+      }
+    }
   }
 
-  highlightMoves(){
+  movePiece(x, y, occupied) {
+    this.moveTo = {
+      xS: x,
+      yS: y,
+      piece: this.boardState[x][y]
+    };
+    if (occupied) { // do logic to move a piece
+      let playerArray;
 
+      if (this.moveTo.piece[0] == 'b') { //check where to place taken piece
+        playerArray = 5;
+      } else {
+        playerArray = 0;
+      }
+
+      let c = 0;
+      while (this.boardState[playerArray][c] !== '' && c < 4) {
+        c++;
+      }
+      this.boardState[x][y] = this.selected.piece;
+      this.boardState[this.selected.xS][this.selected.yS] = '';
+      this.boardState[playerArray][c] = this.moveTo.piece;
+    } else { // just move it!
+      this.boardState[x][y] = this.selected.piece;
+      this.boardState[this.selected.xS][this.selected.yS] = '';
+    }
+    this.selected = null;
+    this.moveTo = null;
+    this.moves = [];
+    this.highlighted = [];
+  }
+
+  highlightMoves() {
+
+    this.moves.forEach(e => {
+      let element = document.getElementById("r" + e.x + "c" + e.y);
+      let className;
+      if (e.o) {
+        className = "validEnemy";
+      } else {
+        className = "valid";
+      }
+      element.classList.add(className);
+      this.highlighted.push(element);
+    });
+  }
+
+  unHighlightMoves() {
+    this.highlighted.forEach(e => {
+      e.classList.remove('valid','validEnemy');
+    });
   }
 }
