@@ -62,16 +62,7 @@ export class PlayGameModal {
   }
 
   joinQueue(player: any, type: string) {
-    // if they want a private game, no reason to queue, just jump to the Queue Page
-    // with this player and we'll set them up with a link to invite someone
-    if (type === 'private') {
-      this.navCtrl.push(QueuePage, {player: player, type: type});
-      this.viewCtrl.dismiss();
-    }
-    // otherwise we need send them to the queue page to have a match made
-    else {
-      this.navCtrl.push(QueuePage, {player: player, type: type});
-      this.viewCtrl.dismiss();
-    }
+    this.navCtrl.push(QueuePage, {player: player, type: type});
+    this.viewCtrl.dismiss();
   }
 }
