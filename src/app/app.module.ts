@@ -17,6 +17,7 @@ import {AngularFireAuthModule} from 'angularfire2/auth';
 import {AngularFirestore} from "angularfire2/firestore";
 import { ChessProvider } from '../providers/chess/chess';
 import { QueuePage } from '../pages/queue/queue';
+import { HttpClientModule } from '@angular/common/http';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyD2OLU1f78pWLsMO-NwIfBJfRRJp4Hlg1k",
@@ -41,6 +42,7 @@ export const firebaseConfig = {
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
+    HttpClientModule,
     ComponentsModule
   ],
   bootstrap: [IonicApp],

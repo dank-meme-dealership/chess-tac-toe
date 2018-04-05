@@ -16,9 +16,11 @@ export class ChessProvider {
   }
 
   getValidMoves(board, selected) {
-    let pieceType = this.selected.piece[1];
-    this.board = board;
+    
     this.selected = selected;
+    this.board = board;
+
+    let pieceType = this.selected.piece[1];
     let moves = null;
     switch (pieceType) {
       case 'r': {
