@@ -46,6 +46,7 @@ export class QueuePage {
         player: player,
         queueTimestamp: moment().unix(),
       });
+
       // listen for changes to the list and determine queue position
       this.queue = this.queueCollection.snapshotChanges()
         .takeUntil(this.ngUnsubscribe)
