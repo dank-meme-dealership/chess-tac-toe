@@ -1,7 +1,7 @@
 <!-- Generated template for the BoardComponent component -->
 <div class="chessboard">
   <!-- 1st -->
-  <div class="player board-space" (click)="onClick(0,0)" [ngClass]='boardState[0][0]'></div>
+  <div class="player board-space" (click)="onClick(0,0)" [ngClass]="{'selected': selected.xS===0 && selected.yS ===0}" [ngClass]="boardState[0][0]"></div>
   <div class="player board-space" (click)="onClick(0,1)" [ngClass]="boardState[0][1]"></div>
   <div class="player board-space" (click)="onClick(0,2)" [ngClass]="boardState[0][2]"></div>
   <div class="player board-space" (click)="onClick(0,3)" [ngClass]="boardState[0][3]"></div>
