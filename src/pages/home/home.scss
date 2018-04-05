@@ -18,13 +18,15 @@ page-home {
       width: 200px;
       height: 40px;
       max-height: 40px;
-      padding: 0 5px;
       background: #fff;
 
       input {
         text-align: center;
         font-size: 16px;
         color: #000;
+        padding: 0 5px;
+        margin: 11px 0 !important;
+        width: 100% !important;
       }
     }
     .chess-button {
