@@ -68,14 +68,16 @@ board {
   }
 
   .valid {
-    border: black;
-    border-style: solid;
-    border-width: 4px;
+    background: bisque;
   }
 
   .validEnemy {
-    border: red;
-    border-style: solid;
-    border-width: 4px;
+    background: firebrick;
+  }
+
+  .selected {
+    border:black;
+    border-style: dotted;
+    border-width: 2px;
   }
 }

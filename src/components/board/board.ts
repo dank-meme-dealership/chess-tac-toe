@@ -31,21 +31,15 @@ export class BoardComponent {
   onClick(x, y): void {
     // if nothing is selected yet and we click a spot with a piece, update this.selected
     if (this.selected === null && this.boardState[x][y] !== '') {
-      this.selected = {
-        xS: x,
-        yS: y,
-        piece: this.boardState[x][y]
-      };
-      this.moves = this.chessProvider.getValidMoves(this.boardState, this.selected);
-      if (this.chessProvider.isNotInTray(x)) {
-        this.highlightMoves();
-      }
-    } else if (this.selected !== null) { // if we already have a piece selected then see if we clicked a valid square. If so move piece, else do nothing.
+      this.selectPiece(x, y);
+    } else if (this.selected !== null) { // if we already have a piece selected then see if we clicked a valid square. If so move piece, else do deselect piece.
       for (let space of this.moves) {
         if (space.x === x && space.y === y) {
           this.movePiece(x, y, space.o);
+          return;
         }
       }
+      this.deselectPiece(); //if we did not click a valid move deselct the piece;
     }
   }
 
@@ -75,6 +69,38 @@ export class BoardComponent {
       this.boardState[x][y] = this.selected.piece;
       this.boardState[this.selected.xS][this.selected.yS] = '';
     }
+    this.deselectPiece();
+  }
+
+  highlightMoves() {
+
+    let element;
+
+    if (this.chessProvider.isNotInTray(this.selected.xS)) {
+      this.moves.forEach(e => {
+        element = document.getElementById("r" + e.x + "c" + e.y);
+        let className;
+        if (e.o) {
+          className = "validEnemy";
+        } else {
+          className = "valid";
+        }
+        element.classList.add(className);
+        this.highlighted.push(element);
+      });
+    }
+    element = document.getElementById("r" + this.selected.xS + "c" + this.selected.yS);
+    element.classList.add("selected");
+    this.highlighted.push(element)
+  }
+
+  unHighlightMoves() {
+    this.highlighted.forEach(e => {
+      e.classList.remove('valid', 'validEnemy', 'selected');
+    });
+  }
+
+  deselectPiece() {
     this.unHighlightMoves();
     this.selected = null;
     this.moveTo = null;
@@ -82,24 +108,13 @@ export class BoardComponent {
     this.highlighted = [];
   }
 
-  highlightMoves() {
-
-    this.moves.forEach(e => {
-      let element = document.getElementById("r" + e.x + "c" + e.y);
-      let className;
-      if (e.o) {
-        className = "validEnemy";
-      } else {
-        className = "valid";
-      }
-      element.classList.add(className);
-      this.highlighted.push(element);
-    });
-  }
-
-  unHighlightMoves() {
-    this.highlighted.forEach(e => {
-      e.classList.remove('valid','validEnemy');
-    });
+  selectPiece(x, y) {
+    this.selected = {
+      xS: x,
+      yS: y,
+      piece: this.boardState[x][y]
+    };
+    this.moves = this.chessProvider.getValidMoves(this.boardState, this.selected);
+    this.highlightMoves();
   }
 }
