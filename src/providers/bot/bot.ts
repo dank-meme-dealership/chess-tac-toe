@@ -1,5 +1,6 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
+import {ChessProvider} from "../chess/chess"
 
 @Injectable()
 export class BotProvider {
@@ -10,12 +11,13 @@ export class BotProvider {
   private board: any[][]; //not sure if this declaration or VVVV below
   // private weights: number[][]; //not sure if this declaration or VVVV below
   private availablePieces: Array<string>;
+  private chessProvider: ChessProvider;
 
   constructor(public http: HttpClient) {
     console.log('Hello BotProvider Provider');
   }
 
-  getMove(state: any) {
+  public makeMove(state: any) {
     //collect meta about the state
     this.color = state.color;
     this.board = state.board;
@@ -55,19 +57,64 @@ export class BotProvider {
         }
       }
     }
+
+
+
     let tempWeights = this.getWeightedBoard(board, color);
-    this.movePiece(board, color, playerPieceRow, playerPieceCol, null, null)
+    let availableMoves = null;
+
+    if(this.board[playerPieceRow][playerPieceCol][1] === 'p') {
+      availableMoves = this.chessProvider.getRookLegalMove();
+    } else if(this.board[playerPieceRow][playerPieceCol][1] === 'k') {
+      availableMoves = this.chessProvider.getKnightLegalMove();
+    } else if(this.board[playerPieceRow][playerPieceCol][1] === 'r') {
+      availableMoves = this.chessProvider.getRookLegalMove();
+    } else if(this.board[playerPieceRow][playerPieceCol][1] === 'b') {
+      availableMoves = this.chessProvider.getBishopLegalMove();
+    }
+
+    let highWeight = 0;
+    var bestMove = null;
+    for(let move of availableMoves) {
+      if(tempWeights[move.x][move.y] > highWeight) {
+        highWeight = tempWeights[move.x][move.y];
+        bestMove = move;
+      }
+    }
+
+    this.movePiece(board, color, playerPieceRow, playerPieceCol, bestMove.x, bestMove.y);
   }
 
 
 
-  protected movePiece(board: any[][], color: string, fromColumn: number, fromRow: number, toColumn: number, toRow: number )
+  protected movePiece(board: any[][], color: string,fromRow: number, fromColumn: number, toRow: number, toColumn: number )
   {
+    let deadPiece = board[toRow][toColumn];
     board[toRow][toColumn] = board[fromRow][fromColumn];
     board[fromRow][fromColumn] = '';
+
+    if(deadPiece !== '') {
+      this.addPieceBackToTray(deadPiece);
+    }
     //get best unused piece
 
     //do more stuff with the piece we just found;
+  }
+
+  protected addPieceBackToTray(deadPiece: any) {
+    let trayIndex = null;
+    if(deadPiece[0] === 'w') {
+      trayIndex = 0;
+    } else if(deadPiece[0] === 'b') {
+      trayIndex = 5;
+    }
+
+    for(let i = 0; i < this.board[trayIndex].length; i++) {
+        if(this.board[trayIndex][i]=== '') {
+          this.board[trayIndex][i] = deadPiece;
+          break;
+        }
+    }
   }
 
   protected getWeightedBoard(board: string[][], color: string){
@@ -77,7 +124,7 @@ export class BotProvider {
         //if it's one of our pieces...
         if(board[row][col][0] === color[0]) {
           weights[row][col]-=100; //a piece occupies this spot
-          this.updateWeights(row,col, weights); //add one to each cell NSEW from this location.
+          this.updateWeights(row,col, weights); //add one to each cell UDLR from this location.
         }
 
         //what about if it's one of thier pieces?
