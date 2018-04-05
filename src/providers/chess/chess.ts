@@ -51,7 +51,7 @@ export class ChessProvider {
     let color = this.selected.piece[0];
 
     //RIGHT
-    for (let x = this.selected.xS + 1; x < 4; x++) {
+    for (let x = this.selected.xS + 1; x < 5; x++) {
       let possible = this.checkSpace(x, this.selected.yS, color)
       if (possible) {
         legalMoves.push(possible);
@@ -60,7 +60,7 @@ export class ChessProvider {
     }
 
     //LEFT
-    for (let x = this.selected.xS - 1; x >= 0; x--) {
+    for (let x = this.selected.xS - 1; x > 0; x--) {
       let possible = this.checkSpace(x, this.selected.yS, color)
       if (possible) {
         legalMoves.push(possible);
@@ -69,7 +69,7 @@ export class ChessProvider {
     }
 
     //UP
-    for (let y = this.selected.yS - 1; y > 0; y--) {
+    for (let y = this.selected.yS - 1; y >= 0; y--) {
       let possible = this.checkSpace(this.selected.xS, y, color)
       if (possible) {
         legalMoves.push(possible);
@@ -78,7 +78,7 @@ export class ChessProvider {
     }
 
     //DOWN
-    for (let y = this.selected.yS + 1; y < 5; y++) {
+    for (let y = this.selected.yS + 1; y < 4; y++) {
       let possible = this.checkSpace(this.selected.xS, y, color)
       if (possible) {
         legalMoves.push(possible);
