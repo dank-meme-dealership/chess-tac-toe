@@ -85,8 +85,8 @@ export class QueuePage {
           players.push(filtered[0].payload.doc.data().player);
           players.push(filtered[1].payload.doc.data().player);
 
-          players[0].color = 'white'
-          players[1].color = 'black'
+          players[0].color = 'white';
+          players[1].color = 'black';
 
           this.createGame(players, false).then(game => {
             // put the gameId on both players

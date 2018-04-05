@@ -13,24 +13,47 @@ import { BotProvider } from '../../providers/bot/bot';
   templateUrl: 'gameplay.html',
 })
 export class GameplayPage {
-  constructor(public navCtrl: NavController, public navParams: NavParams, public botProvider: BotProvider) {
+  // game firebase magic
+  private gameDoc: AngularFirestoreDocument<Game>;
+  game: any; //Observable<Game>
+  private ngUnsubscribe: Subject<void> = new Subject();
+  private thisPlayer: any;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, public botProvider: BotProvider, private afs: AngularFirestore) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad GameplayPage');
     let gameId = this.navParams.get('gameId');
+    // if you got here without a gameId, you're a magician, leave
     if (!gameId) {
       this.exit();
     }
-
-    if (gameId) {
+    // carry on
+    else {
+      // bot stuff
       if(gameId.includes('bots')) {
         while(true) {
           this.botProvider.makeMove({})
           this.sleep(500);
         }
       }
+
+      // listen to changes in the game
+      this.gameDoc = this.afs.doc<Game>('games/' + gameId);
+      this.game = this.gameDoc.valueChanges()
+        .takeUntil(this.ngUnsubscribe)
+        .subscribe(game => {
+          console.log(JSON.parse(game.boardState))
+
+          if (!this.thisPlayer) {
+            this.thisPlayer = this.getPlayer(game);
+          }
+        });
     }
+  }
+
+  getPlayer(game: any) {
+    return null;
   }
 
   exit() {
