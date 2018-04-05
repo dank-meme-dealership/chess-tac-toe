@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
 import { ChessProvider } from '../../providers/chess/chess';
+import { NavParams } from 'ionic-angular/navigation/nav-params';
+import { AngularFirestoreDocument, AngularFirestore } from 'angularfire2/firestore';
+import { Game } from '../../pages/home/play-game-modal';
+import { Subject } from 'rxjs/Subject';
 
 @Component({
   selector: 'board',
@@ -13,8 +17,26 @@ export class BoardComponent {
   moves: any[];
   highlighted: any[];
 
-  constructor(public chessProvider: ChessProvider) {
-    console.log('Hello BoardComponent');
+  // game firebase magic
+  private gameDoc: AngularFirestoreDocument<Game>;
+  game: any; //Observable<Game>
+  private ngUnsubscribe: Subject<void> = new Subject();
+
+  constructor(public chessProvider: ChessProvider, private navParams: NavParams, private afs: AngularFirestore) {
+
+    let gameId = this.navParams.get('gameId');
+    if (gameId) {
+      this.gameDoc = this.afs.doc<Game>('games/' + gameId);
+      this.game = this.gameDoc.valueChanges()
+        .takeUntil(this.ngUnsubscribe)
+        .subscribe(game => {
+          // this.boardState = game.boardState
+          console.log(JSON.parse(game.boardState))
+
+          this.boardState = JSON.parse(game.boardState);
+        });
+    }
+
     this.selected = null;
     this.boardState = [
       ['wr', 'wpd', 'wk', 'wb'],
@@ -26,6 +48,8 @@ export class BoardComponent {
     ]
     this.highlighted = [];
     this.moves = [];
+
+
   }
 
   onClick(x, y): void {
@@ -80,6 +104,8 @@ export class BoardComponent {
     this.moveTo = null;
     this.moves = [];
     this.highlighted = [];
+
+    this.gameDoc.update({boardState: JSON.stringify(this.boardState)});
   }
 
   highlightMoves() {

@@ -12,25 +12,13 @@ import {Subject} from "rxjs/Subject";
   templateUrl: 'gameplay.html',
 })
 export class GameplayPage {
-  private gameDoc: AngularFirestoreDocument<Game>;
-  game: any; //Observable<Game>
-  private ngUnsubscribe: Subject<void> = new Subject();
-
-  constructor(public navCtrl: NavController, public navParams: NavParams, private afs: AngularFirestore, private afDB: AngularFireDatabase) {
+  constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad GameplayPage');
     let gameId = this.navParams.get('gameId');
-    if (gameId) {
-      this.gameDoc = this.afs.doc<Game>('games/' + gameId);
-      this.game = this.gameDoc.valueChanges()
-        .takeUntil(this.ngUnsubscribe)
-        .subscribe(game => {
-          console.log(game);
-        });
-    }
-    else {
+    if (!gameId) {
       this.exit();
     }
   }

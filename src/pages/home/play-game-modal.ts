@@ -16,6 +16,7 @@ export interface Game {
   queueTimestamp: number;
   startedTimestamp?: number;
   privateGame: boolean;
+  boardState?: any;
 }
 
 @Component({
