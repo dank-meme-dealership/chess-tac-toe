@@ -49,6 +49,7 @@ export class ChessProvider {
   }
 
   getPawnLegalMove(board,selected){
-    
+    var color = selected.piece[0];
+    var direction = selected.piece[2];
   }
 }
