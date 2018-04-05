@@ -78,4 +78,8 @@ board {
   .selected {
     background: darkolivegreen;
   }
+
+  .wr, .wb, .wk, .wpu, .wpd, .br, .bb, .bk, .bpu, .bpd, .valid {
+    cursor: pointer;
+  }
 }

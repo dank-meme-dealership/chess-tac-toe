@@ -11,7 +11,7 @@ const moment = require('moment');
 
 export interface Game {
   players: any[];
-  turns: Move[];
+  turns: any[];
   outcomes?: any;
   queueTimestamp: number;
   startedTimestamp?: number;

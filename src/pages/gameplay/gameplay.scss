@@ -4,5 +4,19 @@ page-gameplay {
     height: 100%;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
+
+    .name-container {
+      padding: 10px 20px;
+      margin: 10px;
+      text-align: center;
+      font-size: 26px;
+      font-weight: 500;
+
+      &.highlighted {
+        background: #609ccd;
+        border-radius: 10px;
+      }
+    }
   }
 }

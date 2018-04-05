@@ -16,6 +16,7 @@ export class BoardComponent {
   moveTo: any;
   moves: any[];
   highlighted: any[];
+  firebaseGame: any;
 
   // game firebase magic
   private gameDoc: AngularFirestoreDocument<Game>;
@@ -32,6 +33,7 @@ export class BoardComponent {
         .subscribe(game => {
           // set the board on the client when it's updated
           this.boardState = JSON.parse(game.boardState);
+          this.firebaseGame = game;
         });
     }
 
@@ -93,7 +95,9 @@ export class BoardComponent {
     this.deselectPiece();
     
     // update the board in firebase
-    this.gameDoc.update({boardState: JSON.stringify(this.boardState)});
+    let boardString = JSON.stringify(this.boardState)
+    this.firebaseGame.turns.push(boardString);
+    this.gameDoc.update({boardState: boardString, turns: this.firebaseGame.turns});
   }
 
   highlightMoves() {
