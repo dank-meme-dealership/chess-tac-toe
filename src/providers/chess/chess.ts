@@ -21,7 +21,19 @@ export class ChessProvider {
     this.board = board;
 
     let pieceType = this.selected.piece[1];
-    let moves = null;
+    let moves = [];
+
+    if (selected.xS === 0 || selected.xS === 5) { // special logic for the placement from the tray
+      for (let x = 1; x < 5; x++) {
+        for (let y = 0; y < 4; y++) {
+          if (this.board[x][y] === '') {
+            moves.push({ x: x, y: y, o: false });
+          }
+        }
+      }
+      return moves; // return here!!
+    }
+
     switch (pieceType) {
       case 'r': {
         moves = this.getRookLegalMove();
@@ -51,7 +63,7 @@ export class ChessProvider {
     let color = this.selected.piece[0];
 
     //RIGHT
-    for (let x = this.selected.xS + 1; x < 4; x++) {
+    for (let x = this.selected.xS + 1; x < 5; x++) {
       let possible = this.checkSpace(x, this.selected.yS, color)
       if (possible) {
         legalMoves.push(possible);
@@ -60,7 +72,7 @@ export class ChessProvider {
     }
 
     //LEFT
-    for (let x = this.selected.xS - 1; x >= 0; x--) {
+    for (let x = this.selected.xS - 1; x > 0; x--) {
       let possible = this.checkSpace(x, this.selected.yS, color)
       if (possible) {
         legalMoves.push(possible);
@@ -69,7 +81,7 @@ export class ChessProvider {
     }
 
     //UP
-    for (let y = this.selected.yS - 1; y > 0; y--) {
+    for (let y = this.selected.yS - 1; y >= 0; y--) {
       let possible = this.checkSpace(this.selected.xS, y, color)
       if (possible) {
         legalMoves.push(possible);
@@ -78,7 +90,7 @@ export class ChessProvider {
     }
 
     //DOWN
-    for (let y = this.selected.yS + 1; y < 5; y++) {
+    for (let y = this.selected.yS + 1; y < 4; y++) {
       let possible = this.checkSpace(this.selected.xS, y, color)
       if (possible) {
         legalMoves.push(possible);
@@ -95,7 +107,7 @@ export class ChessProvider {
 
     // //UP RIGHT
     for (let i = 1; i < 4; i++) {
-      let possible = this.checkSpace(this.selected.xS+i, this.selected.yS+i, color)
+      let possible = this.checkSpace(this.selected.xS + i, this.selected.yS + i, color)
       if (possible) {
         legalMoves.push(possible);
         if (possible.o) break;
@@ -104,7 +116,7 @@ export class ChessProvider {
 
     // //UP LEFT
     for (let i = 1; i < 4; i++) {
-      let possible = this.checkSpace(this.selected.xS-i, this.selected.yS+i, color)
+      let possible = this.checkSpace(this.selected.xS - i, this.selected.yS + i, color)
       if (possible) {
         legalMoves.push(possible);
         if (possible.o) break;
@@ -113,7 +125,7 @@ export class ChessProvider {
 
     // //DOWN RIGHT
     for (let i = 1; i < 4; i++) {
-      let possible = this.checkSpace(this.selected.xS+i, this.selected.yS-i, color)
+      let possible = this.checkSpace(this.selected.xS + i, this.selected.yS - i, color)
       if (possible) {
         legalMoves.push(possible);
         if (possible.o) break;
@@ -122,7 +134,7 @@ export class ChessProvider {
 
     // //DOWN LEFT
     for (let i = 1; i < 4; i++) {
-      let possible = this.checkSpace(this.selected.xS-i, this.selected.yS-i, color)
+      let possible = this.checkSpace(this.selected.xS - i, this.selected.yS - i, color)
       if (possible) {
         legalMoves.push(possible);
         if (possible.o) break;

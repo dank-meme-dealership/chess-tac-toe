@@ -29,6 +29,9 @@ export interface Game {
 
         <button margin-top class="chess-button" ion-button (click)="goToGameplay('private')">Private</button>
         <div text-center>Create a private game and invite a friend</div>
+        
+        <button margin-top class="chess-button" ion-button (click)="goToGameplay('bots')">Bot vs. Bot</button>
+        <div text-center>Watch two bots battle it out!</div>
       </div>
     </ion-content>
   `
@@ -45,7 +48,11 @@ export class PlayGameModal {
   goToGameplay(type: string) {
     let name = this.params.get('name');
     let uid = localStorage.getItem('uid');
-    if (uid) {
+    if(type === 'bots') {
+      this.navCtrl.push(GameplayPage, {gameId: 'bots' + new Date().getMilliseconds});
+      this.viewCtrl.dismiss();
+    }
+    else if (uid) {
       this.joinQueue({name: name, id: uid}, type);
     }
     else {

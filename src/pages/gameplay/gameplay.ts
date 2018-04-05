@@ -5,6 +5,7 @@ import {AngularFirestoreDocument, AngularFirestore} from 'angularfire2/firestore
 import {Observable} from 'rxjs/Observable';
 import {AngularFireDatabase} from 'angularfire2/database';
 import {Subject} from "rxjs/Subject";
+import { BotProvider } from '../../providers/bot/bot';
 
 @IonicPage()
 @Component({
@@ -21,9 +22,22 @@ export class GameplayPage {
     if (!gameId) {
       this.exit();
     }
+
+    if (gameId) {
+      if(gameId.includes('bots')) {
+        while(true) {
+          this.botProvider.makeMove({})
+          this.sleep(500);
+        }
+      }
+    }
   }
 
   exit() {
     this.navCtrl.pop();
+  }
+
+  sleep(ms: number) {
+    return new Promise( resolve => setTimeout(resolve, ms) );
   }
 }
