@@ -75,6 +75,7 @@ export class BoardComponent {
       this.boardState[x][y] = this.selected.piece;
       this.boardState[this.selected.xS][this.selected.yS] = '';
     }
+    this.unHighlightMoves();
     this.selected = null;
     this.moveTo = null;
     this.moves = [];
