@@ -200,7 +200,7 @@ export class ChessProvider {
     //forward
     y = this.selected.yS;
     let onBoardSpace = this.checkSpace(x, y, color);
-    if (onBoardSpace && !onBoardSpace.f) legalMoves.push(onBoardSpace);
+    if (onBoardSpace && !onBoardSpace.f && !onBoardSpace.o) legalMoves.push(onBoardSpace);
 
     //forward left/right
     y = this.selected.yS + 1;
@@ -218,9 +218,9 @@ export class ChessProvider {
   checkSpace(x, y, color) {
     if (!this.moveIsOnBoard(x, y)) return null;
     if (this.board[x][y] === '') {
-      return { x: x, y: y, o: false }; //pass back space as empty
+      return { x: x, y: y, o: false , f:false}; //pass back space as empty
     } else if (this.board[x][y][0] !== color) {
-      return { x: x, y: y, o: true }; //pass back space as occupied if it has opponent
+      return { x: x, y: y, o: true, f:false }; //pass back space as occupied if it has opponent
     } else {
       return { o: false, f:true};
     }
