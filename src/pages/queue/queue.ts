@@ -63,6 +63,7 @@ export class QueuePage {
     queue = queue.filter(queueEntry => queueEntry.payload.doc.data().done !== true);
     let queueGame = this.getQueueGame(queue, player);
 
+    // if this queued user needs to join a game, do it!
     if (queueGame) {
       this.busy = true;
       this.joinGame(queueGame.gameId, queueGame.queueId);
@@ -83,6 +84,9 @@ export class QueuePage {
           let players = [];
           players.push(filtered[0].payload.doc.data().player);
           players.push(filtered[1].payload.doc.data().player);
+
+          players[0].color = 'white'
+          players[1].color = 'black'
 
           this.createGame(players, false).then(game => {
             // put the gameId on both players
@@ -116,6 +120,14 @@ export class QueuePage {
         turns: [],
         queueTimestamp: moment().unix(),
         privateGame: privateGame,
+        boardState: JSON.stringify([
+          ['wr', 'wpd', 'wk', 'wb'],
+          ['', '', '', ''],
+          ['', '', '', ''],
+          ['', '', '', ''],
+          ['', '', '', ''],
+          ['br', 'bpu', 'bk', 'bb'],
+        ])
       });
   }
 
