@@ -59,19 +59,27 @@ export class ChessProvider {
     }
 
     for (y = selected.yS - 1; y <= selected.yS + 1; y++) {
-      if (x === 0 || x === 5 || y === -1 || y == 4) {
+      if (!this.moveIsOnBoard(x,y)) {
         return [];
       }
     }
   }
 
   checkSpace(x, y, color, board) {
-    
+
     if (board[x][y] === '') {
       return { x: x, y: y, o:true}; //pass back space as empty
     } else if (board[x][y][0] !== color) {
       return { x: x, y: y, o:false}; //pass back space as occupied if it has opponent
     }
     return []; // otherwise pass back not a valid move;
+  }
+
+  moveIsOnBoard(x,y){
+    if (x < 5 && x > 0 && y < 4 && y >= 0){
+      return true;
+    } else{
+      return false;
+    }
   }
 }
