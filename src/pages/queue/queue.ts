@@ -5,6 +5,7 @@ import { GameplayPage } from "../gameplay/gameplay";
 import { AngularFirestore } from 'angularfire2/firestore';
 import { Subject } from 'rxjs/Subject';
 import _ from 'lodash';
+import {HomePage} from "../home/home";
 
 const moment = require("moment");
 
@@ -20,6 +21,7 @@ export class QueuePage {
   private ngUnsubscribe: Subject<void> = new Subject();
   private busy;
 
+  queueId: string;
   queueMessage: string;
   message: string;
 
@@ -38,7 +40,7 @@ export class QueuePage {
           // nav to this game, nothing to delete
           this.joinGame(game.id, 'bot1', null);
           this.joinGame(game.id, 'bot2', null);
-        });;
+        });
     }
 
     // private games just start and are handled in the gameplay page
@@ -49,6 +51,7 @@ export class QueuePage {
         this.joinGame(game.id, player.id, null);
       });
     }
+
     // matchmaking games join a queue
     else {
       this.message = 'Waiting for opponent...';
@@ -61,7 +64,9 @@ export class QueuePage {
       this.queueCollection.add({
         player: player,
         timestamp: moment().unix(),
-      });
+      }).then(function (queueItem) {
+        this.queueId = queueItem.id;
+      }.bind(this));
 
       // listen for changes to the list and determine queue position
       this.queue = this.queueCollection.snapshotChanges()
@@ -175,5 +180,10 @@ export class QueuePage {
     setTimeout(() => {
       this.navCtrl.push(GameplayPage, { gameId: gameId, playerId: playerId });
     }, 1000)
+  }
+
+  exit() {
+    this.afs.doc<any>('queue/' + this.queueId).update({ done: true });
+    this.navCtrl.push(HomePage);
   }
 }

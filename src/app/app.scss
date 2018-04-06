@@ -1,6 +1,5 @@
 // http://ionicframework.com/docs/theming/
 
-
 // App Global Sass
 // --------------------------------------------------
 // Put style rules here that you want to apply globally. These
@@ -75,6 +74,19 @@ ion-backdrop {
   }
 }
 
+button.exit-button {
+  position: absolute;
+  top: 20px;
+  height: 32px;
+  width: 60px;
+  font-size: 14px;
+  font-weight: 500;
+  text-transform: uppercase;
+  background: #d0b085;
+  color: white;
+  border-radius: 0 5px 5px 0;
+  z-index: 2;
+}
 
 //// OVERRIDES
 
