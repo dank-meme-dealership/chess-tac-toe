@@ -17,6 +17,9 @@
 
 button[ion-button].chess-button {
   background: #d0b085;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: 14px;
 
   &:hover {
     background: #937c5e;
@@ -27,4 +30,8 @@ button[ion-button].chess-button {
   height: 50px;
   width: 50px;
   border-radius: 25px;
+}
+
+* {
+  font-family: Roboto, "Helvetica Neue", sans-serif; 
 }
