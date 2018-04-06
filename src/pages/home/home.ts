@@ -64,4 +64,8 @@ export class HomePage {
     this.modal = this.modalCtrl.create(PlayGameModal, {name: this.name || ''}, {cssClass: 'play-game-modal'});
     this.modal.present();
   }
+
+  goToProfile() {
+    console.log('going to profile');
+  }
 }
