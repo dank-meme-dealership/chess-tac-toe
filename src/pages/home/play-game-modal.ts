@@ -17,6 +17,7 @@ export interface Game {
   startedTimestamp?: number;
   privateGame: boolean;
   boardState?: any;
+  winner?: string;
 }
 
 @Component({

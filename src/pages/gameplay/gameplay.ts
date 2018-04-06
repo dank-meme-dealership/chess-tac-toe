@@ -62,6 +62,11 @@ export class GameplayPage {
           }
           this.whitesTurn = game.turns.length % 2 === 0;
           this.blacksTurn = !this.whitesTurn;
+
+          // check if a winner was set by the board
+          if (game.winner) {
+            console.log(game.winner === this.player.id ? 'You won!' : 'You lost!');
+          }
         });
     }
   }
