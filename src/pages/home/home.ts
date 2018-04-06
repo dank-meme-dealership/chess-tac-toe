@@ -68,7 +68,6 @@ export class HomePage {
   }
 
   goToProfile() {
-    console.log('going to profile');
     this.navCtrl.push(ProfilePage, {id: this.uid});
   }
 }

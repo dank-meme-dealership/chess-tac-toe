@@ -13,7 +13,6 @@ export class BotProvider {
   private availablePieces: Array<string>;
 
   constructor(public http: HttpClient, private chessProvider:ChessProvider) {
-    console.log('Hello BotProvider Provider');
   }
 
   public makeMove(state: any) {

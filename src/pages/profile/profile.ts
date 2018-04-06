@@ -17,8 +17,6 @@ export class ProfilePage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ProfilePage');
-
     this.name = this.navParams.get('id');
 
     this.gameCollection = this.afs.collection<Game>('games');
