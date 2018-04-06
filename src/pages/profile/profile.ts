@@ -29,7 +29,6 @@ export class ProfilePage {
         .takeUntil(this.ngUnsubscribe)
         .subscribe(games => {
           this.games = _.reverse(_.sortBy(this.filterGames(games, playerId), 'timestamp'));
-          console.log(this.games);
         });
   }
 
