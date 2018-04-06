@@ -67,6 +67,10 @@ export class HomePage {
     this.modal.present();
   }
 
+  goToLeaderboard() {
+    console.log('Leaderboard');
+  }
+
   goToProfile() {
     this.navCtrl.push(ProfilePage, {id: this.uid, name: this.name});
   }

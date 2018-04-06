@@ -34,11 +34,16 @@ page-home {
     }
   }
 
-  .profile-button {
+  .leaderboard-button {
     position: absolute;
     top: 10px;
     right: 10px;
-    font-size: 24px;
+  }
+
+  .profile-button {
+    position: absolute;
+    top: 70px;
+    right: 10px;
   }
 }
 
