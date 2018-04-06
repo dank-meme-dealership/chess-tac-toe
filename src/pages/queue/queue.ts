@@ -4,6 +4,7 @@ import { Game } from "../home/play-game-modal";
 import { GameplayPage } from "../gameplay/gameplay";
 import { AngularFirestore } from 'angularfire2/firestore';
 import { Subject } from 'rxjs/Subject';
+import _ from 'lodash';
 
 const moment = require("moment");
 
@@ -19,6 +20,7 @@ export class QueuePage {
   private ngUnsubscribe: Subject<void> = new Subject();
   private busy;
 
+  queueMessage: string;
   message: string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private afs: AngularFirestore) {
@@ -88,6 +90,8 @@ export class QueuePage {
       // filter the queue down to just people without games to join
       let filtered = queue.filter(queueEntry => queueEntry.gameId === undefined);
 
+      this.queueMessage = this.getQueueMessage(filtered, player);
+
       // if there is a queue length > 1, figure out if you need to do anything
       if (filtered.length > 1) {
         let firstInQueue = filtered[0].payload.doc.data();
@@ -115,6 +119,16 @@ export class QueuePage {
         }
       }
     }
+  }
+
+  getQueueMessage(queue: any, player: any) {
+    let position = queue.length;
+    for (let i = 0; i < queue.length; i++) {
+      if (queue[i].payload.doc.data().player.id === player.id) {
+        return 'You are in position ' + (i + 1) + ' out of ' + queue.length;
+      }
+    }
+    return 'You are in position ' + position + ' out of ' + queue.length;
   }
 
   getQueueGame(queue: any, player: any) {
