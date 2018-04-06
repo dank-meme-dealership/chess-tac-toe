@@ -237,4 +237,54 @@ export class ChessProvider {
   isNotInTray(x) {
     return x < 5 && x > 0;
   }
+
+
+  checkForWin(board, color){
+
+    for (let x = 1; !this.isNotInTray(x); x++){ // check columns
+      let piecesInColumn = 0;
+
+      for (let y = 0; y < 4; y ++){
+        if(color === board[x][y][0])piecesInColumn++; 
+      }
+
+      if( piecesInColumn === 4) return true;
+    }
+
+    for(let y = 0; y < 4; y ++){ // check rows
+      let piecesInRow = 0;
+
+      for (let x = 1; !this.isNotInTray(x); x++){
+        if(color === board[x][y][0]) piecesInRow++;
+      }
+
+      if (piecesInRow === 4) return true;
+    }
+
+    let y = 0;
+    let x = 1;
+    let piecesInDiagonal = 0;
+    while (y > 4){ // check 1 diagonal
+      if (color === board[x][y][0]){
+        piecesInDiagonal++;
+      }
+      y++;
+      x++;
+    }
+
+    if (piecesInDiagonal == 4) return true;
+
+    y = 3;
+    x = 1;
+    piecesInDiagonal = 0;
+    while (y >= 0){
+      if (color === board[x][y][0]){
+        piecesInDiagonal++;
+      }
+      y--;
+      x++;
+    }
+
+    if (piecesInDiagonal == 4) return true;
+  }
 }
