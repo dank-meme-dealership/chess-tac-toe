@@ -17,7 +17,7 @@
         Wins
       </ion-col>
     </ion-row>
-    <ion-row *ngFor="let player of players; let i = index">
+    <ion-row class="clickable" *ngFor="let player of players; let i = index" (click)="goToProfile(player)">
       <ion-col col-2>
         {{ i + 1 }}
       </ion-col>
