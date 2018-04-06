@@ -53,7 +53,7 @@ export class BoardComponent {
 
   onClick(x, y): void {
     // if nothing is selected yet and we click a spot with a piece, update this.selected
-    if (this.selected === null && this.boardState[x][y] !== '') {
+    if (this.selected === null && this.boardState[x][y][0] === this.player.color.toLowerCase()[0]) {
       this.selectPiece(x, y);
     } else if (this.selected !== null) { // if we already have a piece selected then see if we clicked a valid square. If so move piece, else do deselect piece.
       for (let space of this.moves) {
