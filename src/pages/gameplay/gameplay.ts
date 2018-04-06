@@ -53,8 +53,12 @@ export class GameplayPage {
         .subscribe(game => {
           if (!this.player) {
             this.player = this.getPlayer(game, playerId);
-            this.whiteName = game.players[0].name;
-            this.blackName = game.players[1].name;
+            if (game.players.length > 0) {
+              this.whiteName = game.players[0].name;
+            }
+            if (game.players.length > 1) {
+              this.blackName = game.players[1].name;
+            }
           }
           this.whitesTurn = game.turns.length % 2 === 0;
           this.blacksTurn = !this.whitesTurn;
