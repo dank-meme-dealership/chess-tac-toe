@@ -55,9 +55,15 @@ export class GameplayPage {
             this.player = this.getPlayer(game, playerId);
             if (game.players.length > 0) {
               this.whiteName = game.players[0].name;
+              if (this.player.color === 'white') {
+                this.whiteName += ' (You)';
+              }
             }
             if (game.players.length > 1) {
               this.blackName = game.players[1].name;
+              if (this.player.color === 'black') {
+                this.blackName += ' (You)';
+              }
             }
           }
           this.whitesTurn = game.turns.length % 2 === 0;
