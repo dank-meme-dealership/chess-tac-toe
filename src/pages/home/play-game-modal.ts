@@ -13,8 +13,8 @@ export interface Game {
   players: any[];
   turns: any[];
   outcomes?: any;
-  queueTimestamp: number;
-  startedTimestamp?: number;
+  timestamp: number;
+
   privateGame: boolean;
   boardState?: any;
   winner?: string;

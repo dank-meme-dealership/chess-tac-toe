@@ -8,5 +8,9 @@
 
 
 <ion-content padding>
-  <div text-center>Stuff coming real soon</div>
+    <ul>
+      <li *ngFor="let game of games | async">
+        {{ game.timestamp || 'warren game'}}
+      </li>
+    </ul>
 </ion-content>
