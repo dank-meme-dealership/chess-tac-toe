@@ -28,17 +28,15 @@ export class QueuePage {
     // ensure this class doesn't think we're busy
     this.busy = false;
     let player = this.navParams.data.player;
-    console.log(player);
-    //let isBot = false;
 
+    // bot stuff
     if(this.navParams.data.type === 'bots') {
       this.message = 'bots are being created...'
-        this.createGame([{name: 'bot1', id: 'bot1'},{name: 'bot2', id: 'bot2'}], true).then(game => {
+        this.createGame([{name: 'bot1', id: 'bot1'},{name: 'bot2', id: 'bot2'}], false).then(game => {
           // nav to this game, nothing to delete
           this.joinGame(game.id, 'bot1', null);
           this.joinGame(game.id, 'bot2', null);
         });;
-      
     }
 
     // private games just start and are handled in the gameplay page
@@ -48,26 +46,19 @@ export class QueuePage {
         // nav to this game, nothing to delete
         this.joinGame(game.id, player.id, null);
       });
-
     }
     // matchmaking games join a queue
     else {
       this.message = 'Waiting for opponent...';
-<<<<<<< HEAD
       // sort the collection ascending by queueTimestamp
       this.queueCollection = this.afs.collection<any>('queue',
         ref => ref.orderBy('queueTimestamp', 'asc')
-=======
-      // sort the collection ascending by timestamp
-      this.queueCollection = this.afs.collection<any>('queue',
-        ref => ref.orderBy('timestamp', 'asc')
->>>>>>> 418a31b774ff2455d50a099c3691c53ad7b96894
       );
 
       // add this player to the queue
       this.queueCollection.add({
         player: player,
-        timestamp: moment().unix(),
+        queueTimestamp: moment().unix(),
       });
 
       // listen for changes to the list and determine queue position
@@ -167,12 +158,8 @@ export class QueuePage {
     }
 
     setTimeout(() => {
-<<<<<<< HEAD
       this.navCtrl.pop(); // remove queue from history stack
       this.navCtrl.push(GameplayPage, { gameId: gameId, playerId: playerId });
-=======
-      this.navCtrl.push(GameplayPage, {gameId: gameId, playerId: playerId});
->>>>>>> 418a31b774ff2455d50a099c3691c53ad7b96894
     }, 1000)
   }
 }
