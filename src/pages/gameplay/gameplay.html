@@ -2,11 +2,19 @@
   <button class="exit-button" (click)="exit()">Exit</button>
 
   <div class="board-container">
-    <div class="name-container" [ngClass]="{'highlighted': whitesTurn}">
+    <div class="name-container" [ngClass]="{'highlighted': whitesTurn}" *ngIf="player && player.color === 'black'">
       <div>{{ whiteName }}</div>
     </div>
+    <div class="name-container" [ngClass]="{'highlighted': blacksTurn}" *ngIf="player && player.color === 'white'">
+      <div>{{ blackName }}</div>
+    </div>
+
     <board [player]="player" [ngClass]="{'disabled': !isMyTurn()}"></board>
-    <div class="name-container" [ngClass]="{'highlighted': blacksTurn}">
+
+    <div class="name-container" [ngClass]="{'highlighted': whitesTurn}" *ngIf="player && player.color === 'white'">
+      <div>{{ whiteName }}</div>
+    </div>
+    <div class="name-container" [ngClass]="{'highlighted': blacksTurn}" *ngIf="player && player.color === 'black'">
       <div>{{ blackName }}</div>
     </div>
   </div>
