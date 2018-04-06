@@ -5,6 +5,7 @@ import {Observable} from 'rxjs/Observable';
 
 import "rxjs/add/operator/take";
 import {PlayGameModal} from "./play-game-modal";
+import { ProfilePage } from '../profile/profile';
 
 export interface User {
   name: string;
@@ -20,15 +21,16 @@ export class HomePage {
   user: Observable<User>;
   modal: Modal;
   name: string;
+  uid: string;
 
   constructor(public navCtrl: NavController, public modalCtrl: ModalController, private afs: AngularFirestore) {
     this.name = localStorage.getItem('name');
   }
 
   ionViewDidLoad() {
-    let uid = localStorage.getItem('uid');
-    if (uid) {
-      this.userDoc = this.afs.doc<User>('users/' + uid);
+    this.uid = localStorage.getItem('uid');
+    if (this.uid) {
+      this.userDoc = this.afs.doc<User>('users/' + this.uid);
       this.user = this.userDoc.valueChanges();
       this.user.take(1).subscribe(user => {
         if (user) {
@@ -67,5 +69,6 @@ export class HomePage {
 
   goToProfile() {
     console.log('going to profile');
+    this.navCtrl.push(ProfilePage, {id: this.uid});
   }
 }

@@ -27,12 +27,12 @@ export interface Game {
       <div class="button-container">
         <button class="chess-button" ion-button (click)="goToGameplay('matchmaking')">Matchmaking</button>
         <div text-center>Play against a random opponent</div>
-
-        <button margin-top class="chess-button" ion-button (click)="goToGameplay('private')">Private</button>
-        <div text-center>Create a private game and invite a friend</div>
         
         <button margin-top class="chess-button" ion-button (click)="goToGameplay('bots')">Bot vs. Bot</button>
         <div text-center>Watch two bots battle it out!</div>
+
+        <button margin-top class="chess-button" ion-button (click)="goToGameplay('private')" disabled="true">Private</button>
+        <div text-center>Create a private game and invite a friend</div>
       </div>
     </ion-content>
   `

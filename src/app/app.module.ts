@@ -18,6 +18,7 @@ import {AngularFirestore} from "angularfire2/firestore";
 import { ChessProvider } from '../providers/chess/chess';
 import { QueuePage } from '../pages/queue/queue';
 import { HttpClientModule } from '@angular/common/http';
+import { ProfilePage } from '../pages/profile/profile';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyD2OLU1f78pWLsMO-NwIfBJfRRJp4Hlg1k",
@@ -34,7 +35,8 @@ export const firebaseConfig = {
     HomePage,
     PlayGameModal,
     QueuePage,
-    GameplayPage
+    GameplayPage,
+    ProfilePage
   ],
   imports: [
     BrowserModule,
@@ -51,7 +53,8 @@ export const firebaseConfig = {
     HomePage,
     PlayGameModal,
     QueuePage,
-    GameplayPage
+    GameplayPage,
+    ProfilePage
   ],
   providers: [
     StatusBar,

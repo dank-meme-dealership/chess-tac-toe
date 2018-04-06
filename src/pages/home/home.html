@@ -1,5 +1,5 @@
 <ion-content>
-  <button class="circle-button profile-button" (click)="goToProfile()">
+  <button class="circle-button profile-button" (click)="goToProfile()" *ngIf="uid">
     <ion-icon name="md-person"></ion-icon>
   </button>
   <div class="home-container">
