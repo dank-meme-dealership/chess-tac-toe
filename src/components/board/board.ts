@@ -94,10 +94,10 @@ export class BoardComponent {
       this.boardState[this.selected.xS][this.selected.yS] = '';
     }
     let victory = this.chessProvider.checkForWin(this.boardState, this.selected.piece[0]);
+    this.deselectPiece();
     if (victory) {
       this.gameDoc.update({ winner: this.player.id });
     };
-    this.deselectPiece();
 
     // update the board in firebase
     let boardString = JSON.stringify(this.boardState)

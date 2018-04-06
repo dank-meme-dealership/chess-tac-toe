@@ -1,9 +1,9 @@
 <div class="chessboard" *ngIf="player && player.color === 'black'">
   <!-- 1st -->
-  <div  id="r0c0" class="player board-space" (click)="onClick(0,0)" [ngClass]="boardState[0][0]"></div>
-  <div  id="r0c1" class="player board-space" (click)="onClick(0,1)" [ngClass]="boardState[0][1]"></div>
-  <div  id="r0c2" class="player board-space" (click)="onClick(0,2)" [ngClass]="boardState[0][2]"></div>
-  <div  id="r0c3" class="player board-space" (click)="onClick(0,3)" [ngClass]="boardState[0][3]"></div>
+  <div id="r0c0" class="player board-space" (click)="onClick(0,0)" [ngClass]="boardState[0][0]"></div>
+  <div id="r0c1" class="player board-space" (click)="onClick(0,1)" [ngClass]="boardState[0][1]"></div>
+  <div id="r0c2" class="player board-space" (click)="onClick(0,2)" [ngClass]="boardState[0][2]"></div>
+  <div id="r0c3" class="player board-space" (click)="onClick(0,3)" [ngClass]="boardState[0][3]"></div>
   <!-- 2nd -->
   <div id="r1c0" class="black board-space" (click)="onClick(1,0)" [ngClass]="boardState[1][0]"></div>
   <div id="r1c1" class="white board-space" (click)="onClick(1,1)" [ngClass]="boardState[1][1]"></div>
@@ -33,10 +33,10 @@
 
 <div class="chessboard" *ngIf="player && player.color === 'white'">
   <!-- 1st -->
-  <div  id="r5c0" class="player board-space" (click)="onClick(5,0)" [ngClass]="boardState[5][0]"></div>
-  <div  id="r5c1" class="player board-space" (click)="onClick(5,1)" [ngClass]="boardState[5][1]"></div>
-  <div  id="r5c2" class="player board-space" (click)="onClick(5,2)" [ngClass]="boardState[5][2]"></div>
-  <div  id="r5c3" class="player board-space" (click)="onClick(5,3)" [ngClass]="boardState[5][3]"></div>
+  <div id="r5c0" class="player board-space" (click)="onClick(5,0)" [ngClass]="boardState[5][0]"></div>
+  <div id="r5c1" class="player board-space" (click)="onClick(5,1)" [ngClass]="boardState[5][1]"></div>
+  <div id="r5c2" class="player board-space" (click)="onClick(5,2)" [ngClass]="boardState[5][2]"></div>
+  <div id="r5c3" class="player board-space" (click)="onClick(5,3)" [ngClass]="boardState[5][3]"></div>
   <!-- 2nd -->
   <div id="r4c0" class="black board-space" (click)="onClick(4,0)" [ngClass]="boardState[4][0]"></div>
   <div id="r4c1" class="white board-space" (click)="onClick(4,1)" [ngClass]="boardState[4][1]"></div>

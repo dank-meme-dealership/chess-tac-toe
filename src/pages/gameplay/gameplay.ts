@@ -88,7 +88,6 @@ export class GameplayPage {
             this.botProvider.makeMove({board: game.boardState, color: color})
             this.sleep(500);
           }
-          console.log(game.messages);
         });
     }
   }
