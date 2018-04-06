@@ -146,12 +146,26 @@ export class BoardComponent {
   }
 
   selectPiece(x, y) {
-    this.selected = {
-      xS: x,
-      yS: y,
-      piece: this.boardState[x][y],
+    let trayIndex;
+    let numOnBoard = 0;
+    if (this.player.color[0] === 'b') {
+      trayIndex = 5;
+    } else {
+      trayIndex = 0;
+    }
+    for (let c = 0; c < 4; c++){
+      if(this.boardState[trayIndex][c] === '') numOnBoard++;
+    }
+    if(numOnBoard < 3 && x !== trayIndex){
+      return; // do not select anything if we have less than three pieces on the board;
+    }
 
-    };
+      this.selected = {
+        xS: x,
+        yS: y,
+        piece: this.boardState[x][y],
+
+      };
     this.moves = this.chessProvider.getValidMoves(this.boardState, this.selected);
     this.highlightMoves();
   }
