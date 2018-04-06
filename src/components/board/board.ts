@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ChessProvider } from '../../providers/chess/chess';
 import { NavParams } from 'ionic-angular/navigation/nav-params';
 import { AngularFirestoreDocument, AngularFirestore } from 'angularfire2/firestore';
@@ -10,6 +10,7 @@ import { Subject } from 'rxjs/Subject';
   templateUrl: 'board.html'
 })
 export class BoardComponent {
+  @Input() player: any;
 
   boardState: string[][];
   selected: any;
@@ -101,6 +102,7 @@ export class BoardComponent {
     let boardString = JSON.stringify(this.boardState)
     this.firebaseGame.turns.push(boardString);
     this.gameDoc.update({boardState: boardString, turns: this.firebaseGame.turns});
+    console.log(this.player);
   }
 
 
