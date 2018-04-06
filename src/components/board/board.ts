@@ -92,7 +92,10 @@ export class BoardComponent {
       this.boardState[x][y] = this.selected.piece;
       this.boardState[this.selected.xS][this.selected.yS] = '';
     }
+    let victory = this.chessProvider.checkForWin(this.boardState,this.selected.piece[0]);
+    if(victory){ alert("You Won!")};
     this.deselectPiece();
+    
     
     // update the board in firebase
     let boardString = JSON.stringify(this.boardState)
@@ -100,6 +103,8 @@ export class BoardComponent {
     this.gameDoc.update({boardState: boardString, turns: this.firebaseGame.turns});
   }
 
+
+  // Highlights all possible moves and currently selected piece
   highlightMoves() {
 
     let element;
