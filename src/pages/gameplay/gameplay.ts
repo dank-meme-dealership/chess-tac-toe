@@ -18,6 +18,7 @@ import { GameOverModalPage } from '../game-over-modal/game-over-modal';
 })
 export class GameplayPage {
   // game firebase magic
+  private playerDoc: AngularFirestoreDocument<any>;
   private gameDoc: AngularFirestoreDocument<Game>;
   game: any; //Observable<Game>
   private ngUnsubscribe: Subject<void> = new Subject();
@@ -47,6 +48,9 @@ export class GameplayPage {
     }
     // carry on
     else {
+      // connect to the player so we can update them later
+      this.playerDoc = this.afs.doc<Game>('users/' + playerId);
+
       // listen to changes in the game
       this.gameDoc = this.afs.doc<Game>('games/' + gameId);
       this.gameDoc.valueChanges()
@@ -122,8 +126,16 @@ export class GameplayPage {
   }
 
   showGameOverModal(name: string, didWin: boolean) {
-    let modal = this.modalCtrl.create(GameOverModalPage, {name: name, didWin: didWin, player: this.player}, {cssClass: 'game-over-modal'});
-    modal.present();
+    // if this player won, update their wins on their user document
+    if (didWin) {
+      this.playerDoc.valueChanges().take(1).subscribe(user => {
+        let wins = (user.wins || 0) + 1;
+        this.playerDoc.update({wins: wins});
+      });
+    }
+
+    // show the game over modal
+    this.modalCtrl.create(GameOverModalPage, {name: name, didWin: didWin, player: this.player}, {cssClass: 'game-over-modal'}).present();
   }
 
   addMessage(){
