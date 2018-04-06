@@ -24,7 +24,7 @@ export class GameOverModalPage {
   }
 
   ionViewDidLoad() {
-    this.name = this.navParams.get('name');
+    this.name = this.navParams.get('name') || 'Anonymous';
     this.didWin = this.navParams.get('didWin');
     this.player = this.navParams.get('player');
   }

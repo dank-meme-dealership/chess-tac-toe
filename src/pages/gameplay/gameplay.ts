@@ -9,6 +9,7 @@ import { BotProvider } from '../../providers/bot/bot';
 
 import _ from "lodash";
 import { GameOverModalPage } from '../game-over-modal/game-over-modal';
+import { HomePage } from '../home/home';
 
 @IonicPage()
 @Component({
@@ -22,7 +23,7 @@ export class GameplayPage {
   private ngUnsubscribe: Subject<void> = new Subject();
   private player: any;
   private enemy: any;
-  private modalLaunched: boolean;
+  private gameOver: boolean;
 
   whiteName: string;
   whitesTurn: boolean;
@@ -34,7 +35,7 @@ export class GameplayPage {
 
   ionViewDidLoad() {
     // reset modal launched boolean
-    this.modalLaunched = false;
+    this.gameOver = false;
 
     let gameId = this.navParams.get('gameId');
     let playerId = this.navParams.get('playerId');
@@ -77,13 +78,13 @@ export class GameplayPage {
           this.blacksTurn = !this.whitesTurn;
 
           // check if a winner was set by the board
-          if (game.winner && !this.modalLaunched) {
-            this.modalLaunched = true;
+          if (game.winner && !this.gameOver) {
+            this.gameOver = true;
             if (game.winner === this.player.id) {
-              this.gameOver(this.enemy.name, true);
+              this.showGameOverModal(this.enemy.name, true);
             }
             else {
-              this.gameOver(this.enemy.name, false);
+              this.showGameOverModal(this.enemy.name, false);
             }
           }
         });
@@ -101,10 +102,14 @@ export class GameplayPage {
   }
 
   exit() {
-    // if you leave, the other player wins automatically
-    this.modalLaunched = true; // short-circuit modal
-    this.gameDoc.update({winner: this.enemy.id});
-    this.navCtrl.pop();
+    // if the game isn't over and you leave,
+    // the other player wins automatically
+    if (!this.gameOver) {
+      this.gameDoc.update({winner: this.enemy.id});
+    }
+
+    this.gameOver = true;
+    this.navCtrl.push(HomePage);
   }
 
   sleep(ms: number) {
@@ -118,7 +123,7 @@ export class GameplayPage {
     return false;
   }
 
-  gameOver(name: string, didWin: boolean) {
+  showGameOverModal(name: string, didWin: boolean) {
     let modal = this.modalCtrl.create(GameOverModalPage, {name: name, didWin: didWin, player: this.player}, {cssClass: 'game-over-modal'});
     modal.present();
   }

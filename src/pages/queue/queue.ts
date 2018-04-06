@@ -148,7 +148,6 @@ export class QueuePage {
     }
 
     setTimeout(() => {
-      this.navCtrl.pop(); // remove queue from history stack
       this.navCtrl.push(GameplayPage, {gameId: gameId, playerId: playerId});
     }, 1000)
   }
