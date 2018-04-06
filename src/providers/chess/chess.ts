@@ -286,5 +286,6 @@ export class ChessProvider {
     }
 
     if (piecesInDiagonal == 4) return true;
+    return false;
   }
 }
