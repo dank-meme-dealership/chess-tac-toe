@@ -124,11 +124,13 @@ export class GameplayPage {
   showGameOverModal(name: string, didWin: boolean) {
     // if this player won, update their wins on their user document
     if (didWin) {
-      let wins = (this.player.wins || 0) + 1;
-      this.playerDoc.update({wins: wins});
+      this.playerDoc.valueChanges().take(1).subscribe(user => {
+        let wins = (user.wins || 0) + 1;
+        this.playerDoc.update({wins: wins});
+      });
     }
 
-    let modal = this.modalCtrl.create(GameOverModalPage, {name: name, didWin: didWin, player: this.player}, {cssClass: 'game-over-modal'});
-    modal.present();
+    // show the game over modal
+    this.modalCtrl.create(GameOverModalPage, {name: name, didWin: didWin, player: this.player}, {cssClass: 'game-over-modal'}).present();
   }
 }
