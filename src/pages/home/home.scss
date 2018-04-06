@@ -42,22 +42,7 @@ page-home {
   }
 }
 
-play-game-modal {
-  .button-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    height: 100%;
-    padding: 10px;
-  }
-}
-
 .play-game-modal {
-  ion-backdrop {
-    visibility: visible !important;
-  }
-
   .modal-wrapper {
     left: calc(50% - (200px/2));
     top: calc(50% - (280px/2));

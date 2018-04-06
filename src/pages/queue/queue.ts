@@ -53,15 +53,21 @@ export class QueuePage {
     // matchmaking games join a queue
     else {
       this.message = 'Waiting for opponent...';
+<<<<<<< HEAD
       // sort the collection ascending by queueTimestamp
       this.queueCollection = this.afs.collection<any>('queue',
         ref => ref.orderBy('queueTimestamp', 'asc')
+=======
+      // sort the collection ascending by timestamp
+      this.queueCollection = this.afs.collection<any>('queue',
+        ref => ref.orderBy('timestamp', 'asc')
+>>>>>>> 418a31b774ff2455d50a099c3691c53ad7b96894
       );
 
       // add this player to the queue
       this.queueCollection.add({
         player: player,
-        queueTimestamp: moment().unix(),
+        timestamp: moment().unix(),
       });
 
       // listen for changes to the list and determine queue position
@@ -161,8 +167,12 @@ export class QueuePage {
     }
 
     setTimeout(() => {
+<<<<<<< HEAD
       this.navCtrl.pop(); // remove queue from history stack
       this.navCtrl.push(GameplayPage, { gameId: gameId, playerId: playerId });
+=======
+      this.navCtrl.push(GameplayPage, {gameId: gameId, playerId: playerId});
+>>>>>>> 418a31b774ff2455d50a099c3691c53ad7b96894
     }, 1000)
   }
 }

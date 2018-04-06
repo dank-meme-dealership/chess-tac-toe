@@ -35,3 +35,16 @@ button[ion-button].chess-button {
 * {
   font-family: Roboto, "Helvetica Neue", sans-serif; 
 }
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100%;
+  padding: 10px;
+}
+
+ion-backdrop {
+  visibility: visible !important;
+}

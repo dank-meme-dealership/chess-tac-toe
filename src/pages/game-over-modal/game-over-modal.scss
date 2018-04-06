@@ -1,0 +1,24 @@
+.game-over-modal {
+  .modal-wrapper {
+    left: calc(50% - (240px/2));
+    top: calc(50% - (260px/2));
+    position: absolute;
+    width: 240px;
+    height: 260px;
+  }
+
+  .game-over {
+    font-size: 32px;
+    padding-bottom: 10px;
+  }
+
+  .message {
+    font-size: 14px;
+    padding-bottom: 35px;
+    text-align: center
+  }
+
+  .chess-button {
+    margin: -10px;
+  }
+}

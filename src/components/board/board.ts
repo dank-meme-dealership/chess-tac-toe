@@ -99,12 +99,10 @@ export class BoardComponent {
     };
     this.deselectPiece();
 
-
     // update the board in firebase
     let boardString = JSON.stringify(this.boardState)
     this.firebaseGame.turns.push(boardString);
     this.gameDoc.update({ boardState: boardString, turns: this.firebaseGame.turns });
-    console.log(this.player);
   }
 
 

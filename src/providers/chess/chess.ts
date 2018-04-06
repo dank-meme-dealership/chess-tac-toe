@@ -13,7 +13,6 @@ export class ChessProvider {
   board: any[][];
   selected: any;
   constructor(public http: HttpClient) {
-    console.log('Hello ChessProvider Provider');
   }
 
   getValidMoves(board, selected) {
