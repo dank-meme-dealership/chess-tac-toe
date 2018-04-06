@@ -139,7 +139,7 @@ export class GameplayPage {
 
   addMessage(){
     if(this.game.messages === undefined) this.game.messages = [];
-    if(this.message !== '') this.game.messages.push(this.player.name + ' : ' + this.message);
+    if(this.message !== '') this.game.messages.push({player: this.player.name, message: this.message});
     this.gameDoc.update({messages: this.game.messages});
     this.message = '';
   }

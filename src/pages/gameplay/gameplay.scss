@@ -44,6 +44,15 @@ page-gameplay {
     position: absolute;
     bottom: 5px;
     left: 10px;
-    width: 300px;
+    width: 200px;
+
+    .message {
+      padding: 10px;
+      border-bottom: 1px solid #ccc;
+
+      &:nth-child(even) {
+        background: #ccc;
+      }
+    }
   }
 }

@@ -21,9 +21,11 @@
 
   <div class="chat-container">
     <div *ngIf="game && game.messages" >
-      <span *ngFor="let m of game.messages">{{m}} <br/></span>
+      <div class="message" *ngFor="let m of game.messages">
+        <strong>{{m.player}}:</strong> {{m.message}}
+      </div>
     </div>
-      <ion-input
+    <ion-input
       type="text"
       class="chat-text"
       placeholder="Type here"
