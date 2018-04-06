@@ -42,7 +42,15 @@ export const firebaseConfig = {
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp),
+    IonicModule.forRoot(MyApp, {
+      backButtonText: '',
+      backButtonIcon: 'md-arrow-back',
+      iconMode: 'md',
+      pageTransition: 'md-transition',
+      pageTransitionDelay: 96,
+      modalEnter: 'modal-md-slide-in',
+      modalLeave: 'modal-md-slide-out',
+    }),
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireDatabaseModule,
     AngularFireAuthModule,

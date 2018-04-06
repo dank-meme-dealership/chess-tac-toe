@@ -49,3 +49,15 @@ button[ion-button].chess-button {
 ion-backdrop {
   visibility: visible !important;
 }
+
+
+//// OVERRIDES
+
+.bar-button-default-ios, .bar-button-default.bar-button-ios-default, .bar-button-clear-ios-default {
+  color: #424242;
+  background-color: transparent;
+}
+
+.back-button-icon-ios {
+  font-size: 2.4rem;
+}
