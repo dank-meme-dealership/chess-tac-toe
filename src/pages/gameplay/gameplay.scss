@@ -37,4 +37,13 @@ page-gameplay {
     pointer-events: none;
     cursor: not-allowed;
   }
+
+  .chat-container {
+    color:black;
+    background: white;
+    position: absolute;
+    bottom: 5px;
+    left: 10px;
+    width: 300px;
+  }
 }

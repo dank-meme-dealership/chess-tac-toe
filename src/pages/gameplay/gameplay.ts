@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {IonicPage, NavController, NavParams, ModalController} from 'ionic-angular';
 import {Game} from '../home/play-game-modal';
 import {AngularFirestoreDocument, AngularFirestore} from 'angularfire2/firestore';
@@ -24,11 +24,13 @@ export class GameplayPage {
   private player: any;
   private enemy: any;
   private gameOver: boolean;
+  private message: string;
 
   whiteName: string;
   whitesTurn: boolean;
   blackName: string;
   blacksTurn: boolean;
+
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public botProvider: BotProvider, private afs: AngularFirestore, public modalCtrl: ModalController) {
   }
@@ -47,9 +49,10 @@ export class GameplayPage {
     else {
       // listen to changes in the game
       this.gameDoc = this.afs.doc<Game>('games/' + gameId);
-      this.game = this.gameDoc.valueChanges()
+      this.gameDoc.valueChanges()
         .takeUntil(this.ngUnsubscribe)
         .subscribe(game => {
+          this.game = game;
           if (!this.player) {
             this.player = this.getPlayer(game, playerId);
             this.enemy = this.getEnemy(game, playerId);
@@ -81,6 +84,7 @@ export class GameplayPage {
             this.botProvider.makeMove({board: game.boardState, color: color})
             this.sleep(500);
           }
+          console.log(game.messages);
         });
     }
   }
@@ -120,5 +124,12 @@ export class GameplayPage {
   showGameOverModal(name: string, didWin: boolean) {
     let modal = this.modalCtrl.create(GameOverModalPage, {name: name, didWin: didWin, player: this.player}, {cssClass: 'game-over-modal'});
     modal.present();
+  }
+
+  addMessage(){
+    if(this.game.messages === undefined) this.game.messages = [];
+    if(this.message !== '') this.game.messages.push(this.player.name + ' : ' + this.message);
+    this.gameDoc.update({messages: this.game.messages});
+    this.message = '';
   }
 }

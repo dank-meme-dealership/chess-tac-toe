@@ -18,4 +18,17 @@
       <div>{{ blackName }}</div>
     </div>
   </div>
+
+  <div class="chat-container">
+    <div *ngIf="game && game.messages" >
+      <span *ngFor="let m of game.messages">{{m}} <br/></span>
+    </div>
+      <ion-input
+      type="text"
+      class="chat-text"
+      placeholder="Type here"
+      [(ngModel)]="message"
+      (keyup.enter)="addMessage()">
+    </ion-input>
+  </div>
 </ion-content>
