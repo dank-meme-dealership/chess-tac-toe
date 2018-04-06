@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Leaderboard</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-grid>
+    <ion-row class="header-row">
+      <ion-col>
+        Rank
+      </ion-col>
+      <ion-col col-2>
+        Name
+      </ion-col>
+      <ion-col>
+        Wins
+      </ion-col>
+    </ion-row>
+    <ion-row *ngFor="let player of players">
+      <ion-col>
+        {{ player.rank }}
+      </ion-col>
+      <ion-col col-2>
+        {{ player.name }}
+      </ion-col>
+      <ion-col>
+        {{ player.wins }}
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

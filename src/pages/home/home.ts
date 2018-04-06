@@ -6,6 +6,7 @@ import {Observable} from 'rxjs/Observable';
 import "rxjs/add/operator/take";
 import {PlayGameModal} from "./play-game-modal";
 import { ProfilePage } from '../profile/profile';
+import { LeaderboardPage } from '../leaderboard/leaderboard';
 
 export interface User {
   name: string;
@@ -68,7 +69,7 @@ export class HomePage {
   }
 
   goToLeaderboard() {
-    console.log('Leaderboard');
+    this.navCtrl.push(LeaderboardPage);
   }
 
   goToProfile() {
