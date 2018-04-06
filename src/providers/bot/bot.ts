@@ -6,21 +6,20 @@ import {ChessProvider} from "../chess/chess"
 export class BotProvider {
 
   //ordered by power
-  private pieces: ['r', 'b', 'k', 'p'];
+  private pieces = ['r', 'b', 'k', 'p'];
   private color: string;
-  private board: any[][]; //not sure if this declaration or VVVV below
+  private board: any; //not sure if this declaration or VVVV below
   // private weights: number[][]; //not sure if this declaration or VVVV below
   private availablePieces: Array<string>;
-  private chessProvider: ChessProvider;
 
-  constructor(public http: HttpClient) {
+  constructor(public http: HttpClient, private chessProvider:ChessProvider) {
     console.log('Hello BotProvider Provider');
   }
 
   public makeMove(state: any) {
     //collect meta about the state
     this.color = state.color;
-    this.board = state.board;
+    this.board = JSON.parse(state.board);
     let availablePieces = this.getAvailablePieces(this.board, this.color);
 
     if(availablePieces.length > 1) {
@@ -31,18 +30,18 @@ export class BotProvider {
     return this.board;
   }
 
-  protected getAvailablePieces(board: any[][], color: string)
+  protected getAvailablePieces(board: string, color: string)
   {
-    let playerIndex = color==='w'? 0 : 5;
+    let playerIndex = color[0]==='w'? 0 : 5;
     this.availablePieces = [];
-    for(let piece in board[playerIndex]) {
+    for(let piece of board[playerIndex]) {
       if(piece !== '' && piece[0]===color[0])
         this.availablePieces.push(piece);
     }
     return this.availablePieces;
   }
 
-  addPiece(board: any[][], color: string, availablePieces: any[]) {
+  addPiece(board: any, color: string, availablePieces: any[]) {
     let powerIndex = 100;
     let playerPieceRow = color[0]=='w' ? 0 : 5;
     let playerPieceCol = 1000;
@@ -118,7 +117,7 @@ export class BotProvider {
 
   protected getWeightedBoard(board: string[][], color: string){
     var weights = this.getEmptyMultiArray();
-    for(let row=0; row < this.board.length; row++) {
+    for(let row=1; row < this.board.length-1; row++) {
       for(let col=0; col < this.board[row].length; col++) {
         //if it's one of our pieces...
         if(board[row][col][0] === color[0]) {

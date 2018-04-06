@@ -39,19 +39,12 @@ export class GameplayPage {
     }
     // carry on
     else {
-      // bot stuff
-      if(gameId.includes('bots')) {
-        while(true) {
-          this.botProvider.makeMove({})
-          this.sleep(500);
-        }
-      }
-
       // listen to changes in the game
       this.gameDoc = this.afs.doc<Game>('games/' + gameId);
       this.game = this.gameDoc.valueChanges()
         .takeUntil(this.ngUnsubscribe)
         .subscribe(game => {
+
           if (!this.player) {
             this.player = this.getPlayer(game, playerId);
             this.enemy = this.getEnemy(game, playerId);
@@ -74,6 +67,13 @@ export class GameplayPage {
           // check if a winner was set by the board
           if (game.winner) {
             console.log(game.winner === this.player.id ? 'You won!' : 'You lost!');
+          }
+
+          // bot stuff
+          if(playerId==='bot1'|| playerId === 'bot2') {
+            let color = game.players[0].name === playerId ? 'white' : 'black';
+            this.botProvider.makeMove({board: game.boardState, color: color})
+            this.sleep(500);
           }
         });
     }

@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import {Game} from "../home/play-game-modal";
-import {GameplayPage} from "../gameplay/gameplay";
-import {AngularFirestore} from 'angularfire2/firestore';
+import { Game } from "../home/play-game-modal";
+import { GameplayPage } from "../gameplay/gameplay";
+import { AngularFirestore } from 'angularfire2/firestore';
 import { Subject } from 'rxjs/Subject';
 
 const moment = require("moment");
@@ -18,7 +18,7 @@ export class QueuePage {
   private queue;
   private ngUnsubscribe: Subject<void> = new Subject();
   private busy;
-  
+
   message: string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private afs: AngularFirestore) {
@@ -28,20 +28,33 @@ export class QueuePage {
     // ensure this class doesn't think we're busy
     this.busy = false;
     let player = this.navParams.data.player;
+    console.log(player);
+    //let isBot = false;
+
+    if(this.navParams.data.type === 'bots') {
+      this.message = 'bots are being created...'
+        this.createGame([{name: 'bot1', id: 'bot1'},{name: 'bot2', id: 'bot2'}], true).then(game => {
+          // nav to this game, nothing to delete
+          this.joinGame(game.id, 'bot1', null);
+          this.joinGame(game.id, 'bot2', null);
+        });;
+      
+    }
 
     // private games just start and are handled in the gameplay page
-    if (this.navParams.data.type === 'private') {
+    else if (this.navParams.data.type === 'private') {
       this.message = 'Creating game...';
       this.createGame([player], true).then(game => {
         // nav to this game, nothing to delete
         this.joinGame(game.id, player.id, null);
-      });;
+      });
+
     }
     // matchmaking games join a queue
     else {
       this.message = 'Waiting for opponent...';
       // sort the collection ascending by queueTimestamp
-      this.queueCollection = this.afs.collection<any>('queue', 
+      this.queueCollection = this.afs.collection<any>('queue',
         ref => ref.orderBy('queueTimestamp', 'asc')
       );
 
@@ -72,7 +85,7 @@ export class QueuePage {
       this.busy = true;
       this.joinGame(queueGame.gameId, player.id, queueGame.queueId);
     }
-    
+
     // if gameId returned as null, it means you haven't been invited to a game yet
     else {
       // filter the queue down to just people without games to join
@@ -96,8 +109,8 @@ export class QueuePage {
           this.createGame(players, false).then(game => {
             // put the gameId on both players
             setTimeout(() => {
-              this.afs.doc<any>('queue/' + filtered[0].payload.doc.id).update({gameId: game.id});
-              this.afs.doc<any>('queue/' + filtered[1].payload.doc.id).update({gameId: game.id});
+              this.afs.doc<any>('queue/' + filtered[0].payload.doc.id).update({ gameId: game.id });
+              this.afs.doc<any>('queue/' + filtered[1].payload.doc.id).update({ gameId: game.id });
             }, 1000)
           });
 
@@ -144,12 +157,12 @@ export class QueuePage {
     // if this game is being joined by a player from the queue,
     // that user's queueId needs to be removed
     if (queueToDelete) {
-      this.afs.doc<any>('queue/' + queueToDelete).update({done: true});
+      this.afs.doc<any>('queue/' + queueToDelete).update({ done: true });
     }
 
     setTimeout(() => {
       this.navCtrl.pop(); // remove queue from history stack
-      this.navCtrl.push(GameplayPage, {gameId: gameId, playerId: playerId});
+      this.navCtrl.push(GameplayPage, { gameId: gameId, playerId: playerId });
     }, 1000)
   }
 }

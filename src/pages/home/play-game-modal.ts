@@ -6,6 +6,7 @@ import {NavController, NavParams, ViewController} from "ionic-angular";
 import {GameplayPage} from "../gameplay/gameplay";
 import {Move} from "../../providers/chess/chess";
 import {QueuePage} from "../queue/queue";
+import { BotProvider } from "../../providers/bot/bot";
 
 const moment = require('moment');
 
@@ -41,7 +42,7 @@ export class PlayGameModal {
   private usersCollection: AngularFirestoreCollection<User>;
   users: Observable<User[]>;
 
-  constructor(public navCtrl: NavController, public params: NavParams, public viewCtrl: ViewController, private afs: AngularFirestore) {
+  constructor(public navCtrl: NavController, public params: NavParams, public viewCtrl: ViewController, private afs: AngularFirestore, private botProvider: BotProvider) {
     this.usersCollection = afs.collection<User>('users');
     this.users = this.usersCollection.valueChanges();
   }
@@ -50,7 +51,10 @@ export class PlayGameModal {
     let name = this.params.get('name');
     let uid = localStorage.getItem('uid');
     if(type === 'bots') {
-      this.navCtrl.push(GameplayPage, {gameId: 'bots' + new Date().getMilliseconds});
+      if(!localStorage.getItem('bot1')||!localStorage.getItem('bot2')) {
+             this.createBots();
+      }
+      this.navCtrl.push(QueuePage, {gameId: 'bots' + new Date().getMilliseconds, type: 'bots'});
       this.viewCtrl.dismiss();
     }
     else if (uid) {
@@ -73,5 +77,19 @@ export class PlayGameModal {
   joinQueue(player: any, type: string) {
     this.navCtrl.push(QueuePage, {player: player, type: type});
     this.viewCtrl.dismiss();
+  }
+
+  createBots() {
+    let bot1Name = 'bot1';
+    let bot2Name = 'bot2';
+
+    this.addUser(bot1Name).then(function(uid){
+      localStorage.setItem(bot1Name, uid)
+      this.joinQueue({name: bot1Name, id: uid}, 'bots');
+    }.bind(this));
+    this.addUser(bot2Name).then(function(uid){
+      localStorage.setItem(bot2Name, uid)
+      this.joinQueue({name: bot2Name, id: uid}, 'bots');
+    }.bind(this));
   }
 }
