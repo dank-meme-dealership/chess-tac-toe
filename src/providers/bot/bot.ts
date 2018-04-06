@@ -14,7 +14,6 @@ export class BotProvider {
   private chessProvider: ChessProvider;
 
   constructor(public http: HttpClient) {
-    console.log('Hello BotProvider Provider');
   }
 
   public makeMove(state: any) {

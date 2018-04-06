@@ -24,7 +24,6 @@ export class GameOverModalPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad GameOverModalPage');
     this.name = this.navParams.get('name');
     this.didWin = this.navParams.get('didWin');
     this.player = this.navParams.get('player');
