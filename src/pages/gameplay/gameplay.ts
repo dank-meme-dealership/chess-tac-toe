@@ -82,4 +82,11 @@ export class GameplayPage {
   sleep(ms: number) {
     return new Promise( resolve => setTimeout(resolve, ms) );
   }
+
+  isMyTurn(){
+    if(this.player){
+      return (this.player.color === 'white' && this.whitesTurn) || (this.player.color === 'black' && this.blacksTurn)
+    }
+    return false;
+  }
 }

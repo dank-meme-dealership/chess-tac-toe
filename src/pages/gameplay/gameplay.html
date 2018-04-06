@@ -5,7 +5,7 @@
     <div class="name-container" [ngClass]="{'highlighted': whitesTurn}">
       <div>{{ whiteName }}</div>
     </div>
-    <board [player]="player"></board>
+    <board [player]="player" [ngClass]="{'disabled': !isMyTurn()}"></board>
     <div class="name-container" [ngClass]="{'highlighted': blacksTurn}">
       <div>{{ blackName }}</div>
     </div>

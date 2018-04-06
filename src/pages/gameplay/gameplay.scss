@@ -32,4 +32,9 @@ page-gameplay {
     color: white;
     border-radius: 0 5px 5px 0;
   }
+
+  board.disabled{
+    pointer-events: none;
+    cursor: not-allowed;
+  }
 }
