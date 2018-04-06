@@ -85,7 +85,7 @@ button.exit-button {
   background: #d0b085;
   color: white;
   border-radius: 0 5px 5px 0;
-  z-index: 2;
+  z-index: 999; // doesn't matter does it?
 }
 
 //// OVERRIDES
