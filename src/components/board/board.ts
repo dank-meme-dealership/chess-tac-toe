@@ -18,6 +18,7 @@ export class BoardComponent {
   moves: any[];
   highlighted: any[];
   firebaseGame: any;
+  gameId: string;
 
   // game firebase magic
   private gameDoc: AngularFirestoreDocument<Game>;
@@ -27,6 +28,7 @@ export class BoardComponent {
   constructor(public chessProvider: ChessProvider, private navParams: NavParams, private afs: AngularFirestore) {
 
     let gameId = this.navParams.get('gameId');
+    this.gameId = gameId;
     if (gameId) {
       this.gameDoc = this.afs.doc<Game>('games/' + gameId);
       this.game = this.gameDoc.valueChanges()
@@ -113,7 +115,7 @@ export class BoardComponent {
 
     if (this.chessProvider.isNotInTray(this.selected.xS)) {
       this.moves.forEach(e => {
-        element = document.getElementById("r" + e.x + "c" + e.y);
+        element = document.getElementById("r" + e.x + "c" + e.y + ' ' + this.gameId);
         let className;
         if (e.o) {
           className = "validEnemy";
@@ -124,7 +126,7 @@ export class BoardComponent {
         this.highlighted.push(element);
       });
     }
-    element = document.getElementById("r" + this.selected.xS + "c" + this.selected.yS);
+    element = document.getElementById("r" + this.selected.xS + "c" + this.selected.yS + ' ' + this.gameId);
     element.classList.add("selected");
     this.highlighted.push(element)
   }
