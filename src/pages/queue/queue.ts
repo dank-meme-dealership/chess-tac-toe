@@ -18,6 +18,8 @@ export class QueuePage {
   private queue;
   private ngUnsubscribe: Subject<void> = new Subject();
   private busy;
+  
+  message: string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private afs: AngularFirestore) {
   }
@@ -29,6 +31,7 @@ export class QueuePage {
 
     // private games just start and are handled in the gameplay page
     if (this.navParams.data.type === 'private') {
+      this.message = 'Creating game...';
       this.createGame([player], true).then(game => {
         // nav to this game, nothing to delete
         this.joinGame(game.id, player.id, null);
@@ -36,6 +39,7 @@ export class QueuePage {
     }
     // matchmaking games join a queue
     else {
+      this.message = 'Waiting for opponent...';
       // sort the collection ascending by queueTimestamp
       this.queueCollection = this.afs.collection<any>('queue', 
         ref => ref.orderBy('queueTimestamp', 'asc')
@@ -80,6 +84,7 @@ export class QueuePage {
 
         // only the first player in the queue will do game creation
         if (firstInQueue.player.id === player.id) {
+          this.message = 'Creating game...';
           this.busy = true;
           let players = [];
           players.push(filtered[0].payload.doc.data().player);
@@ -90,8 +95,10 @@ export class QueuePage {
 
           this.createGame(players, false).then(game => {
             // put the gameId on both players
-            this.afs.doc<any>('queue/' + filtered[0].payload.doc.id).update({gameId: game.id});
-            this.afs.doc<any>('queue/' + filtered[1].payload.doc.id).update({gameId: game.id});
+            setTimeout(() => {
+              this.afs.doc<any>('queue/' + filtered[0].payload.doc.id).update({gameId: game.id});
+              this.afs.doc<any>('queue/' + filtered[1].payload.doc.id).update({gameId: game.id});
+            }, 1000)
           });
 
           this.busy = false;
@@ -132,13 +139,17 @@ export class QueuePage {
   }
 
   joinGame(gameId: string, playerId: string, queueToDelete: string) {
+    this.message = 'Game starting...';
+
     // if this game is being joined by a player from the queue,
     // that user's queueId needs to be removed
     if (queueToDelete) {
       this.afs.doc<any>('queue/' + queueToDelete).update({done: true});
     }
 
-    this.navCtrl.pop(); // remove queue from history stack
-    this.navCtrl.push(GameplayPage, {gameId: gameId, playerId: playerId});
+    setTimeout(() => {
+      this.navCtrl.pop(); // remove queue from history stack
+      this.navCtrl.push(GameplayPage, {gameId: gameId, playerId: playerId});
+    }, 1000)
   }
 }
