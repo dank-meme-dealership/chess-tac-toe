@@ -12,8 +12,12 @@ export class BotProvider {
   // private weights: number[][]; //not sure if this declaration or VVVV below
   private availablePieces: Array<string>;
 
+<<<<<<< HEAD
   constructor(public http: HttpClient, private chessProvider:ChessProvider) {
     console.log('Hello BotProvider Provider');
+=======
+  constructor(public http: HttpClient) {
+>>>>>>> 418a31b774ff2455d50a099c3691c53ad7b96894
   }
 
   public makeMove(state: any) {
@@ -30,7 +34,7 @@ export class BotProvider {
     return this.board;
   }
 
-  protected getAvailablePieces(board: any, color: string)
+  protected getAvailablePieces(board: string, color: string)
   {
     let playerIndex = color[0]==='w'? 0 : 5;
     this.availablePieces = [];
