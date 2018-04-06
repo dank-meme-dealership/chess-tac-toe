@@ -8,9 +8,30 @@
 
 
 <ion-content padding>
-    <ul>
-      <li *ngFor="let game of games | async">
-        {{ game.timestamp || 'warren game'}}
-      </li>
-    </ul>
+  <ion-grid>
+    <ion-row class="header-row">
+      <ion-col>
+        Time
+      </ion-col>
+      <ion-col col-2>
+        Turns
+      </ion-col>
+      <ion-col>
+        Players
+      </ion-col>
+    </ion-row>
+    <ion-row *ngFor="let game of games">
+      <ion-col>
+        {{ game.timeString }}
+      </ion-col>
+      <ion-col col-2>
+        {{ game.turns.length }}
+      </ion-col>
+      <ion-col>
+        <div *ngFor="let player of game.players">
+          {{ player.name || 'Anonymous' }} {{ player.color }}
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
