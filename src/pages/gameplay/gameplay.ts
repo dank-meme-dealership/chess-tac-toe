@@ -20,6 +20,7 @@ export class GameplayPage {
   game: any; //Observable<Game>
   private ngUnsubscribe: Subject<void> = new Subject();
   private player: any;
+  private enemy: any;
 
   whiteName: string;
   whitesTurn: boolean;
@@ -53,6 +54,7 @@ export class GameplayPage {
         .subscribe(game => {
           if (!this.player) {
             this.player = this.getPlayer(game, playerId);
+            this.enemy = this.getEnemy(game, playerId);
             if (game.players.length > 0) {
               this.whiteName = game.players[0].name;
               if (this.player.color === 'white') {
@@ -81,7 +83,15 @@ export class GameplayPage {
     return _.find(game.players, {'id': playerId});
   }
 
+  getEnemy(game: any, playerId: string) {
+    return _.find(game.players, function(player) {
+      return player.id != playerId;
+    });
+  }
+
   exit() {
+    // if you leave, the other player wins automatically
+    this.gameDoc.update({winner: this.enemy.id});
     this.navCtrl.pop();
   }
 
