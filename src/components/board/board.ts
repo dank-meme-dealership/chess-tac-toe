@@ -93,15 +93,17 @@ export class BoardComponent {
       this.boardState[x][y] = this.selected.piece;
       this.boardState[this.selected.xS][this.selected.yS] = '';
     }
-    let victory = this.chessProvider.checkForWin(this.boardState,this.selected.piece[0]);
-    if(victory){ alert("You Won!")};
+    let victory = this.chessProvider.checkForWin(this.boardState, this.selected.piece[0]);
+    if (victory) {
+      this.gameDoc.update({ winner: this.player.id });
+    };
     this.deselectPiece();
-    
-    
+
+
     // update the board in firebase
     let boardString = JSON.stringify(this.boardState)
     this.firebaseGame.turns.push(boardString);
-    this.gameDoc.update({boardState: boardString, turns: this.firebaseGame.turns});
+    this.gameDoc.update({ boardState: boardString, turns: this.firebaseGame.turns });
     console.log(this.player);
   }
 
@@ -148,14 +150,14 @@ export class BoardComponent {
       xS: x,
       yS: y,
       piece: this.boardState[x][y],
-      
+
     };
     this.moves = this.chessProvider.getValidMoves(this.boardState, this.selected);
     this.highlightMoves();
   }
 
-  updatePawnIfNeeded(){
-    if (this.selected.piece.substring(1,3)==='pd' && this.moveTo.xS === 4) this.selected.piece = this.selected.piece[0] + 'pu';
-    if (this.selected.piece.substring(1,3)==='pu' && this.moveTo.xS === 1) this.selected.piece = this.selected.piece[0] + 'pd' ;
+  updatePawnIfNeeded() {
+    if (this.selected.piece.substring(1, 3) === 'pd' && this.moveTo.xS === 4) this.selected.piece = this.selected.piece[0] + 'pu';
+    if (this.selected.piece.substring(1, 3) === 'pu' && this.moveTo.xS === 1) this.selected.piece = this.selected.piece[0] + 'pd';
   }
 }
