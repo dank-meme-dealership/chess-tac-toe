@@ -1,0 +1,9 @@
+<ion-content>
+  <div class="button-container">
+    <div class="game-over">Game Over</div>
+    <div class="message">{{ didWin ? 'You defeated' : 'You were defeated by' }} <strong>{{ name }}</strong></div>
+    <button class="chess-button" ion-button (click)="playAgain()">Play Again</button>
+    <button margin-top class="chess-button" ion-button disabled="true">Watch Replay</button>
+    <button margin-top class="chess-button" ion-button (click)="exit()">Exit</button>
+  </div>
+</ion-content>

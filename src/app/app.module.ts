@@ -19,6 +19,7 @@ import { ChessProvider } from '../providers/chess/chess';
 import { QueuePage } from '../pages/queue/queue';
 import { HttpClientModule } from '@angular/common/http';
 import { ProfilePage } from '../pages/profile/profile';
+import { GameOverModalPage } from '../pages/game-over-modal/game-over-modal';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyD2OLU1f78pWLsMO-NwIfBJfRRJp4Hlg1k",
@@ -36,7 +37,8 @@ export const firebaseConfig = {
     PlayGameModal,
     QueuePage,
     GameplayPage,
-    ProfilePage
+    ProfilePage,
+    GameOverModalPage
   ],
   imports: [
     BrowserModule,
@@ -54,7 +56,8 @@ export const firebaseConfig = {
     PlayGameModal,
     QueuePage,
     GameplayPage,
-    ProfilePage
+    ProfilePage,
+    GameOverModalPage
   ],
   providers: [
     StatusBar,

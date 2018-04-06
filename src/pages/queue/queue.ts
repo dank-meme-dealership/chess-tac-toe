@@ -18,7 +18,7 @@ export class QueuePage {
   private queue;
   private ngUnsubscribe: Subject<void> = new Subject();
   private busy;
-  
+
   message: string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private afs: AngularFirestore) {
@@ -40,15 +40,15 @@ export class QueuePage {
     // matchmaking games join a queue
     else {
       this.message = 'Waiting for opponent...';
-      // sort the collection ascending by queueTimestamp
-      this.queueCollection = this.afs.collection<any>('queue', 
-        ref => ref.orderBy('queueTimestamp', 'asc')
+      // sort the collection ascending by timestamp
+      this.queueCollection = this.afs.collection<any>('queue',
+        ref => ref.orderBy('timestamp', 'asc')
       );
 
       // add this player to the queue
       this.queueCollection.add({
         player: player,
-        queueTimestamp: moment().unix(),
+        timestamp: moment().unix(),
       });
 
       // listen for changes to the list and determine queue position
@@ -72,7 +72,7 @@ export class QueuePage {
       this.busy = true;
       this.joinGame(queueGame.gameId, player.id, queueGame.queueId);
     }
-    
+
     // if gameId returned as null, it means you haven't been invited to a game yet
     else {
       // filter the queue down to just people without games to join

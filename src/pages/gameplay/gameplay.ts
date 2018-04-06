@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {IonicPage, NavController, NavParams} from 'ionic-angular';
+import {IonicPage, NavController, NavParams, ModalController} from 'ionic-angular';
 import {Game} from '../home/play-game-modal';
 import {AngularFirestoreDocument, AngularFirestore} from 'angularfire2/firestore';
 import {Observable} from 'rxjs/Observable';
@@ -8,6 +8,7 @@ import {Subject} from "rxjs/Subject";
 import { BotProvider } from '../../providers/bot/bot';
 
 import _ from "lodash";
+import { GameOverModalPage } from '../game-over-modal/game-over-modal';
 
 @IonicPage()
 @Component({
@@ -21,16 +22,20 @@ export class GameplayPage {
   private ngUnsubscribe: Subject<void> = new Subject();
   private player: any;
   private enemy: any;
+  private modalLaunched: boolean;
 
   whiteName: string;
   whitesTurn: boolean;
   blackName: string;
   blacksTurn: boolean;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public botProvider: BotProvider, private afs: AngularFirestore) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public botProvider: BotProvider, private afs: AngularFirestore, public modalCtrl: ModalController) {
   }
 
   ionViewDidLoad() {
+    // reset modal launched boolean
+    this.modalLaunched = false;
+
     let gameId = this.navParams.get('gameId');
     let playerId = this.navParams.get('playerId');
     // if you got here without a gameId, you're a magician, leave
@@ -72,8 +77,14 @@ export class GameplayPage {
           this.blacksTurn = !this.whitesTurn;
 
           // check if a winner was set by the board
-          if (game.winner) {
-            console.log(game.winner === this.player.id ? 'You won!' : 'You lost!');
+          if (game.winner && !this.modalLaunched) {
+            this.modalLaunched = true;
+            if (game.winner === this.player.id) {
+              this.gameOver(this.enemy.name, true);
+            }
+            else {
+              this.gameOver(this.enemy.name, false);
+            }
           }
         });
     }
@@ -91,6 +102,7 @@ export class GameplayPage {
 
   exit() {
     // if you leave, the other player wins automatically
+    this.modalLaunched = true; // short-circuit modal
     this.gameDoc.update({winner: this.enemy.id});
     this.navCtrl.pop();
   }
@@ -99,10 +111,15 @@ export class GameplayPage {
     return new Promise( resolve => setTimeout(resolve, ms) );
   }
 
-  isMyTurn(){
+  isMyTurn() {
     if(this.player){
       return (this.player.color === 'white' && this.whitesTurn) || (this.player.color === 'black' && this.blacksTurn)
     }
     return false;
+  }
+
+  gameOver(name: string, didWin: boolean) {
+    let modal = this.modalCtrl.create(GameOverModalPage, {name: name, didWin: didWin, player: this.player}, {cssClass: 'game-over-modal'});
+    modal.present();
   }
 }
