@@ -50,15 +50,15 @@ export class QueuePage {
     // matchmaking games join a queue
     else {
       this.message = 'Waiting for opponent...';
-      // sort the collection ascending by queueTimestamp
+      // sort the collection ascending by timestamp
       this.queueCollection = this.afs.collection<any>('queue',
-        ref => ref.orderBy('queueTimestamp', 'asc')
+        ref => ref.orderBy('timestamp', 'asc')
       );
 
       // add this player to the queue
       this.queueCollection.add({
         player: player,
-        queueTimestamp: moment().unix(),
+        timestamp: moment().unix(),
       });
 
       // listen for changes to the list and determine queue position
@@ -158,7 +158,6 @@ export class QueuePage {
     }
 
     setTimeout(() => {
-      this.navCtrl.pop(); // remove queue from history stack
       this.navCtrl.push(GameplayPage, { gameId: gameId, playerId: playerId });
     }, 1000)
   }

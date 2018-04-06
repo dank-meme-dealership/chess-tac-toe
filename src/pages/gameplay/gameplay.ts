@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {IonicPage, NavController, NavParams} from 'ionic-angular';
+import {IonicPage, NavController, NavParams, ModalController} from 'ionic-angular';
 import {Game} from '../home/play-game-modal';
 import {AngularFirestoreDocument, AngularFirestore} from 'angularfire2/firestore';
 import {Observable} from 'rxjs/Observable';
@@ -8,6 +8,8 @@ import {Subject} from "rxjs/Subject";
 import { BotProvider } from '../../providers/bot/bot';
 
 import _ from "lodash";
+import { HomePage } from '../home/home';
+import { GameOverModalPage } from '../game-over-modal/game-over-modal';
 
 @IonicPage()
 @Component({
@@ -21,16 +23,20 @@ export class GameplayPage {
   private ngUnsubscribe: Subject<void> = new Subject();
   private player: any;
   private enemy: any;
+  private gameOver: boolean;
 
   whiteName: string;
   whitesTurn: boolean;
   blackName: string;
   blacksTurn: boolean;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public botProvider: BotProvider, private afs: AngularFirestore) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public botProvider: BotProvider, private afs: AngularFirestore, public modalCtrl: ModalController) {
   }
 
   ionViewDidLoad() {
+    // reset game over boolean
+    this.gameOver = false;
+
     let gameId = this.navParams.get('gameId');
     let playerId = this.navParams.get('playerId');
     // if you got here without a gameId, you're a magician, leave
@@ -48,13 +54,13 @@ export class GameplayPage {
             this.player = this.getPlayer(game, playerId);
             this.enemy = this.getEnemy(game, playerId);
             if (game.players.length > 0) {
-              this.whiteName = game.players[0].name;
+              this.whiteName = game.players[0].name || 'Anonymous';
               if (this.player.color === 'white') {
                 this.whiteName += ' (You)';
               }
             }
             if (game.players.length > 1) {
-              this.blackName = game.players[1].name;
+              this.blackName = game.players[1].name || 'Anonymous';
               if (this.player.color === 'black') {
                 this.blackName += ' (You)';
               }
@@ -64,8 +70,9 @@ export class GameplayPage {
           this.blacksTurn = !this.whitesTurn;
 
           // check if a winner was set by the board
-          if (game.winner) {
-            console.log(game.winner === this.player.id ? 'You won!' : 'You lost!');
+          if (game.winner && !this.gameOver) {
+            this.gameOver = true;
+            this.showGameOverModal(this.enemy.name, game.winner === this.player.id);
           }
 
           // bot stuff
@@ -89,19 +96,29 @@ export class GameplayPage {
   }
 
   exit() {
-    // if you leave, the other player wins automatically
-    this.gameDoc.update({winner: this.enemy.id});
-    this.navCtrl.pop();
+    // if the game isn't over and you leave,
+    // the other player wins automatically
+    if (!this.gameOver) {
+      this.gameDoc.update({winner: this.enemy.id});
+    }
+
+    this.gameOver = true;
+    this.navCtrl.push(HomePage);
   }
 
   sleep(ms: number) {
     return new Promise( resolve => setTimeout(resolve, ms) );
   }
 
-  isMyTurn(){
+  isMyTurn() {
     if(this.player){
       return (this.player.color === 'white' && this.whitesTurn) || (this.player.color === 'black' && this.blacksTurn)
     }
     return false;
+  }
+
+  showGameOverModal(name: string, didWin: boolean) {
+    let modal = this.modalCtrl.create(GameOverModalPage, {name: name, didWin: didWin, player: this.player}, {cssClass: 'game-over-modal'});
+    modal.present();
   }
 }
