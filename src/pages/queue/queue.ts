@@ -125,7 +125,7 @@ export class QueuePage {
       .add({
         players: players,
         turns: [],
-        queueTimestamp: moment().unix(),
+        timestamp: moment().unix(),
         privateGame: privateGame,
         boardState: JSON.stringify([
           ['wr', 'wpd', 'wk', 'wb'],
