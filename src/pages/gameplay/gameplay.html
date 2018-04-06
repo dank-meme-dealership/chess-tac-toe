@@ -19,7 +19,7 @@
     </div>
   </div>
 
-  <div class="chat-container">
+  <div class="chat-container" [hidden]="!chatShown">
     <div *ngIf="game && game.messages" >
       <div class="message" *ngFor="let m of game.messages">
         <strong>{{m.player}}:</strong> {{m.message}}
@@ -33,4 +33,7 @@
       (keyup.enter)="addMessage()">
     </ion-input>
   </div>
+  <button class="chat-button" [hidden]="chatShown" (click)="toggleChatShown()">
+    <ion-icon name="md-chatbubbles"></ion-icon>
+  </button>
 </ion-content>
