@@ -6,7 +6,7 @@ import {NavController, NavParams, ViewController} from "ionic-angular";
 import {GameplayPage} from "../gameplay/gameplay";
 import {Move} from "../../providers/chess/chess";
 import {QueuePage} from "../queue/queue";
-import { BotProvider } from "../../providers/bot/bot";
+import {BotProvider} from "../../providers/bot/bot";
 
 const moment = require('moment');
 
@@ -29,11 +29,12 @@ export interface Game {
       <div class="button-container">
         <button class="chess-button" ion-button (click)="goToGameplay('matchmaking')">Matchmaking</button>
         <div text-center>Play against a random opponent</div>
-        
-        <button margin-top class="chess-button" ion-button (click)="goToGameplay('bots')">Bot vs. Bot</button>
+
+        <button margin-top class="chess-button" ion-button (click)="goToGameplay('bots')" disabled>Bot vs. Bot</button>
         <div text-center>Watch two bots battle it out!</div>
 
-        <button margin-top class="chess-button" ion-button (click)="goToGameplay('private')" disabled="true">Private</button>
+        <button margin-top class="chess-button" ion-button (click)="goToGameplay('private')" disabled>Private
+        </button>
         <div text-center>Create a private game and invite a friend</div>
       </div>
     </ion-content>
@@ -51,9 +52,9 @@ export class PlayGameModal {
   goToGameplay(type: string) {
     let name = this.params.get('name');
     let uid = localStorage.getItem('uid');
-    if(type === 'bots') {
-      if(!localStorage.getItem('bot1')||!localStorage.getItem('bot2')) {
-             this.createBots();
+    if (type === 'bots') {
+      if (!localStorage.getItem('bot1') || !localStorage.getItem('bot2')) {
+        this.createBots();
       }
       this.navCtrl.push(QueuePage, {gameId: 'bots' + new Date().getMilliseconds, type: 'bots'});
       this.viewCtrl.dismiss();
@@ -84,11 +85,11 @@ export class PlayGameModal {
     let bot1Name = 'bot1';
     let bot2Name = 'bot2';
 
-    this.addUser(bot1Name).then(function(uid){
+    this.addUser(bot1Name).then(function (uid) {
       localStorage.setItem(bot1Name, uid)
       this.joinQueue({name: bot1Name, id: uid}, 'bots');
     }.bind(this));
-    this.addUser(bot2Name).then(function(uid){
+    this.addUser(bot2Name).then(function (uid) {
       localStorage.setItem(bot2Name, uid)
       this.joinQueue({name: bot2Name, id: uid}, 'bots');
     }.bind(this));
