@@ -7,24 +7,24 @@
 <ion-content padding>
   <ion-grid>
     <ion-row class="header-row">
-      <ion-col col-2>
+      <ion-col col-3>
         Rank
       </ion-col>
       <ion-col>
         Name
       </ion-col>
-      <ion-col col-2>
+      <ion-col col-3>
         Wins
       </ion-col>
     </ion-row>
     <ion-row class="clickable" *ngFor="let player of players; let i = index" (click)="goToProfile(player)">
-      <ion-col col-2>
+      <ion-col col-3>
         {{ i + 1 }}
       </ion-col>
       <ion-col>
-        {{ player.name }}
+        {{ player.name || 'Anonymous' }}
       </ion-col>
-      <ion-col col-2>
+      <ion-col col-3>
         {{ player.wins }}
       </ion-col>
     </ion-row>

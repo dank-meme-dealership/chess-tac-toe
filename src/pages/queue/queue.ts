@@ -4,7 +4,6 @@ import { Game } from "../home/play-game-modal";
 import { GameplayPage } from "../gameplay/gameplay";
 import { AngularFirestore } from 'angularfire2/firestore';
 import { Subject } from 'rxjs/Subject';
-import _ from 'lodash';
 import {HomePage} from "../home/home";
 
 const moment = require("moment");
@@ -16,7 +15,6 @@ const moment = require("moment");
 })
 export class QueuePage {
   private queueCollection;
-  private queue;
   private ngUnsubscribe: Subject<void> = new Subject();
   private busy;
 
@@ -68,7 +66,7 @@ export class QueuePage {
       }.bind(this));
 
       // listen for changes to the list and determine queue position
-      this.queue = this.queueCollection.snapshotChanges()
+      this.queueCollection.snapshotChanges()
         .takeUntil(this.ngUnsubscribe)
         .subscribe(queue => {
           this.determineQueuePosition(queue, player);
@@ -116,7 +114,7 @@ export class QueuePage {
             setTimeout(() => {
               this.afs.doc<any>('queue/' + filtered[0].payload.doc.id).update({ gameId: game.id });
               this.afs.doc<any>('queue/' + filtered[1].payload.doc.id).update({ gameId: game.id });
-            }, 1000)
+            }, 500)
           });
 
           this.busy = false;
@@ -178,7 +176,7 @@ export class QueuePage {
 
     setTimeout(() => {
       this.navCtrl.push(GameplayPage, { gameId: gameId, playerId: playerId });
-    }, 1000)
+    }, 500)
   }
 
   exit() {
