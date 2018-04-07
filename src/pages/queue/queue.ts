@@ -15,7 +15,6 @@ const moment = require("moment");
   templateUrl: 'queue.html',
 })
 export class QueuePage {
-  private gameCollection;
   private queueCollection;
   private queue;
   private ngUnsubscribe: Subject<void> = new Subject();
@@ -35,7 +34,7 @@ export class QueuePage {
 
     // bot stuff
     if(this.navParams.data.type === 'bots') {
-      this.message = 'bots are being created...'
+      this.message = 'bots are being created...';
         this.createGame([{name: 'bot1', id: 'bot1'},{name: 'bot2', id: 'bot2'}], false).then(game => {
           // nav to this game, nothing to delete
           this.joinGame(game.id, 'bot1', null);
@@ -174,7 +173,7 @@ export class QueuePage {
     // if this game is being joined by a player from the queue,
     // that user's queueId needs to be removed
     if (queueToDelete) {
-      this.afs.doc<any>('queue/' + queueToDelete).update({ done: true });
+      this.afs.doc<any>('queue/' + queueToDelete).delete().catch(this.catchError);
     }
 
     setTimeout(() => {
@@ -183,7 +182,12 @@ export class QueuePage {
   }
 
   exit() {
-    this.afs.doc<any>('queue/' + this.queueId).update({ done: true });
+    this.ngUnsubscribe.next();
+    this.afs.doc<any>('queue/' + this.queueId).delete().catch(this.catchError);
     this.navCtrl.push(HomePage);
+  }
+
+  catchError() {
+    // do nothing
   }
 }
