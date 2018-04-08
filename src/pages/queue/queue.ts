@@ -14,9 +14,16 @@ const moment = require("moment");
   templateUrl: 'queue.html',
 })
 export class QueuePage {
+  private timeoutPeriod = 10;
+
   private queueCollection;
+  private myQueuePosition;
   private ngUnsubscribe: Subject<void> = new Subject();
   private busy;
+  private timeout;
+
+  private updateStarted: boolean;
+  private stopUpdate: boolean;
 
   queueId: string;
   queueMessage: string;
@@ -28,6 +35,8 @@ export class QueuePage {
   ionViewDidLoad() {
     // ensure this class doesn't think we're busy
     this.busy = false;
+    this.updateStarted = false;
+    this.stopUpdate = false;
     let player = this.navParams.data.player;
 
     // bot stuff
@@ -61,8 +70,15 @@ export class QueuePage {
       this.queueCollection.add({
         player: player,
         timestamp: moment().unix(),
+        lastUpdated: moment().unix()
       }).then(function (queueItem) {
         this.queueId = queueItem.id;
+        this.myQueuePosition = this.afs.doc('queue/' + this.queueId);
+        
+        // if we haven't started setting our lastUpdated timestamp, do it
+        if (!this.updateStarted) {
+          this.setLastUpdated(3);
+        }
       }.bind(this));
 
       // listen for changes to the list and determine queue position
@@ -74,63 +90,77 @@ export class QueuePage {
     }
   }
 
+  // start a timeout to update the queue with a new timestamp every 3
+  // seconds so the other members in the queue know you're still here
+  setLastUpdated(seconds: number) {
+    this.updateStarted = true;
+    if (!this.stopUpdate) {
+      setTimeout(() => {
+        this.myQueuePosition.update({ lastUpdated: moment().unix() }).catch(this.doNothing);
+        this.setLastUpdated(seconds);
+      }, seconds * 1000);
+    }
+  }
+ 
   determineQueuePosition(queue: any, player: any) {
     if (this.busy) return;
 
-    // remove queue items that are already done
-    queue = queue.filter(queueEntry => queueEntry.payload.doc.data().done !== true);
-    let queueGame = this.getQueueGame(queue, player);
-
     // if this queued user needs to join a game, do it!
+    let queueGame = this.getQueueGame(queue, player);
     if (queueGame) {
       this.busy = true;
       this.joinGame(queueGame.gameId, player.id, queueGame.queueId);
     }
 
-    // if gameId returned as null, it means you haven't been invited to a game yet
+    // if queueGame returned as null, it means you haven't been invited to a game yet
     else {
       // filter the queue down to just people without games to join
       let filtered = queue.filter(queueEntry => queueEntry.gameId === undefined);
 
-      this.queueMessage = this.getQueueMessage(filtered, player);
-
-      // if there is a queue length > 1, figure out if you need to do anything
-      if (filtered.length > 1) {
-        let firstInQueue = filtered[0].payload.doc.data();
-
-        // only the first player in the queue will do game creation
-        if (firstInQueue.player.id === player.id) {
-          this.message = 'Creating game...';
-          this.busy = true;
-          let players = [];
-          players.push(filtered[0].payload.doc.data().player);
-          players.push(filtered[1].payload.doc.data().player);
-
-          players[0].color = 'white';
-          players[1].color = 'black';
-
-          this.createGame(players, false).then(game => {
-            // put the gameId on both players
-            setTimeout(() => {
-              this.afs.doc<any>('queue/' + filtered[0].payload.doc.id).update({ gameId: game.id });
-              this.afs.doc<any>('queue/' + filtered[1].payload.doc.id).update({ gameId: game.id });
-            }, 500)
-          });
-
-          this.busy = false;
+      // update the queue position message 
+      let queuePosition = this.getQueuePosition(filtered, player);
+      this.queueMessage = 'You are in position ' + (queuePosition + 1) + ' out of ' + queue.length;
+      
+      // check if the person in front of you in the queue is gone and boot them if so
+      if (queuePosition > 0) {
+        let nextPosition = filtered[queuePosition - 1].payload.doc.data();
+        if (moment().unix() - nextPosition.lastUpdated > this.timeoutPeriod) {
+          this.afs.doc<any>('queue/' + filtered[queuePosition - 1].payload.doc.id).delete().catch(this.doNothing);
         }
+      }
+
+      // only the first player in the queue will do game creation
+      if (queuePosition === 0 && filtered.length > 1) {
+        this.message = 'Creating game...';
+        this.busy = true;
+        let players = [];
+        players.push(filtered[0].payload.doc.data().player);
+        players.push(filtered[1].payload.doc.data().player);
+
+        players[0].color = 'white';
+        players[1].color = 'black';
+
+        this.createGame(players, false).then(game => {
+          // put the gameId on both players
+          setTimeout(() => {
+            this.afs.doc<any>('queue/' + filtered[0].payload.doc.id).update({ gameId: game.id });
+            this.afs.doc<any>('queue/' + filtered[1].payload.doc.id).update({ gameId: game.id });
+          }, 500)
+        });
+
+        this.busy = false;
       }
     }
   }
 
-  getQueueMessage(queue: any, player: any) {
-    let position = queue.length;
+  getQueuePosition(queue: any, player: any) {
+    let position = queue.length - 1;
     for (let i = 0; i < queue.length; i++) {
-      if (queue[i].payload.doc.data().player.id === player.id) {
-        return 'You are in position ' + (i + 1) + ' out of ' + queue.length;
+      if (queue[i].payload.doc.id === this.queueId) {
+        return i;
       }
     }
-    return 'You are in position ' + position + ' out of ' + queue.length;
+    return position;
   }
 
   getQueueGame(queue: any, player: any) {
@@ -167,11 +197,12 @@ export class QueuePage {
 
   joinGame(gameId: string, playerId: string, queueToDelete: string) {
     this.message = 'Game starting...';
+    this.stopUpdate = true;
 
     // if this game is being joined by a player from the queue,
     // that user's queueId needs to be removed
     if (queueToDelete) {
-      this.afs.doc<any>('queue/' + queueToDelete).delete().catch(this.catchError);
+      this.afs.doc<any>('queue/' + queueToDelete).delete().catch(this.doNothing);
     }
 
     setTimeout(() => {
@@ -181,11 +212,11 @@ export class QueuePage {
 
   exit() {
     this.ngUnsubscribe.next();
-    this.afs.doc<any>('queue/' + this.queueId).delete().catch(this.catchError);
+    this.afs.doc<any>('queue/' + this.queueId).delete().catch(this.doNothing);
     this.navCtrl.push(HomePage);
   }
 
-  catchError() {
-    // do nothing
+  doNothing() {
+    // do nothing with the error message
   }
 }
