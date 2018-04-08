@@ -42,7 +42,7 @@ export class ProfilePage {
         });
       })
       .filter(function (game) {
-        return _.includes(_.map(game.players, 'id'), playerId);
+        return game.winner && _.includes(_.map(game.players, 'id'), playerId);
       });
   }
 }

@@ -8,7 +8,7 @@
 
 
 <ion-content padding>
-  <ion-grid>
+  <ion-grid *ngIf="games && games.length">
     <ion-row class="header-row">
       <ion-col>
         Time
@@ -37,4 +37,8 @@
       </ion-col>
     </ion-row>
   </ion-grid>
+
+  <h4 margin-top text-center *ngIf="!games || games.length === 0">
+    No games played yet
+  </h4>
 </ion-content>

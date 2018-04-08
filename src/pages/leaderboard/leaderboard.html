@@ -5,7 +5,7 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-grid>
+  <ion-grid *ngIf="players && players.length">
     <ion-row class="header-row">
       <ion-col col-3>
         Rank
@@ -29,4 +29,8 @@
       </ion-col>
     </ion-row>
   </ion-grid>
+
+  <h4 margin-top text-center *ngIf="!players || players.length === 0">
+    No games played yet
+  </h4>
 </ion-content>
