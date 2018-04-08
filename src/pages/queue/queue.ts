@@ -85,7 +85,7 @@ export class QueuePage {
       this.queueCollection.snapshotChanges()
         .takeUntil(this.ngUnsubscribe)
         .subscribe(queue => {
-          this.determineQueuePosition(queue, player);
+          this.checkTheQueue(queue, player);
         });
     }
   }
@@ -102,7 +102,7 @@ export class QueuePage {
     }
   }
  
-  determineQueuePosition(queue: any, player: any) {
+  checkTheQueue(queue: any, player: any) {
     if (this.busy) return;
 
     // if this queued user needs to join a game, do it!
