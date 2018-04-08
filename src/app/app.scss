@@ -26,6 +26,9 @@ button[ion-button].chess-button {
 }
 
 .circle-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: 50px;
   width: 50px;
   border-radius: 25px;
