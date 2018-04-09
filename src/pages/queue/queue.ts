@@ -19,6 +19,7 @@ export class QueuePage {
   private queueCollection;
   private myQueuePosition;
   private ngUnsubscribe: Subject<void> = new Subject();
+  private game;
   private busy;
   private timeout;
 
@@ -37,6 +38,7 @@ export class QueuePage {
     this.busy = false;
     this.updateStarted = false;
     this.stopUpdate = false;
+    this.game = null;
     let player = this.navParams.data.player;
 
     // bot stuff
@@ -141,14 +143,19 @@ export class QueuePage {
         players[0].color = random === 0 ? 'white' : 'black';
         players[1].color = random === 1 ? 'white' : 'black';
 
-        this.createGame(players, false).then(game => {
-          // put the gameId on both players
-          setTimeout(() => {
-            this.afs.doc<any>('queue/' + filtered[0].payload.doc.id).update({ gameId: game.id });
-            this.afs.doc<any>('queue/' + filtered[1].payload.doc.id).update({ gameId: game.id });
-          }, 500)
-        });
+        // only create a new game if one hasn't been made yet as this was 
+        // sometimes getting fired twice when the queue was updated rapidly
+        if (this.game === null) {
+          this.game = this.createGame(players, false).then(game => {
 
+            // put the gameId on both players, effectively inviting them to the game
+            setTimeout(() => {
+              this.afs.doc<any>('queue/' + filtered[0].payload.doc.id).update({ gameId: game.id }).catch(this.doNothing);
+              this.afs.doc<any>('queue/' + filtered[1].payload.doc.id).update({ gameId: game.id }).catch(this.doNothing);
+            }, 500)
+          });
+        }
+        
         this.busy = false;
       }
     }
