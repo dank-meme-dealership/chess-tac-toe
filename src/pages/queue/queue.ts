@@ -137,8 +137,9 @@ export class QueuePage {
         players.push(filtered[0].payload.doc.data().player);
         players.push(filtered[1].payload.doc.data().player);
 
-        players[0].color = 'white';
-        players[1].color = 'black';
+        let random = this.getRandomInt(2);
+        players[0].color = random === 0 ? 'white' : 'black';
+        players[1].color = random === 1 ? 'white' : 'black';
 
         this.createGame(players, false).then(game => {
           // put the gameId on both players
@@ -151,6 +152,10 @@ export class QueuePage {
         this.busy = false;
       }
     }
+  }
+
+  getRandomInt(max) {
+    return Math.floor(Math.random() * Math.floor(max));
   }
 
   getQueuePosition(queue: any, player: any) {
