@@ -4,7 +4,7 @@ import { Game } from "../home/play-game-modal";
 import { GameplayPage } from "../gameplay/gameplay";
 import { AngularFirestore } from 'angularfire2/firestore';
 import { Subject } from 'rxjs/Subject';
-import {HomePage} from "../home/home";
+import { HomePage } from "../home/home";
 
 const moment = require("moment");
 
@@ -21,9 +21,7 @@ export class QueuePage {
   private ngUnsubscribe: Subject<void> = new Subject();
   private game;
   private busy;
-  private timeout;
 
-  private updateStarted: boolean;
   private stopUpdate: boolean;
 
   queueId: string;
@@ -36,7 +34,6 @@ export class QueuePage {
   ionViewDidLoad() {
     // ensure this class doesn't think we're busy
     this.busy = false;
-    this.updateStarted = false;
     this.stopUpdate = false;
     this.game = null;
     let player = this.navParams.data.player;
@@ -95,7 +92,6 @@ export class QueuePage {
   // start a timeout to update the queue with a new timestamp every 3
   // seconds so the other members in the queue know you're still here
   setLastUpdated(seconds: number) {
-    this.updateStarted = true;
     if (!this.stopUpdate) {
       setTimeout(() => {
         this.myQueuePosition.update({ lastUpdated: moment().unix() }).catch(this.doNothing);
