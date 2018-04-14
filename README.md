@@ -2,7 +2,7 @@
 
 # chesstactoe
 
-Real-time matchmaking online version of Tic Tac Chec board game, [see it live on Heroku](https://chesstactoe.herokuapp.com/)
+Real-time matchmaking online version of Tic Tac Chec board game, [see it live here](https://chess-tac-toe.firebaseapp.com/)
 
 ## FEATURES
 
