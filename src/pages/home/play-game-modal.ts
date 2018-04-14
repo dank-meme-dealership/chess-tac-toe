@@ -27,7 +27,7 @@ export interface Game {
   template: `
     <ion-content>
       <div class="button-container">
-        <button class="chess-button" ion-button (click)="goToGameplay('matchmaking')">Matchmaking</button>
+        <button class="chess-button" ion-button (click)="goToGameplay('matchmaking')" [disabled]="buttonClicked">Matchmaking</button>
         <div text-center>Play against a random opponent</div>
 
         <button margin-top class="chess-button" ion-button (click)="goToGameplay('bots')" disabled>Bot vs. Bot</button>
@@ -44,12 +44,19 @@ export class PlayGameModal {
   private usersCollection: AngularFirestoreCollection<User>;
   users: Observable<User[]>;
 
+  private buttonClicked: boolean;
+
   constructor(public navCtrl: NavController, public params: NavParams, public viewCtrl: ViewController, private afs: AngularFirestore, private botProvider: BotProvider) {
     this.usersCollection = afs.collection<User>('users');
     this.users = this.usersCollection.valueChanges();
+    this.buttonClicked = false;
   }
 
   goToGameplay(type: string) {
+    // set buttonClicked to true so the html can key off 
+    // of this and disable any subsequent button clicks
+    this.buttonClicked = true;
+
     let name = this.params.get('name');
     let uid = localStorage.getItem('uid');
     if (type === 'bots') {
