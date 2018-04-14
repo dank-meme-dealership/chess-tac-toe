@@ -91,6 +91,11 @@ button.exit-button {
   z-index: 999; // doesn't matter does it?
 }
 
+@font-face {
+  font-family: 'ChessAlpha';
+  src: url('../assets/fonts/Alpha.ttf') format('truetype');
+}
+
 //// OVERRIDES
 
 .bar-button-default-ios, .bar-button-default.bar-button-ios-default, .bar-button-clear-ios-default {

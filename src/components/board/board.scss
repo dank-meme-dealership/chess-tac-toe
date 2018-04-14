@@ -80,6 +80,7 @@ board {
   }
 
   .wr, .wb, .wk, .wpu, .wpd, .br, .bb, .bk, .bpu, .bpd, .valid {
+    font-family: ChessAlpha;
     cursor: pointer;
   }
 }
