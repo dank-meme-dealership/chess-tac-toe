@@ -135,9 +135,7 @@ export class QueuePage {
         players.push(filtered[0].payload.doc.data().player);
         players.push(filtered[1].payload.doc.data().player);
 
-        // let random = this.getRandomInt(2);
-        // players[0].color = random === 0 ? 'white' : 'black';
-        // players[1].color = random === 1 ? 'white' : 'black';
+        // hard code the colors
         players[0].color = 'white';
         players[1].color = 'black';
 
