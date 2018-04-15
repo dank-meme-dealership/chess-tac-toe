@@ -93,9 +93,12 @@ button.exit-button {
 
 @font-face {
   font-family: 'ChessAlpha';
-  src: url('../assets/fonts/Alpha.ttf') format('truetype'),
-       url('../assets/fonts/Alpha.woff2') format('woff2'),
-       url('../assets/fonts/Alpha.woff') format('woff');
+  src: url('chessalpha.eot');
+    src: url('chessalpha.eot?#iefix') format('embedded-opentype'),
+         url('chessalpha.woff2') format('woff2'),
+         url('chessalpha.woff') format('woff'),
+         url('chessalpha.ttf') format('truetype'),
+         url('chessalpha.svg#chess_alpha_2book') format('svg');
   font-weight: normal;
   font-style: normal;
 }
