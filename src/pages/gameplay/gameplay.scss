@@ -7,15 +7,30 @@ page-gameplay {
     flex-direction: column;
 
     .name-container {
-      padding: 10px 20px;
-      margin: 10px;
-      text-align: center;
-      font-size: 26px;
-      font-weight: 500;
+      display: flex;
+      justify-content: space-between;
+      font-size: 20px;
+      text-align: left;
+      width: 410px;
+      border: solid #333;
+      border-width: 5px;
+      background: #616161;
 
-      &.highlighted {
+      span {
+        padding: 5px 10px;
+        flex-grow: 1;
+      }
+
+      &.top {
+        border-bottom: 0;
+      }
+
+      &.bottom {
+        border-top: 0;
+      }
+
+      .highlighted {
         background: #609ccd;
-        border-radius: 10px;
       }
     }
   }

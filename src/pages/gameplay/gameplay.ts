@@ -27,12 +27,7 @@ export class GameplayPage {
   private gameOver: boolean;
   private message: string;
   chatShown = false;
-
-  whiteName: string;
-  whitesTurn: boolean;
-  blackName: string;
-  blacksTurn: boolean;
-
+  yourTurn = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public botProvider: BotProvider, private afs: AngularFirestore, public modalCtrl: ModalController) {
   }
@@ -58,24 +53,15 @@ export class GameplayPage {
         .takeUntil(this.ngUnsubscribe)
         .subscribe(game => {
           this.game = game;
+
+          // set up the player and enemy if it hasn't yet
           if (!this.player) {
             this.player = this.getPlayer(game, playerId);
             this.enemy = this.getEnemy(game, playerId);
-            if (game.players.length > 0) {
-              this.whiteName = game.players[0].name || 'Anonymous';
-              if (this.player.color === 'white') {
-                this.whiteName += ' (You)';
-              }
-            }
-            if (game.players.length > 1) {
-              this.blackName = game.players[1].name || 'Anonymous';
-              if (this.player.color === 'black') {
-                this.blackName += ' (You)';
-              }
-            }
           }
-          this.whitesTurn = game.turns.length % 2 === 0;
-          this.blacksTurn = !this.whitesTurn;
+
+          // determine whose turn it is
+          this.yourTurn = game.turns.length % 2 === (this.player.color === 'white' ? 0 : 1);
 
           // check if a winner was set by the board
           if (game.winner && !this.gameOver) {
@@ -116,13 +102,6 @@ export class GameplayPage {
 
   sleep(ms: number) {
     return new Promise( resolve => setTimeout(resolve, ms) );
-  }
-
-  isMyTurn() {
-    if(this.player){
-      return (this.player.color === 'white' && this.whitesTurn) || (this.player.color === 'black' && this.blacksTurn)
-    }
-    return false;
   }
 
   showGameOverModal(name: string, didWin: boolean) {

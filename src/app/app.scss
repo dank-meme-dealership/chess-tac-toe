@@ -106,3 +106,54 @@ button.exit-button {
 .back-button-icon-ios {
   font-size: 2.4rem;
 }
+
+//// MEDIA QUERIES
+@media screen and (max-width: 360px) {
+  .chessboard {
+    width: 266px !important;
+    height: 384px !important;
+  }
+  .board-space {
+    width: 64px !important;
+    height: 64px !important;
+    font-size: 40px !important;
+  }
+  .name-container {
+    width: 266px !important;
+
+    &.top {
+      margin-top: 10px;
+    }
+  }
+  button.exit-button {
+    top: 15px;
+  }
+}
+@media screen and (min-width: 360px) and (max-width: 400px) {
+  .chessboard {
+    width: 290px !important;
+    height: 408px !important;
+  }
+  .board-space {
+    width: 70px !important;
+    height: 70px !important;
+    font-size: 40px !important;
+  }
+  .name-container {
+    width: 290px !important;
+  }
+}
+@media screen and (min-width: 400px) and (max-width: 450px) {
+  .chessboard {
+    width: 330px !important;
+    height: 448px !important;
+  }
+  .board-space {
+    width: 80px !important;
+    height: 80px !important;
+    font-size: 40px !important;
+  }
+  .name-container {
+    width: 330px !important;
+  }
+}
