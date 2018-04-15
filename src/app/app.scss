@@ -93,7 +93,9 @@ button.exit-button {
 
 @font-face {
   font-family: 'ChessAlpha';
-  src: url('../assets/fonts/Alpha.ttf') format('truetype');
+  src: url('../assets/fonts/Alpha.ttf') format('truetype'),
+       url('../assets/fonts/Alpha.woff2') format('woff2'),
+       url('../assets/fonts/Alpha.woff') format('woff');;
 }
 
 //// OVERRIDES
