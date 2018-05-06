@@ -30,9 +30,6 @@ export interface Game {
         <button class="chess-button" ion-button (click)="goToGameplay('matchmaking')" [disabled]="buttonClicked">Matchmaking</button>
         <div text-center>Play against a random opponent</div>
 
-        <button margin-top class="chess-button" ion-button (click)="goToGameplay('bots')" disabled>Bot vs. Bot</button>
-        <div text-center>Watch two bots battle it out!</div>
-
         <button margin-top class="chess-button" ion-button (click)="goToGameplay('private')" disabled>Private
         </button>
         <div text-center>Create a private game and invite a friend</div>
@@ -59,14 +56,7 @@ export class PlayGameModal {
 
     let name = this.params.get('name');
     let uid = localStorage.getItem('uid');
-    if (type === 'bots') {
-      if (!localStorage.getItem('bot1') || !localStorage.getItem('bot2')) {
-        this.createBots();
-      }
-      this.navCtrl.push(QueuePage, { gameId: 'bots' + new Date().getMilliseconds, type: 'bots' });
-      this.viewCtrl.dismiss();
-    }
-    else if (uid) {
+    if (uid) {
       this.joinQueue({ name: name, id: uid }, type);
     }
     else {
@@ -86,19 +76,5 @@ export class PlayGameModal {
   joinQueue(player: any, type: string) {
     this.navCtrl.push(QueuePage, { player: player, type: type });
     this.viewCtrl.dismiss();
-  }
-
-  createBots() {
-    let bot1Name = 'bot1';
-    let bot2Name = 'bot2';
-
-    this.addUser(bot1Name).then(function (uid) {
-      localStorage.setItem(bot1Name, uid)
-      this.joinQueue({ name: bot1Name, id: uid }, 'bots');
-    }.bind(this));
-    this.addUser(bot2Name).then(function (uid) {
-      localStorage.setItem(bot2Name, uid)
-      this.joinQueue({ name: bot2Name, id: uid }, 'bots');
-    }.bind(this));
   }
 }

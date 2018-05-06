@@ -68,13 +68,6 @@ export class GameplayPage {
             this.gameOver = true;
             this.showGameOverModal(this.enemy.name, game.winner === this.player.id);
           }
-
-          // bot stuff
-          if (playerId === 'bot1' || playerId === 'bot2') {
-            let color = game.players[0].name === playerId ? 'white' : 'black';
-            this.botProvider.makeMove({ board: game.boardState, color: color })
-            this.sleep(500);
-          }
         });
     }
   }

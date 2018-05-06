@@ -38,18 +38,8 @@ export class QueuePage {
     this.game = null;
     let player = this.navParams.data.player;
 
-    // bot stuff
-    if (this.navParams.data.type === 'bots') {
-      this.message = 'bots are being created...';
-      this.createGame([{ name: 'bot1', id: 'bot1' }, { name: 'bot2', id: 'bot2' }], false).then(game => {
-        // nav to this game, nothing to delete
-        this.joinGame(game.id, 'bot1', null);
-        this.joinGame(game.id, 'bot2', null);
-      });
-    }
-
     // private games just start and are handled in the gameplay page
-    else if (this.navParams.data.type === 'private') {
+    if (this.navParams.data.type === 'private') {
       this.message = 'Creating game...';
       this.createGame([player], true).then(game => {
         // nav to this game, nothing to delete
