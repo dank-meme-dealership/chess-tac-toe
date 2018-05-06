@@ -41,14 +41,6 @@ export class BoardComponent {
     }
 
     this.selected = null;
-    this.boardState = [
-      ['wr', 'wpd', 'wk', 'wb'],
-      ['', '', '', ''],
-      ['', '', '', ''],
-      ['', '', '', ''],
-      ['', '', '', ''],
-      ['br', 'bpu', 'bk', 'bb'],
-    ]
     this.highlighted = [];
     this.moves = [];
   }
@@ -153,17 +145,19 @@ export class BoardComponent {
 
   selectPiece(x, y) {
     let trayIndex;
-    let numOnBoard = 0;
     if (this.player.color[0] === 'b') {
       trayIndex = 5;
     } else {
       trayIndex = 0;
     }
-    for (let c = 0; c < 4; c++) {
-      if (this.boardState[trayIndex][c] === '') numOnBoard++;
-    }
-    if (numOnBoard < 3 && x !== trayIndex) {
-      return; // do not select anything if we have less than three pieces on the board;
+    if (x !== trayIndex) {
+      let numOnBoard = 0;
+      for (let c = 0; c < 4; c++) {
+        if (this.boardState[trayIndex][c] === '') numOnBoard++;
+      }
+      if (numOnBoard < 3) {
+        return; // do not select anything if we have less than three pieces on the board;
+      }
     }
 
     this.selected = {

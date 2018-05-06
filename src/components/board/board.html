@@ -1,34 +1,34 @@
 <div class="chessboard" *ngIf="player && player.color === 'black'">
   <!-- 1st -->
-  <div id="r0c0 {{gameId}}" class="player board-space" (click)="onClick(0,3)" [ngClass]="boardState[0][3]"></div>
-  <div id="r0c1 {{gameId}}" class="player board-space" (click)="onClick(0,2)" [ngClass]="boardState[0][2]"></div>
-  <div id="r0c2 {{gameId}}" class="player board-space" (click)="onClick(0,1)" [ngClass]="boardState[0][1]"></div>
-  <div id="r0c3 {{gameId}}" class="player board-space" (click)="onClick(0,0)" [ngClass]="boardState[0][0]"></div>
+  <div id="r0c3 {{gameId}}" class="player board-space" (click)="onClick(0,3)" [ngClass]="boardState[0][3]"></div>
+  <div id="r0c2 {{gameId}}" class="player board-space" (click)="onClick(0,2)" [ngClass]="boardState[0][2]"></div>
+  <div id="r0c1 {{gameId}}" class="player board-space" (click)="onClick(0,1)" [ngClass]="boardState[0][1]"></div>
+  <div id="r0c0 {{gameId}}" class="player board-space" (click)="onClick(0,0)" [ngClass]="boardState[0][0]"></div>
   <!-- 2nd -->
-  <div id="r1c0 {{gameId}}" class="black board-space" (click)="onClick(1,3)" [ngClass]="boardState[1][3]"></div>
-  <div id="r1c1 {{gameId}}" class="white board-space" (click)="onClick(1,2)" [ngClass]="boardState[1][2]"></div>
-  <div id="r1c2 {{gameId}}" class="black board-space" (click)="onClick(1,1)" [ngClass]="boardState[1][1]"></div>
-  <div id="r1c3 {{gameId}}" class="white board-space" (click)="onClick(1,0)" [ngClass]="boardState[1][0]"></div>
+  <div id="r1c3 {{gameId}}" class="black board-space" (click)="onClick(1,3)" [ngClass]="boardState[1][3]"></div>
+  <div id="r1c2 {{gameId}}" class="white board-space" (click)="onClick(1,2)" [ngClass]="boardState[1][2]"></div>
+  <div id="r1c1 {{gameId}}" class="black board-space" (click)="onClick(1,1)" [ngClass]="boardState[1][1]"></div>
+  <div id="r1c0 {{gameId}}" class="white board-space" (click)="onClick(1,0)" [ngClass]="boardState[1][0]"></div>
   <!-- 3th -->
-  <div id="r2c0 {{gameId}}" class="white board-space" (click)="onClick(2,3)" [ngClass]="boardState[2][3]"></div>
-  <div id="r2c1 {{gameId}}" class="black board-space" (click)="onClick(2,2)" [ngClass]="boardState[2][2]"></div>
-  <div id="r2c2 {{gameId}}" class="white board-space" (click)="onClick(2,1)" [ngClass]="boardState[2][1]"></div>
-  <div id="r2c3 {{gameId}}" class="black board-space" (click)="onClick(2,0)" [ngClass]="boardState[2][0]"></div>
+  <div id="r2c3 {{gameId}}" class="white board-space" (click)="onClick(2,3)" [ngClass]="boardState[2][3]"></div>
+  <div id="r2c2 {{gameId}}" class="black board-space" (click)="onClick(2,2)" [ngClass]="boardState[2][2]"></div>
+  <div id="r2c1 {{gameId}}" class="white board-space" (click)="onClick(2,1)" [ngClass]="boardState[2][1]"></div>
+  <div id="r2c0 {{gameId}}" class="black board-space" (click)="onClick(2,0)" [ngClass]="boardState[2][0]"></div>
   <!-- 4st -->
-  <div id="r3c0 {{gameId}}" class="black board-space" (click)="onClick(3,3)" [ngClass]="boardState[3][3]"></div>
-  <div id="r3c1 {{gameId}}" class="white board-space" (click)="onClick(3,2)" [ngClass]="boardState[3][2]"></div>
-  <div id="r3c2 {{gameId}}" class="black board-space" (click)="onClick(3,1)" [ngClass]="boardState[3][1]"></div>
-  <div id="r3c3 {{gameId}}" class="white board-space" (click)="onClick(3,0)" [ngClass]="boardState[3][0]"></div>
+  <div id="r3c3 {{gameId}}" class="black board-space" (click)="onClick(3,3)" [ngClass]="boardState[3][3]"></div>
+  <div id="r3c2 {{gameId}}" class="white board-space" (click)="onClick(3,2)" [ngClass]="boardState[3][2]"></div>
+  <div id="r3c1 {{gameId}}" class="black board-space" (click)="onClick(3,1)" [ngClass]="boardState[3][1]"></div>
+  <div id="r3c0 {{gameId}}" class="white board-space" (click)="onClick(3,0)" [ngClass]="boardState[3][0]"></div>
   <!-- 5th -->
-  <div id="r4c0 {{gameId}}" class="white board-space" (click)="onClick(4,3)" [ngClass]="boardState[4][3]"></div>
-  <div id="r4c1 {{gameId}}" class="black board-space" (click)="onClick(4,2)" [ngClass]="boardState[4][2]"></div>
-  <div id="r4c2 {{gameId}}" class="white board-space" (click)="onClick(4,1)" [ngClass]="boardState[4][1]"></div>
-  <div id="r4c3 {{gameId}}" class="black board-space" (click)="onClick(4,0)" [ngClass]="boardState[4][0]"></div>
+  <div id="r4c3 {{gameId}}" class="white board-space" (click)="onClick(4,3)" [ngClass]="boardState[4][3]"></div>
+  <div id="r4c2 {{gameId}}" class="black board-space" (click)="onClick(4,2)" [ngClass]="boardState[4][2]"></div>
+  <div id="r4c1 {{gameId}}" class="white board-space" (click)="onClick(4,1)" [ngClass]="boardState[4][1]"></div>
+  <div id="r4c0 {{gameId}}" class="black board-space" (click)="onClick(4,0)" [ngClass]="boardState[4][0]"></div>
   <!-- 6th -->
-  <div id="r5c0 {{gameId}}" class="player board-space" (click)="onClick(5,3)" [ngClass]="boardState[5][3]"></div>
-  <div id="r5c1 {{gameId}}" class="player board-space" (click)="onClick(5,2)" [ngClass]="boardState[5][2]"></div>
-  <div id="r5c2 {{gameId}}" class="player board-space" (click)="onClick(5,1)" [ngClass]="boardState[5][1]"></div>
-  <div id="r5c3 {{gameId}}" class="player board-space" (click)="onClick(5,0)" [ngClass]="boardState[5][0]"></div>
+  <div id="r5c3 {{gameId}}" class="player board-space" (click)="onClick(5,3)" [ngClass]="boardState[5][3]"></div>
+  <div id="r5c2 {{gameId}}" class="player board-space" (click)="onClick(5,2)" [ngClass]="boardState[5][2]"></div>
+  <div id="r5c1 {{gameId}}" class="player board-space" (click)="onClick(5,1)" [ngClass]="boardState[5][1]"></div>
+  <div id="r5c0 {{gameId}}" class="player board-space" (click)="onClick(5,0)" [ngClass]="boardState[5][0]"></div>
 </div>
 
 <div class="chessboard" *ngIf="player && player.color === 'white'">

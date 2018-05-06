@@ -183,12 +183,12 @@ export class QueuePage {
         timestamp: moment().unix(),
         privateGame: privateGame,
         boardState: JSON.stringify([
-          ['wr', 'wpd', 'wk', 'wb'],
+          ['wpd', 'wk', 'wb', 'wr'],
           ['', '', '', ''],
           ['', '', '', ''],
           ['', '', '', ''],
           ['', '', '', ''],
-          ['br', 'bpu', 'bk', 'bb'],
+          ['br', 'bb', 'bk', 'bpu'],
         ])
       });
   }
