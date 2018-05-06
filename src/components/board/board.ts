@@ -90,6 +90,10 @@ export class BoardComponent {
       }
       this.boardState[x][y] = this.selected.piece;
       this.boardState[this.selected.xS][this.selected.yS] = '';
+
+      // set pawns back to their original directional state
+      if (this.moveTo.piece[1] === 'p') this.moveTo.piece = playerArray === 0 ? 'wpd' : 'bpu';
+
       this.boardState[playerArray][c] = this.moveTo.piece;
     } else { // just move it!
       this.boardState[x][y] = this.selected.piece;
