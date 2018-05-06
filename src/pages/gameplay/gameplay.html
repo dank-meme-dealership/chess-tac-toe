@@ -5,7 +5,7 @@
     <div class="name-container top">
       <span [ngClass]="{'highlighted': !yourTurn}">{{ enemy?.name || 'Anonymous' }}</span>
     </div>
-    <board [player]="player" [ngClass]="{'disabled': !yourTurn}"></board>
+    <board [player]="player" [ngClass]="{'disabled': !yourTurn || gameOver}"></board>
     <div class="name-container bottom">
       <span [ngClass]="{'highlighted': yourTurn}">{{ player?.name || 'Anonymous' }}</span>
     </div>
