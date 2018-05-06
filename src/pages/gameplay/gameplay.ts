@@ -11,6 +11,8 @@ import _ from "lodash";
 import { HomePage } from '../home/home';
 import { GameOverModalPage } from '../game-over-modal/game-over-modal';
 
+const moment = require("moment");
+
 @IonicPage()
 @Component({
   selector: 'page-gameplay',
@@ -112,7 +114,7 @@ export class GameplayPage {
 
   addMessage() {
     if (this.game.messages === undefined) this.game.messages = [];
-    if (this.message !== '') this.game.messages.push({ player: this.player.name, message: this.message });
+    if (this.message !== '') this.game.messages.push({ player: this.player.name || 'Anonymous', message: this.message, timestamp: moment().unix() });
     this.gameDoc.update({ messages: this.game.messages });
     this.message = '';
   }
