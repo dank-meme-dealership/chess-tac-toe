@@ -1,8 +1,10 @@
-import {Component} from '@angular/core';
-import {IonicPage, NavController, NavParams, ModalController} from 'ionic-angular';
-import {Game} from '../home/play-game-modal';
-import {AngularFirestoreDocument, AngularFirestore} from 'angularfire2/firestore';
-import {Subject} from "rxjs/Subject";
+import { Component, Input } from '@angular/core';
+import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
+import { Game } from '../home/play-game-modal';
+import { AngularFirestoreDocument, AngularFirestore } from 'angularfire2/firestore';
+import { Observable } from 'rxjs/Observable';
+import { AngularFireDatabase } from 'angularfire2/database';
+import { Subject } from "rxjs/Subject";
 import { BotProvider } from '../../providers/bot/bot';
 
 import _ from "lodash";
@@ -68,9 +70,9 @@ export class GameplayPage {
           }
 
           // bot stuff
-          if(playerId==='bot1'|| playerId === 'bot2') {
+          if (playerId === 'bot1' || playerId === 'bot2') {
             let color = game.players[0].name === playerId ? 'white' : 'black';
-            this.botProvider.makeMove({board: game.boardState, color: color})
+            this.botProvider.makeMove({ board: game.boardState, color: color })
             this.sleep(500);
           }
         });
@@ -78,11 +80,11 @@ export class GameplayPage {
   }
 
   getPlayer(game: any, playerId: string) {
-    return _.find(game.players, {'id': playerId});
+    return _.find(game.players, { 'id': playerId });
   }
 
   getEnemy(game: any, playerId: string) {
-    return _.find(game.players, function(player) {
+    return _.find(game.players, function (player) {
       return player.id != playerId;
     });
   }
@@ -91,7 +93,7 @@ export class GameplayPage {
     // if the game isn't over and you leave,
     // the other player wins automatically
     if (!this.gameOver) {
-      this.gameDoc.update({winner: this.enemy.id});
+      this.gameDoc.update({ winner: this.enemy.id });
     }
 
     this.gameOver = true;
@@ -99,7 +101,7 @@ export class GameplayPage {
   }
 
   sleep(ms: number) {
-    return new Promise( resolve => setTimeout(resolve, ms) );
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
 
   showGameOverModal(name: string, didWin: boolean) {
@@ -107,18 +109,18 @@ export class GameplayPage {
     if (didWin) {
       this.playerDoc.valueChanges().take(1).subscribe(user => {
         let wins = (user.wins || 0) + 1;
-        this.playerDoc.update({wins: wins});
+        this.playerDoc.update({ wins: wins });
       });
     }
 
     // show the game over modal
-    this.modalCtrl.create(GameOverModalPage, {name: name, didWin: didWin, player: this.player}, {cssClass: 'game-over-modal'}).present();
+    this.modalCtrl.create(GameOverModalPage, { name: name, didWin: didWin, player: this.player }, { cssClass: 'game-over-modal' }).present();
   }
 
-  addMessage(){
-    if(this.game.messages === undefined) this.game.messages = [];
-    if(this.message !== '') this.game.messages.push({player: this.player.name, message: this.message});
-    this.gameDoc.update({messages: this.game.messages});
+  addMessage() {
+    if (this.game.messages === undefined) this.game.messages = [];
+    if (this.message !== '') this.game.messages.push({ player: this.player.name, message: this.message });
+    this.gameDoc.update({ messages: this.game.messages });
     this.message = '';
   }
 

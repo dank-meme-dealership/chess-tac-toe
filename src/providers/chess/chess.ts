@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { ObjectToUniqueKey } from '@firebase/database/dist/src/core/util/util';
 
 export interface Move {
   playerId: number;
@@ -15,7 +16,7 @@ export class ChessProvider {
   }
 
   getValidMoves(board, selected) {
-    
+
     this.selected = selected;
     this.board = board;
 
@@ -65,7 +66,7 @@ export class ChessProvider {
     for (let x = this.selected.xS + 1; x < 5; x++) {
       let onBoardSpace = this.checkSpace(x, this.selected.yS, color)
       if (onBoardSpace) {
-        if(onBoardSpace.f) break; // we hit a friendly and can't go farther. Break and do not add to legal moves
+        if (onBoardSpace.f) break; // we hit a friendly and can't go farther. Break and do not add to legal moves
         legalMoves.push(onBoardSpace);
         if (onBoardSpace.o) break; // we hit aan enemy and can't go farther, but we added him already as a valid move.
       }
@@ -75,9 +76,9 @@ export class ChessProvider {
     for (let x = this.selected.xS - 1; x > 0; x--) {
       let onBoardSpace = this.checkSpace(x, this.selected.yS, color)
       if (onBoardSpace) {
-        if(onBoardSpace.f) break; 
+        if (onBoardSpace.f) break;
         legalMoves.push(onBoardSpace);
-        if (onBoardSpace.o) break;  
+        if (onBoardSpace.o) break;
       }
     }
 
@@ -85,7 +86,7 @@ export class ChessProvider {
     for (let y = this.selected.yS - 1; y >= 0; y--) {
       let onBoardSpace = this.checkSpace(this.selected.xS, y, color)
       if (onBoardSpace) {
-        if(onBoardSpace.f) break; 
+        if (onBoardSpace.f) break;
         legalMoves.push(onBoardSpace);
         if (onBoardSpace.o) break;
       }
@@ -95,7 +96,7 @@ export class ChessProvider {
     for (let y = this.selected.yS + 1; y < 4; y++) {
       let onBoardSpace = this.checkSpace(this.selected.xS, y, color)
       if (onBoardSpace) {
-        if(onBoardSpace.f) break;
+        if (onBoardSpace.f) break;
         legalMoves.push(onBoardSpace);
         if (onBoardSpace.o) break;
       }
@@ -112,7 +113,7 @@ export class ChessProvider {
     for (let i = 1; i < 4; i++) {
       let onBoardSpace = this.checkSpace(this.selected.xS + i, this.selected.yS + i, color)
       if (onBoardSpace) {
-        if(onBoardSpace.f) break;
+        if (onBoardSpace.f) break;
         legalMoves.push(onBoardSpace);
         if (onBoardSpace.o) break;
       }
@@ -122,7 +123,7 @@ export class ChessProvider {
     for (let i = 1; i < 4; i++) {
       let onBoardSpace = this.checkSpace(this.selected.xS - i, this.selected.yS + i, color)
       if (onBoardSpace) {
-        if(onBoardSpace.f) break;
+        if (onBoardSpace.f) break;
         legalMoves.push(onBoardSpace);
         if (onBoardSpace.o) break;
       }
@@ -132,7 +133,7 @@ export class ChessProvider {
     for (let i = 1; i < 4; i++) {
       let onBoardSpace = this.checkSpace(this.selected.xS + i, this.selected.yS - i, color)
       if (onBoardSpace) {
-        if(onBoardSpace.f) break;
+        if (onBoardSpace.f) break;
         legalMoves.push(onBoardSpace);
         if (onBoardSpace.o) break;
       }
@@ -142,7 +143,7 @@ export class ChessProvider {
     for (let i = 1; i < 4; i++) {
       let onBoardSpace = this.checkSpace(this.selected.xS - i, this.selected.yS - i, color)
       if (onBoardSpace) {
-        if(onBoardSpace.f) break;
+        if (onBoardSpace.f) break;
         legalMoves.push(onBoardSpace);
         if (onBoardSpace.o) break;
       }
@@ -216,11 +217,11 @@ export class ChessProvider {
   checkSpace(x, y, color) {
     if (!this.moveIsOnBoard(x, y)) return null;
     if (this.board[x][y] === '') {
-      return { x: x, y: y, o: false , f:false}; //pass back space as empty
+      return { x: x, y: y, o: false, f: false }; //pass back space as empty
     } else if (this.board[x][y][0] !== color) {
-      return { x: x, y: y, o: true, f:false }; //pass back space as occupied if it has opponent
+      return { x: x, y: y, o: true, f: false }; //pass back space as occupied if it has opponent
     } else {
-      return { o: false, f:true};
+      return { o: false, f: true };
     }
   }
 
@@ -237,23 +238,23 @@ export class ChessProvider {
   }
 
 
-  checkForWin(board, color){
+  checkForWin(board, color) {
 
-    for (let x = 1; x < 5; x++){ // check rows
+    for (let x = 1; x < 5; x++) { // check rows
       let piecesInColumn = 0;
 
-      for (let y = 0; y < 4; y ++){
-        if(color === board[x][y][0])piecesInColumn++; 
+      for (let y = 0; y < 4; y++) {
+        if (color === board[x][y][0]) piecesInColumn++;
       }
 
-      if( piecesInColumn === 4) return true;
+      if (piecesInColumn === 4) return true;
     }
 
-    for(let y = 0; y < 4; y ++){ // check columns
+    for (let y = 0; y < 4; y++) { // check columns
       let piecesInRow = 0;
 
-      for (let x = 1; x < 5; x++){
-        if(color === board[x][y][0]) piecesInRow++;
+      for (let x = 1; x < 5; x++) {
+        if (color === board[x][y][0]) piecesInRow++;
       }
 
       if (piecesInRow === 4) return true;
@@ -262,8 +263,8 @@ export class ChessProvider {
     let y = 0;
     let x = 1;
     let piecesInDiagonal = 0;
-    while (y < 4){ // check 1 diagonal
-      if (color === board[x][y][0]){
+    while (y < 4) { // check 1 diagonal
+      if (color === board[x][y][0]) {
         piecesInDiagonal++;
       }
       y++;
@@ -275,8 +276,8 @@ export class ChessProvider {
     y = 3;
     x = 1;
     piecesInDiagonal = 0;
-    while (y >= 0){
-      if (color === board[x][y][0]){
+    while (y >= 0) {
+      if (color === board[x][y][0]) {
         piecesInDiagonal++;
       }
       y--;

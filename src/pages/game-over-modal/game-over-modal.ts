@@ -23,7 +23,7 @@ export class GameOverModalPage {
   }
 
   playAgain() {
-    this.navCtrl.push(QueuePage, {player: this.player, type: 'public'});
+    this.navCtrl.push(QueuePage, { player: this.player, type: 'public' });
     this.viewCtrl.dismiss();
   }
 

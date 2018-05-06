@@ -12,17 +12,12 @@
   </div>
 
   <div class="chat-container" [hidden]="!chatShown">
-    <div *ngIf="game && game.messages" >
+    <div *ngIf="game && game.messages">
       <div class="message" *ngFor="let m of game.messages">
         <strong>{{m.player}}:</strong> {{m.message}}
       </div>
     </div>
-    <ion-input
-      type="text"
-      class="chat-text"
-      placeholder="Type here"
-      [(ngModel)]="message"
-      (keyup.enter)="addMessage()">
+    <ion-input type="text" class="chat-text" placeholder="Type here" [(ngModel)]="message" (keyup.enter)="addMessage()">
     </ion-input>
   </div>
   <button class="chat-button" [hidden]="chatShown" (click)="toggleChatShown()">

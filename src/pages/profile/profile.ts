@@ -26,10 +26,10 @@ export class ProfilePage {
 
     this.gameCollection = this.afs.collection<Game>('games');
     this.gameCollection.snapshotChanges()
-        .takeUntil(this.ngUnsubscribe)
-        .subscribe(games => {
-          this.games = _.reverse(_.sortBy(this.filterGames(games, playerId), 'timestamp'));
-        });
+      .takeUntil(this.ngUnsubscribe)
+      .subscribe(games => {
+        this.games = _.reverse(_.sortBy(this.filterGames(games, playerId), 'timestamp'));
+      });
   }
 
   filterGames(games: any, playerId: string) {
