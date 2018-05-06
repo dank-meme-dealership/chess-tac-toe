@@ -182,6 +182,7 @@ export class QueuePage {
         messages: [],
         timestamp: moment().unix(),
         privateGame: privateGame,
+        lastMove: {},
         boardState: JSON.stringify([
           ['wr', 'wpd', 'wk', 'wb'],
           ['', '', '', ''],

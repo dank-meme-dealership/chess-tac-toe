@@ -16,6 +16,7 @@ export interface Game {
   messages?: any[];
   outcomes?: any;
   timestamp: number;
+  lastMove: any;
 
   privateGame: boolean;
   boardState?: any;
