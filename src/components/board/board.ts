@@ -152,7 +152,7 @@ export class BoardComponent {
       this.highlighted.push(element)
     }
 
-    if (this.lastMove) {
+    if (this.lastMove && this.lastMove.oldPos) {
       let oldPos = document.getElementById("r" + this.lastMove.oldPos.x + "c" + this.lastMove.oldPos.y + ' ' + this.gameId);
       oldPos.classList.add('lastMove');
       this.highlighted.push(oldPos);
