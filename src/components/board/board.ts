@@ -24,6 +24,7 @@ export class BoardComponent {
   private gameDoc: AngularFirestoreDocument<Game>;
   game: any; //Observable<Game>
   private ngUnsubscribe: Subject<void> = new Subject();
+  private lastMove: any;
 
   constructor(public chessProvider: ChessProvider, private navParams: NavParams, private afs: AngularFirestore) {
 
@@ -36,7 +37,12 @@ export class BoardComponent {
         .subscribe(game => {
           // set the board on the client when it's updated
           this.boardState = JSON.parse(game.boardState);
+          this.lastMove = game.lastMove;
           this.firebaseGame = game;
+
+          // highlight the correct squares
+          this.unHighlightMoves();
+          this.highlightMoves();
         });
     }
 
@@ -68,6 +74,13 @@ export class BoardComponent {
       yS: y,
       piece: this.boardState[x][y]
     };
+
+    // set up at object to represent the last move
+    let lastMove = {
+      oldPos: { x: this.selected.xS, y: this.selected.yS },
+      newPos: { x: x, y: y }
+    }
+
     this.updatePawnIfNeeded();
     if (occupied) { // do logic to move a piece
       let playerArray;
@@ -102,36 +115,49 @@ export class BoardComponent {
     // update the board in firebase
     let boardString = JSON.stringify(this.boardState)
     this.firebaseGame.turns.push(boardString);
-    this.gameDoc.update({ boardState: boardString, turns: this.firebaseGame.turns });
+    this.gameDoc.update({ boardState: boardString, lastMove: lastMove, turns: this.firebaseGame.turns });
   }
 
 
   // Highlights all possible moves and currently selected piece
   highlightMoves() {
-
     let element;
 
-    if (this.chessProvider.isNotInTray(this.selected.xS)) {
-      this.moves.forEach(e => {
-        element = document.getElementById("r" + e.x + "c" + e.y + ' ' + this.gameId);
-        let className;
-        if (e.o) {
-          className = "validEnemy";
-        } else {
-          className = "valid";
-        }
-        element.classList.add(className);
-        this.highlighted.push(element);
-      });
+    if (this.selected) {
+
+      if (this.chessProvider.isNotInTray(this.selected.xS)) {
+        this.moves.forEach(e => {
+          element = document.getElementById("r" + e.x + "c" + e.y + ' ' + this.gameId);
+          let className;
+          if (e.o) {
+            className = "validEnemy";
+          } else {
+            className = "valid";
+          }
+          element.classList.add(className);
+          this.highlighted.push(element);
+        });
+      }
+
+      element = document.getElementById("r" + this.selected.xS + "c" + this.selected.yS + ' ' + this.gameId);
+      element.classList.add("selected");
+      this.highlighted.push(element)
     }
-    element = document.getElementById("r" + this.selected.xS + "c" + this.selected.yS + ' ' + this.gameId);
-    element.classList.add("selected");
-    this.highlighted.push(element)
+
+    if (this.lastMove && this.lastMove.oldPos) {
+      let oldPos = document.getElementById("r" + this.lastMove.oldPos.x + "c" + this.lastMove.oldPos.y + ' ' + this.gameId);
+      oldPos.classList.add('lastMove');
+      this.highlighted.push(oldPos);
+
+      let newPos = document.getElementById("r" + this.lastMove.newPos.x + "c" + this.lastMove.newPos.y + ' ' + this.gameId);
+      newPos.classList.add('lastMove');
+      this.highlighted.push(newPos);
+    }
   }
 
   unHighlightMoves() {
     this.highlighted.forEach(e => {
-      e.classList.remove('valid', 'validEnemy', 'selected');
+      e.classList.remove('valid', 'validEnemy', 'selected', 'lastMove');
     });
   }
 

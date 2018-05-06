@@ -68,6 +68,10 @@ board {
     background: #6bb1ea;
   }
 
+  .lastMove {
+    background: #bbb798;
+  }
+
   .wr, .wb, .wk, .wpu, .wpd, .br, .bb, .bk, .bpu, .bpd, .valid {
     font-family: ChessAlpha !important;
     cursor: pointer;
