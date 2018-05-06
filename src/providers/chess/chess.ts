@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ObjectToUniqueKey } from '@firebase/database/dist/esm/src/core/util/util';
+import { ObjectToUniqueKey } from '@firebase/database/dist/src/core/util/util';
 
 export interface Move {
   playerId: number;

@@ -14,7 +14,7 @@ import {ComponentsModule} from "../components/components.module";
 import {AngularFireModule} from 'angularfire2';
 import {AngularFireDatabaseModule, AngularFireDatabase} from 'angularfire2/database';
 import {AngularFireAuthModule} from 'angularfire2/auth';
-import {AngularFirestore} from "angularfire2/firestore";
+import {AngularFirestore, AngularFirestoreModule} from "angularfire2/firestore";
 import { ChessProvider } from '../providers/chess/chess';
 import { QueuePage } from '../pages/queue/queue';
 import { HttpClientModule } from '@angular/common/http';
@@ -57,7 +57,8 @@ export const firebaseConfig = {
     AngularFireDatabaseModule,
     AngularFireAuthModule,
     HttpClientModule,
-    ComponentsModule
+    ComponentsModule,
+    AngularFirestoreModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -74,7 +75,6 @@ export const firebaseConfig = {
     StatusBar,
     SplashScreen,
     AngularFireDatabase,
-    AngularFirestore,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     BotProvider,
     ChessProvider
