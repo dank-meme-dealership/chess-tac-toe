@@ -3,10 +3,7 @@ import {AngularFirestoreCollection, AngularFirestore} from "angularfire2/firesto
 import {User} from "./home";
 import {Observable} from "rxjs/Observable";
 import {NavController, NavParams, ViewController} from "ionic-angular";
-import {GameplayPage} from "../gameplay/gameplay";
-import {Move} from "../../providers/chess/chess";
 import {QueuePage} from "../queue/queue";
-import {BotProvider} from "../../providers/bot/bot";
 
 const moment = require('moment');
 
@@ -46,7 +43,7 @@ export class PlayGameModal {
 
   private buttonClicked: boolean;
 
-  constructor(public navCtrl: NavController, public params: NavParams, public viewCtrl: ViewController, private afs: AngularFirestore, private botProvider: BotProvider) {
+  constructor(public navCtrl: NavController, public params: NavParams, public viewCtrl: ViewController, private afs: AngularFirestore) {
     this.usersCollection = afs.collection<User>('users');
     this.users = this.usersCollection.valueChanges();
     this.buttonClicked = false;

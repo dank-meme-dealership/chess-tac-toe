@@ -14,7 +14,7 @@ import {ComponentsModule} from "../components/components.module";
 import {AngularFireModule} from 'angularfire2';
 import {AngularFireDatabaseModule, AngularFireDatabase} from 'angularfire2/database';
 import {AngularFireAuthModule} from 'angularfire2/auth';
-import {AngularFirestore, AngularFirestoreModule} from "angularfire2/firestore";
+import {AngularFirestoreModule} from "angularfire2/firestore";
 import { ChessProvider } from '../providers/chess/chess';
 import { QueuePage } from '../pages/queue/queue';
 import { HttpClientModule } from '@angular/common/http';

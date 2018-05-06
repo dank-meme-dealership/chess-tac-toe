@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {Modal, ModalController, NavController, NavParams, ViewController} from 'ionic-angular';
+import {Modal, ModalController, NavController} from 'ionic-angular';
 import {AngularFirestore, AngularFirestoreDocument} from 'angularfire2/firestore';
 import {Observable} from 'rxjs/Observable';
 

@@ -1,9 +1,7 @@
-import {Component, Input} from '@angular/core';
+import {Component} from '@angular/core';
 import {IonicPage, NavController, NavParams, ModalController} from 'ionic-angular';
 import {Game} from '../home/play-game-modal';
 import {AngularFirestoreDocument, AngularFirestore} from 'angularfire2/firestore';
-import {Observable} from 'rxjs/Observable';
-import {AngularFireDatabase} from 'angularfire2/database';
 import {Subject} from "rxjs/Subject";
 import { BotProvider } from '../../providers/bot/bot';
 
