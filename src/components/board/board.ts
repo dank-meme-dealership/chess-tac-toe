@@ -54,8 +54,10 @@ export class BoardComponent {
   }
 
   onClick(x, y): void {
-    // if nothing is selected yet and we click a spot with a piece, update this.selected
-    if (this.selected === null && this.boardState[x][y][0] === this.player.color.toLowerCase()[0]) {
+    // if we click a spot with one of our pieces, update this.selected
+    // even if we have a piece selected already, clicking our own piece should change the selection
+    if (this.boardState[x][y][0] === this.player.color.toLowerCase()[0]) {
+      this.deselectPiece(); // if we are selecting a new piece, ditch the old selection (this is a nop if nothing is selected)
       this.selectPiece(x, y);
     } else if (this.selected !== null) { // if we already have a piece selected then see if we clicked a valid square. If so move piece, else do deselect piece.
       for (let space of this.moves) {
@@ -157,19 +159,19 @@ export class BoardComponent {
     } else {
       trayIndex = 0;
     }
-    for (let c = 0; c < 4; c++){
-      if(this.boardState[trayIndex][c] === '') numOnBoard++;
+    for (let c = 0; c < 4; c++) {
+      if (this.boardState[trayIndex][c] === '') numOnBoard++;
     }
-    if(numOnBoard < 3 && x !== trayIndex){
+    if (numOnBoard < 3 && x !== trayIndex) {
       return; // do not select anything if we have less than three pieces on the board;
     }
 
-      this.selected = {
-        xS: x,
-        yS: y,
-        piece: this.boardState[x][y],
+    this.selected = {
+      xS: x,
+      yS: y,
+      piece: this.boardState[x][y],
 
-      };
+    };
     this.moves = this.chessProvider.getValidMoves(this.boardState, this.selected);
     this.highlightMoves();
   }
