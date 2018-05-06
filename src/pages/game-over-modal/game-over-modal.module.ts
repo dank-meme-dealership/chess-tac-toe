@@ -10,4 +10,4 @@ import { GameOverModalPage } from './game-over-modal';
     IonicPageModule.forChild(GameOverModalPage),
   ],
 })
-export class GameOverModalPageModule {}
+export class GameOverModalPageModule { }

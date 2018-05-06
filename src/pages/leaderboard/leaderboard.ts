@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import {AngularFirestore} from "angularfire2/firestore";
-import {Subject} from "rxjs/Subject";
+import { AngularFirestore } from "angularfire2/firestore";
+import { Subject } from "rxjs/Subject";
 import _ from 'lodash';
-import {ProfilePage} from "../profile/profile";
+import { ProfilePage } from "../profile/profile";
 
 @IonicPage()
 @Component({
@@ -40,7 +40,7 @@ export class LeaderboardPage {
   }
 
   goToProfile(player: any) {
-    this.navCtrl.push(ProfilePage, {id: player.id, name: player.name});
+    this.navCtrl.push(ProfilePage, { id: player.id, name: player.name });
   }
 
 }

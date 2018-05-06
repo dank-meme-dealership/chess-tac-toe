@@ -1,10 +1,10 @@
-import {Component} from '@angular/core';
-import {Modal, ModalController, NavController} from 'ionic-angular';
-import {AngularFirestore, AngularFirestoreDocument} from 'angularfire2/firestore';
-import {Observable} from 'rxjs/Observable';
+import { Component } from '@angular/core';
+import { Modal, ModalController, NavController, NavParams, ViewController } from 'ionic-angular';
+import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
+import { Observable } from 'rxjs/Observable';
 
 import "rxjs/add/operator/take";
-import {PlayGameModal} from "./play-game-modal";
+import { PlayGameModal } from "./play-game-modal";
 import { ProfilePage } from '../profile/profile';
 import { LeaderboardPage } from '../leaderboard/leaderboard';
 
@@ -52,7 +52,7 @@ export class HomePage {
         this.userDoc = this.afs.doc<User>('users/' + uid);
         this.user = this.userDoc.valueChanges();
       }
-      this.userDoc.update({name: this.name}).catch(this.removeLocalUser.bind(this));
+      this.userDoc.update({ name: this.name }).catch(this.removeLocalUser.bind(this));
       localStorage.setItem('name', this.name);
     }
   }
@@ -64,7 +64,7 @@ export class HomePage {
   }
 
   showModal() {
-    this.modal = this.modalCtrl.create(PlayGameModal, {name: this.name || ''}, {cssClass: 'play-game-modal'});
+    this.modal = this.modalCtrl.create(PlayGameModal, { name: this.name || '' }, { cssClass: 'play-game-modal' });
     this.modal.present();
   }
 
@@ -73,6 +73,6 @@ export class HomePage {
   }
 
   goToProfile() {
-    this.navCtrl.push(ProfilePage, {id: this.uid, name: this.name});
+    this.navCtrl.push(ProfilePage, { id: this.uid, name: this.name });
   }
 }

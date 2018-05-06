@@ -169,8 +169,7 @@ export class BoardComponent {
     this.selected = {
       xS: x,
       yS: y,
-      piece: this.boardState[x][y],
-
+      piece: this.boardState[x][y]
     };
     this.moves = this.chessProvider.getValidMoves(this.boardState, this.selected);
     this.highlightMoves();

@@ -39,13 +39,13 @@ export class QueuePage {
     let player = this.navParams.data.player;
 
     // bot stuff
-    if(this.navParams.data.type === 'bots') {
+    if (this.navParams.data.type === 'bots') {
       this.message = 'bots are being created...';
-        this.createGame([{name: 'bot1', id: 'bot1'},{name: 'bot2', id: 'bot2'}], false).then(game => {
-          // nav to this game, nothing to delete
-          this.joinGame(game.id, 'bot1', null);
-          this.joinGame(game.id, 'bot2', null);
-        });
+      this.createGame([{ name: 'bot1', id: 'bot1' }, { name: 'bot2', id: 'bot2' }], false).then(game => {
+        // nav to this game, nothing to delete
+        this.joinGame(game.id, 'bot1', null);
+        this.joinGame(game.id, 'bot2', null);
+      });
     }
 
     // private games just start and are handled in the gameplay page
@@ -73,7 +73,7 @@ export class QueuePage {
       }).then(function (queueItem) {
         this.queueId = queueItem.id;
         this.myQueuePosition = this.afs.doc('queue/' + this.queueId);
-        
+
         // if we haven't started setting our lastUpdated timestamp, do it
         if (!this.updateStarted) {
           this.setLastUpdated(3);
@@ -99,7 +99,7 @@ export class QueuePage {
       }, seconds * 1000);
     }
   }
- 
+
   checkTheQueue(queue: any, player: any) {
     if (this.busy) return;
 
@@ -118,7 +118,7 @@ export class QueuePage {
       // update the queue position message 
       let queuePosition = this.getQueuePosition(filtered, player);
       this.queueMessage = 'You are in position ' + (queuePosition + 1) + ' out of ' + queue.length;
-      
+
       // check if the person in front of you in the queue is gone and boot them if so
       if (queuePosition > 0) {
         let nextPosition = filtered[queuePosition - 1].payload.doc.data();
@@ -151,7 +151,7 @@ export class QueuePage {
             }, 500)
           });
         }
-        
+
         this.busy = false;
       }
     }

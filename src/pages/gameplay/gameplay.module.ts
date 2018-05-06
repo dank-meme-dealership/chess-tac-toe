@@ -1,6 +1,6 @@
-import {NgModule} from '@angular/core';
-import {IonicPageModule} from 'ionic-angular';
-import {GameplayPage} from './gameplay';
+import { NgModule } from '@angular/core';
+import { IonicPageModule } from 'ionic-angular';
+import { GameplayPage } from './gameplay';
 
 @NgModule({
   declarations: [

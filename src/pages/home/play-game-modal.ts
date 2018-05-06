@@ -1,9 +1,12 @@
-import {Component} from "@angular/core";
-import {AngularFirestoreCollection, AngularFirestore} from "angularfire2/firestore";
-import {User} from "./home";
-import {Observable} from "rxjs/Observable";
-import {NavController, NavParams, ViewController} from "ionic-angular";
-import {QueuePage} from "../queue/queue";
+import { Component } from "@angular/core";
+import { AngularFirestoreCollection, AngularFirestore } from "angularfire2/firestore";
+import { User } from "./home";
+import { Observable } from "rxjs/Observable";
+import { NavController, NavParams, ViewController } from "ionic-angular";
+import { GameplayPage } from "../gameplay/gameplay";
+import { Move } from "../../providers/chess/chess";
+import { QueuePage } from "../queue/queue";
+import { BotProvider } from "../../providers/bot/bot";
 
 const moment = require('moment');
 
@@ -43,7 +46,7 @@ export class PlayGameModal {
 
   private buttonClicked: boolean;
 
-  constructor(public navCtrl: NavController, public params: NavParams, public viewCtrl: ViewController, private afs: AngularFirestore) {
+  constructor(public navCtrl: NavController, public params: NavParams, public viewCtrl: ViewController, private afs: AngularFirestore, private botProvider: BotProvider) {
     this.usersCollection = afs.collection<User>('users');
     this.users = this.usersCollection.valueChanges();
     this.buttonClicked = false;
@@ -60,28 +63,28 @@ export class PlayGameModal {
       if (!localStorage.getItem('bot1') || !localStorage.getItem('bot2')) {
         this.createBots();
       }
-      this.navCtrl.push(QueuePage, {gameId: 'bots' + new Date().getMilliseconds, type: 'bots'});
+      this.navCtrl.push(QueuePage, { gameId: 'bots' + new Date().getMilliseconds, type: 'bots' });
       this.viewCtrl.dismiss();
     }
     else if (uid) {
-      this.joinQueue({name: name, id: uid}, type);
+      this.joinQueue({ name: name, id: uid }, type);
     }
     else {
       this.addUser(name).then(function (uid) {
         localStorage.setItem('uid', uid);
-        this.joinQueue({name: name, id: uid}, type);
+        this.joinQueue({ name: name, id: uid }, type);
       }.bind(this));
     }
   }
 
   addUser(name: string) {
-    return this.usersCollection.add({name: name, timestamp: moment().unix()}).then(function (response) {
+    return this.usersCollection.add({ name: name, timestamp: moment().unix() }).then(function (response) {
       return response.id;
     });
   }
 
   joinQueue(player: any, type: string) {
-    this.navCtrl.push(QueuePage, {player: player, type: type});
+    this.navCtrl.push(QueuePage, { player: player, type: type });
     this.viewCtrl.dismiss();
   }
 
@@ -91,11 +94,11 @@ export class PlayGameModal {
 
     this.addUser(bot1Name).then(function (uid) {
       localStorage.setItem(bot1Name, uid)
-      this.joinQueue({name: bot1Name, id: uid}, 'bots');
+      this.joinQueue({ name: bot1Name, id: uid }, 'bots');
     }.bind(this));
     this.addUser(bot2Name).then(function (uid) {
       localStorage.setItem(bot2Name, uid)
-      this.joinQueue({name: bot2Name, id: uid}, 'bots');
+      this.joinQueue({ name: bot2Name, id: uid }, 'bots');
     }.bind(this));
   }
 }

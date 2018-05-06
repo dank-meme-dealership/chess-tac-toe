@@ -10,4 +10,4 @@ import { QueuePage } from './queue';
     IonicPageModule.forChild(QueuePage),
   ],
 })
-export class QueuePageModule {}
+export class QueuePageModule { }

@@ -10,4 +10,4 @@ import { LeaderboardPage } from './leaderboard';
     IonicPageModule.forChild(LeaderboardPage),
   ],
 })
-export class LeaderboardPageModule {}
+export class LeaderboardPageModule { }
