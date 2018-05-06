@@ -91,6 +91,10 @@ button.exit-button {
   z-index: 999; // doesn't matter does it?
 }
 
+.scroll-content {
+  overflow-y: auto !important;
+}
+
 @font-face {
   font-family: 'ChessAlpha';
   src: url('chessalpha.eot');
