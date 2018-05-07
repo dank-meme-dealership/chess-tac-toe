@@ -21,6 +21,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ProfilePage } from '../pages/profile/profile';
 import { GameOverModalPage } from '../pages/game-over-modal/game-over-modal';
 import { LeaderboardPage } from '../pages/leaderboard/leaderboard';
+import { DashboardPage } from '../pages/dashboard/dashboard';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyD2OLU1f78pWLsMO-NwIfBJfRRJp4Hlg1k",
@@ -40,7 +41,8 @@ export const firebaseConfig = {
     GameplayPage,
     ProfilePage,
     GameOverModalPage,
-    LeaderboardPage
+    LeaderboardPage,
+    DashboardPage
   ],
   imports: [
     BrowserModule,
@@ -69,7 +71,8 @@ export const firebaseConfig = {
     GameplayPage,
     ProfilePage,
     GameOverModalPage,
-    LeaderboardPage
+    LeaderboardPage,
+    DashboardPage
   ],
   providers: [
     StatusBar,

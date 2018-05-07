@@ -1,0 +1,5 @@
+<div *ngIf="game" class="board">
+    <div *ngFor="let piece of game.turns[0].board; let index = index" class="griditem {{isBlack(index) ? 'black' : 'white'}}">
+        
+    </div>
+</div>
