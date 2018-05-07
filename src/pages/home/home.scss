@@ -50,9 +50,36 @@ page-home {
 .play-game-modal {
   .modal-wrapper {
     left: calc(50% - (200px/2));
-    top: calc(50% - (280px/2));
+    top: calc(50% - (200px/2));
     position: absolute;
     width: 200px;
     height: 200px;
+  }
+}
+
+.private-room-modal {
+  .modal-wrapper {
+    left: calc(50% - (300px/2));
+    top: calc(50% - (200px/2));
+    position: absolute;
+    width: 300px;
+    height: 200px;
+  }
+
+  ion-input.room-id {
+    margin-top: 10px;
+    width: 200px;
+    height: 40px;
+    max-height: 40px;
+    background: #fff;
+
+    input {
+      text-align: center;
+      font-size: 16px;
+      color: #000;
+      padding: 0 5px;
+      margin: 11px 0 !important;
+      width: 100% !important;
+    }
   }
 }

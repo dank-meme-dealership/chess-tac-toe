@@ -2,11 +2,9 @@ import { Component } from "@angular/core";
 import { AngularFirestoreCollection, AngularFirestore } from "angularfire2/firestore";
 import { User } from "./home";
 import { Observable } from "rxjs/Observable";
-import { NavController, NavParams, ViewController } from "ionic-angular";
-import { GameplayPage } from "../gameplay/gameplay";
-import { Move } from "../../providers/chess/chess";
+import { ModalController, NavController, NavParams, ViewController } from "ionic-angular";
 import { QueuePage } from "../queue/queue";
-import { BotProvider } from "../../providers/bot/bot";
+import { PrivateRoomModal } from "./private-room-modal";
 
 const moment = require('moment');
 
@@ -31,7 +29,7 @@ export interface Game {
         <button class="chess-button" ion-button (click)="goToGameplay('matchmaking')" [disabled]="buttonClicked">Matchmaking</button>
         <div text-center>Play against a random opponent</div>
 
-        <button margin-top class="chess-button" ion-button (click)="goToGameplay('private')" disabled>Private
+        <button margin-top class="chess-button" ion-button (click)="goToGameplay('private')">Private
         </button>
         <div text-center>Create a private game and invite a friend</div>
       </div>
@@ -44,7 +42,7 @@ export class PlayGameModal {
 
   private buttonClicked: boolean;
 
-  constructor(public navCtrl: NavController, public params: NavParams, public viewCtrl: ViewController, private afs: AngularFirestore, private botProvider: BotProvider) {
+  constructor(public navCtrl: NavController, public params: NavParams, public viewCtrl: ViewController, public modalCtrl: ModalController, private afs: AngularFirestore) {
     this.usersCollection = afs.collection<User>('users');
     this.users = this.usersCollection.valueChanges();
     this.buttonClicked = false;
@@ -57,14 +55,21 @@ export class PlayGameModal {
 
     let name = this.params.get('name');
     let uid = localStorage.getItem('uid');
-    if (uid) {
-      this.joinQueue({ name: name, id: uid }, type);
-    }
-    else {
-      this.addUser(name).then(function (uid) {
-        localStorage.setItem('uid', uid);
+
+    if (type === 'matchmaking') {
+      if (uid) {
         this.joinQueue({ name: name, id: uid }, type);
-      }.bind(this));
+      }
+      else {
+        this.addUser(name).then(function (uid) {
+          localStorage.setItem('uid', uid);
+          this.joinQueue({ name: name, id: uid }, type);
+        }.bind(this));
+      }
+    } else if (type === 'private') {
+      let modal = this.modalCtrl.create(PrivateRoomModal, { name: name }, { cssClass: 'private-room-modal' });
+      modal.present();
+      this.buttonClicked = false;
     }
   }
 
